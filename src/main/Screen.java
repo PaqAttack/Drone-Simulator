@@ -17,7 +17,6 @@ public class Screen extends JPanel{
 		
 	public Screen(Simulator simulator) {
 		this.simulator = simulator;
-	
 		setPanelSize();
 	}
 	
@@ -33,7 +32,7 @@ public class Screen extends JPanel{
 	}
 	
 	private void setPanelSize() {
-		size = new Dimension(800, 800);
+		size = new Dimension(800, 600);
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setMaximumSize(size);
