@@ -31,7 +31,7 @@ public class Indicator {
 	private void drawText(Graphics g, int renderX, int renderY) {
 		if (name != null) {
 			g.setColor(Simulator.getTextColor());
-			g.setFont(new Font("Times New Roman", Font.PLAIN, 10));
+			g.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 			int textHeight = g.getFontMetrics().getHeight();
 			int textWidth = g.getFontMetrics().stringWidth(name);
 		

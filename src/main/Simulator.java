@@ -9,7 +9,10 @@ import javax.swing.JFrame;
 import mapItems.Design;
 import mapItems.MapItems;
 import objects.CentralHub;
-import objects.ChrisDrone;
+import studentDrones.ChrisDrone;
+import studentDrones.FosterDrone;
+import studentDrones.JudeDrone;
+import studentDrones.RichardDrone;
 import ui.Legend;
 
 @SuppressWarnings("serial")
@@ -49,21 +52,19 @@ public class Simulator extends JFrame implements Runnable{
 	private int counter = 0;
 	
 	private static final int CLOCK_X = FIELD_X_OFFSET + (FIELD_WIDTH / 2);
-	private static final int CLOCK_Y = 25;
+	private static final int CLOCK_Y = LABEL_HEIGHT - 5;
 	
 	private void initDrones() {
 		// Create all drones here
-		ChrisDrone chrisDrone = new ChrisDrone("Chris", Color.YELLOW, Design.RECTANGLE, 30, 200);
-//		ChrisDrone chrisDrone1 = new ChrisDrone("Todd", Color.PINK, Design.CIRCLE, 50, 100);
-//		ChrisDrone chrisDrone2 = new ChrisDrone("John", Color.RED, Design.RECTANGLE, 300, 98);
-//		ChrisDrone chrisDrone3 = new ChrisDrone("Bill", Color.BLUE, Design.CIRCLE, 480, 420);
-//		ChrisDrone chrisDrone4 = new ChrisDrone("Max", Color.GREEN, Design.RECTANGLE, 222, 300);
+		ChrisDrone chrisDrone = new ChrisDrone("Chris", Color.YELLOW, Design.CIRCLE, 200, 10);
+		FosterDrone fosterDrone = new FosterDrone("Foster", Color.PINK, Design.CIRCLE, 240, 10);
+		RichardDrone richardDrone = new RichardDrone("Richard", Color.BLUE, Design.CIRCLE, 280, 10);
+		JudeDrone judeDrone = new JudeDrone("Jude", Color.WHITE, Design.CIRCLE, 320, 10);
 	}
 	
 	private void initPlots() {
-		// Create plots here to be plot later
-//		TargetPlot target1 = new TargetPlot("Fire", Color.RED, Design.CIRCLE, 250, 250);
-//		TargetPlot target2 = new TargetPlot("Water", Color.BLUE, Design.CIRCLE, 275, 275);
+		// Create plots here
+
 	}
 	
 	public static void main(String[] args) {
@@ -209,7 +210,7 @@ public class Simulator extends JFrame implements Runnable{
 		g.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		int w = g.getFontMetrics().stringWidth(curTime.toString());
 		int h = g.getFontMetrics().getHeight();
-		g.drawString(curTime.toString(), CLOCK_X - (w / 2), LABEL_HEIGHT - 5);
+		g.drawString(curTime.toString(), CLOCK_X - (w / 2), CLOCK_Y);
 	}
 	
 	private void renderScreenMessage(Graphics g) {

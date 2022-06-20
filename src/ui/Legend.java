@@ -102,6 +102,7 @@ public class Legend {
 					obstacleInd = plots.get(i).getIndicator();
 				}
 			}
+			
 			// print target
 			if (target) {
 				x = START_X + (Simulator.getMapItemWidth() / 2);
@@ -115,7 +116,8 @@ public class Legend {
 			
 			// print obstacles
 			if (obstacle) {
-				y = PLOT_LEGEND_TOP + (g.getFontMetrics().getHeight() + 5);
+				x = START_X + (Simulator.getMapItemWidth() / 2);
+				y = PLOT_LEGEND_TOP + 25;
 				obstacleInd.drawIndicator(g, x, y);
 				
 				g.setColor(Simulator.getGraphColor());
