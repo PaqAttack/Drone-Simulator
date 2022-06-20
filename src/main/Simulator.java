@@ -1,20 +1,32 @@
 package main;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.time.LocalTime;
+
 import javax.swing.JFrame;
 
-import mapItems.Drone;
+import mapItems.Design;
 import mapItems.MapItems;
+import objects.CentralHub;
+import objects.ChrisDrone;
+import objects.TargetPlot;
+import ui.Legend;
 
 @SuppressWarnings("serial")
 public class Simulator extends JFrame implements Runnable{
 
-	private Screen screen;
-	private Thread simThread;
-		
+	// GLOBAL VARIABLES - SET THESE
+	public static final int MAP_ITEM_WIDTH = 8;
+	public static final int MAP_ITEM_HEIGHT = 8;
+	
+	public static final int FIELD_HEIGHT_IN_MILES = 100;
+	public static final int FIELD_WIDTH_IN_MILES = 100;
+	
+	// Program Operation Variables.
 	private static final double FPS_SET = 80.0;
 	private static final double UPS_SET = 60.0;
 	
+	// Program Interface Variables
 	private static final int LABEL_HEIGHT = 75;
 	
 	private static final int FIELD_WIDTH = 500;
@@ -23,29 +35,49 @@ public class Simulator extends JFrame implements Runnable{
 	private static final int FIELD_X_OFFSET = 275;
 	private static final int FIELD_Y_OFFSET = LABEL_HEIGHT + FIELD_HEIGHT;
 	
+	private static final Color BACKGROUND_COLOR = Color.BLACK;
+	private static final Color GRAPH_COLOR = Color.WHITE;
+	private static final Color TEXT_COLOR = Color.WHITE;
+	
+	private Screen screen;
+	private Thread simThread;
+	private LocalTime startTime;
+	private LocalTime curTime;
+	
+	private long elapsedSeconds = 0;
+	private int counter = 0;
+	
 	private void initDrones() {
-		Drone drone1 = new Drone(Color.BLUE, "Chris", 50, 50);
-		
+		// Create all drones here
+		ChrisDrone chrisDrone = new ChrisDrone("Chris", Color.YELLOW, Design.RECTANGLE, 30, 200);
+		ChrisDrone chrisDrone1 = new ChrisDrone("Todd", Color.PINK, Design.CIRCLE, 50, 100);
+		ChrisDrone chrisDrone2 = new ChrisDrone("John", Color.RED, Design.RECTANGLE, 300, 98);
+		ChrisDrone chrisDrone3 = new ChrisDrone("Bill", Color.BLUE, Design.CIRCLE, 480, 420);
+		ChrisDrone chrisDrone4 = new ChrisDrone("Max", Color.GREEN, Design.RECTANGLE, 222, 300);
 		
 	}
 	
 	private void initPlots() {
-		
-		
-		
+		// Create plots here to be plot later
+		TargetPlot target1 = new TargetPlot("Fire", Color.RED, Design.CIRCLE, 250, 250);
+		TargetPlot target2 = new TargetPlot("Water", Color.BLUE, Design.CIRCLE, 275, 275);
 	}
 	
 	public Simulator() {
 		screen = new Screen(this);
 		
+		CentralHub centralHub = new CentralHub();
 		initDrones();
 		initPlots();
+		centralHub.InitCentralHUB();
+		startTime = LocalTime.of(0, 0, 0);
+		curTime = startTime;
 		
 		// Set Frame (Stage) size and data.
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		
+		setTitle("ASU / FSE 100 Drone Simulation");
 		// Add Game Screen to JFrame
 		add(screen);
 		
@@ -80,19 +112,21 @@ public class Simulator extends JFrame implements Runnable{
 	
 	public void render(Graphics g) {
 		// Background
-		g.setColor(Color.BLACK);
+		g.setColor(Simulator.getBackgroundColor());
 		g.fillRect(0, 0, 800, 600);
 		
 		// draw graph
-		g.setColor(Color.WHITE);
+		g.setColor(Simulator.getGraphColor());
 		g.drawRect(FIELD_X_OFFSET, LABEL_HEIGHT, FIELD_WIDTH, FIELD_HEIGHT);
 		
 		
 		if (MapItems.getList() != null) {
 			for (MapItems mapItems : MapItems.getList()) {
-				mapItems.render(g);
+				mapItems.getIndicator().render(g);
 			}
 		}
+		
+		Legend.render(g);
 	}
 	
 	
@@ -128,6 +162,7 @@ public class Simulator extends JFrame implements Runnable{
 			// Update
 			if (now - lastUpdate >= timePerUpdate) {
 				update();
+				updateTime()
 				lastUpdate = now;
 				updates++;
 			}
@@ -142,6 +177,15 @@ public class Simulator extends JFrame implements Runnable{
 		
 	}
 
+	private void updateTime() {
+		counter++;
+		if (counter >= UPS_SET && CentralHub.isActive()) {
+			counter = 0;
+			elapsedSeconds++;
+			curTime = startTime.plusSeconds( (int) elapsedSeconds);
+		}
+	}
+	
 	public static int getLabelHeight() {
 		return LABEL_HEIGHT;
 	}
@@ -161,7 +205,34 @@ public class Simulator extends JFrame implements Runnable{
 	public static int getFieldYOffset() {
 		return FIELD_Y_OFFSET;
 	}
+	
+	public static int getMapItemWidth() {
+		return MAP_ITEM_WIDTH;
+	}
+	
+	public static int getMapItemHeight() {
+		return MAP_ITEM_HEIGHT;
+	}
+	
+	public static int getFieldHeightInMiles() {
+		return FIELD_HEIGHT_IN_MILES;
+	}
+	
+	public static int getFieldWidthInMiles() {
+		return FIELD_WIDTH_IN_MILES;
+	}
+
+	public static Color getBackgroundColor() {
+		return BACKGROUND_COLOR;
+	}
+
+	public static Color getGraphColor() {
+		return GRAPH_COLOR;
+	}
+
+	public static Color getTextColor() {
+		return TEXT_COLOR;
+	}
 
 	
-
 }
