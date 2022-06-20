@@ -1,5 +1,6 @@
 package main;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.time.LocalTime;
 
@@ -47,6 +48,9 @@ public class Simulator extends JFrame implements Runnable{
 	private long elapsedSeconds = 0;
 	private int counter = 0;
 	
+	private static final int CLOCK_X = FIELD_X_OFFSET + (FIELD_WIDTH / 2);
+	private static final int CLOCK_Y = 25;
+	
 	private void initDrones() {
 		// Create all drones here
 		ChrisDrone chrisDrone = new ChrisDrone("Chris", Color.YELLOW, Design.RECTANGLE, 30, 200);
@@ -54,7 +58,6 @@ public class Simulator extends JFrame implements Runnable{
 		ChrisDrone chrisDrone2 = new ChrisDrone("John", Color.RED, Design.RECTANGLE, 300, 98);
 		ChrisDrone chrisDrone3 = new ChrisDrone("Bill", Color.BLUE, Design.CIRCLE, 480, 420);
 		ChrisDrone chrisDrone4 = new ChrisDrone("Max", Color.GREEN, Design.RECTANGLE, 222, 300);
-		
 	}
 	
 	private void initPlots() {
@@ -69,7 +72,7 @@ public class Simulator extends JFrame implements Runnable{
 		CentralHub centralHub = new CentralHub();
 		initDrones();
 		initPlots();
-		centralHub.InitCentralHUB();
+		//CentralHub.InitCentralHUB();
 		startTime = LocalTime.of(0, 0, 0);
 		curTime = startTime;
 		
@@ -125,7 +128,7 @@ public class Simulator extends JFrame implements Runnable{
 				mapItems.getIndicator().render(g);
 			}
 		}
-		
+		renderClock(g);
 		Legend.render(g);
 	}
 	
@@ -162,7 +165,7 @@ public class Simulator extends JFrame implements Runnable{
 			// Update
 			if (now - lastUpdate >= timePerUpdate) {
 				update();
-				updateTime()
+				updateTime();
 				lastUpdate = now;
 				updates++;
 			}
@@ -184,6 +187,14 @@ public class Simulator extends JFrame implements Runnable{
 			elapsedSeconds++;
 			curTime = startTime.plusSeconds( (int) elapsedSeconds);
 		}
+	}
+	
+	private void renderClock(Graphics g) {
+		g.setColor(Simulator.getTextColor());
+		g.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		int w = g.getFontMetrics().stringWidth(curTime.toString());
+		int h = g.getFontMetrics().getHeight();
+		g.drawString(curTime.toString(), CLOCK_X - (w / 2), LABEL_HEIGHT - 5);
 	}
 	
 	public static int getLabelHeight() {
