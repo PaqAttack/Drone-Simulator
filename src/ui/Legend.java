@@ -1,13 +1,17 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
 import main.Simulator;
 import mapItems.DroneInterface;
+import mapItems.Indicator;
 import mapItems.MapItems;
 import mapItems.PlotInterface;
+import objects.ObstaclePlot;
+import objects.TargetPlot;
 
 public class Legend {
 	
@@ -28,6 +32,15 @@ public class Legend {
 	private static final int LEGEND_WIDTH = 225;
 	private static final int LEGEND_HEIGHT = 60;
 	private static final int LEGEND_GAP = 20;
+	
+	private static int x;
+	private static int y;
+	
+	private static boolean target = false;
+	private static boolean obstacle = false;
+	
+	private static Indicator targetInd;
+	private static Indicator obstacleInd;
 	
 	public Legend() {
 		// *pin drops*
@@ -81,16 +94,33 @@ public class Legend {
 		
 		if (!plots.isEmpty()) {
 			for (int i = 0; i < plots.size(); i++) {
-				
-				int x = START_X + (Simulator.getMapItemWidth() / 2);
-				int y = PLOT_LEGEND_TOP + (i * g.getFontMetrics().getHeight() + 5);
-				
-				plots.get(i).getIndicator().drawIndicator(g, x, y);	
+				if (plots.get(i) instanceof TargetPlot) {
+					target = true;
+					targetInd = plots.get(i).getIndicator();
+				} else if (plots.get(i) instanceof ObstaclePlot) {
+					obstacle = true;
+					obstacleInd = plots.get(i).getIndicator();
+				}
+			}
+			// print target
+			if (target) {
+				x = START_X + (Simulator.getMapItemWidth() / 2);
+				y = PLOT_LEGEND_TOP + 5;
+				targetInd.drawIndicator(g, x, y);
 				
 				g.setColor(Simulator.getGraphColor());
 				g.setFont(new Font("Times New Roman", Font.PLAIN, PLOT_ENTRY_HEIGHT));
-				g.drawString(":  " + plots.get(i).getName(), START_X + (Simulator.getMapItemWidth() * 2) + 5, y + (g.getFontMetrics().getHeight() / 2) - 2);
+				g.drawString(":  TARGET", START_X + (Simulator.getMapItemWidth() * 2) + 5, y + (g.getFontMetrics().getHeight() / 2) - 2);
+			}
+			
+			// print obstacles
+			if (obstacle) {
+				y = PLOT_LEGEND_TOP + (g.getFontMetrics().getHeight() + 5);
+				obstacleInd.drawIndicator(g, x, y);
 				
+				g.setColor(Simulator.getGraphColor());
+				g.setFont(new Font("Times New Roman", Font.PLAIN, PLOT_ENTRY_HEIGHT));
+				g.drawString(":  OBSTACLE", START_X + (Simulator.getMapItemWidth() * 2) + 5, y + (g.getFontMetrics().getHeight() / 2) - 2);
 			}
 		}
 

@@ -18,7 +18,8 @@ public class ObstaclePlot extends MapItems implements PlotInterface{
 
 	@Override
 	public void update() {
-		
+		indicator.setIndPosX(posX);
+		indicator.setIndPosY(posY);
 	}
 
 	public static ArrayList<ObstaclePlot> getObstacles() {

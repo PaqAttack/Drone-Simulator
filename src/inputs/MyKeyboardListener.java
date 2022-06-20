@@ -3,34 +3,35 @@ package inputs;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import main.Simulator;
+
 public class MyKeyboardListener implements KeyListener{
+	
+	private Simulator simulator;
+	private boolean rdy = true;
+	
+	public MyKeyboardListener(Simulator simulator) {
+		this.simulator = simulator;
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Look up what this is?
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-//		if (e.getKeyCode() == KeyEvent.VK_A) {
-//			System.out.println("A Key pressed");
-//			GameStates.gameState = GameStates.MENU;
-//		}
-//
-//		if (e.getKeyCode() == KeyEvent.VK_S){
-//			System.out.println("S Key pressed");
-//			GameStates.gameState = GameStates.PLAYING;
-//		}
-//
-//		if (e.getKeyCode() == KeyEvent.VK_D){
-//			System.out.println("D Key pressed");
-//			GameStates.gameState = GameStates.SETTINGS;
-//		}
+		if (rdy) {
+			rdy = false;
+			simulator.getScreen().keyPress(e);
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// Nothing yet
+		rdy = true;
 		
 	}
+
 }

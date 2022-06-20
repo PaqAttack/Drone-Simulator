@@ -16,6 +16,8 @@ public class TargetPlot extends MapItems implements PlotInterface{
 		targets.add(this);
 	}
 
+	
+	
 	@Override
 	public void update() {
 		indicator.setIndPosX(posX);

@@ -10,7 +10,6 @@ import mapItems.Design;
 import mapItems.MapItems;
 import objects.CentralHub;
 import objects.ChrisDrone;
-import objects.TargetPlot;
 import ui.Legend;
 
 @SuppressWarnings("serial")
@@ -44,6 +43,7 @@ public class Simulator extends JFrame implements Runnable{
 	private Thread simThread;
 	private LocalTime startTime;
 	private LocalTime curTime;
+	private SimulationManager simManager;
 	
 	private long elapsedSeconds = 0;
 	private int counter = 0;
@@ -54,25 +54,34 @@ public class Simulator extends JFrame implements Runnable{
 	private void initDrones() {
 		// Create all drones here
 		ChrisDrone chrisDrone = new ChrisDrone("Chris", Color.YELLOW, Design.RECTANGLE, 30, 200);
-		ChrisDrone chrisDrone1 = new ChrisDrone("Todd", Color.PINK, Design.CIRCLE, 50, 100);
-		ChrisDrone chrisDrone2 = new ChrisDrone("John", Color.RED, Design.RECTANGLE, 300, 98);
-		ChrisDrone chrisDrone3 = new ChrisDrone("Bill", Color.BLUE, Design.CIRCLE, 480, 420);
-		ChrisDrone chrisDrone4 = new ChrisDrone("Max", Color.GREEN, Design.RECTANGLE, 222, 300);
+//		ChrisDrone chrisDrone1 = new ChrisDrone("Todd", Color.PINK, Design.CIRCLE, 50, 100);
+//		ChrisDrone chrisDrone2 = new ChrisDrone("John", Color.RED, Design.RECTANGLE, 300, 98);
+//		ChrisDrone chrisDrone3 = new ChrisDrone("Bill", Color.BLUE, Design.CIRCLE, 480, 420);
+//		ChrisDrone chrisDrone4 = new ChrisDrone("Max", Color.GREEN, Design.RECTANGLE, 222, 300);
 	}
 	
 	private void initPlots() {
 		// Create plots here to be plot later
-		TargetPlot target1 = new TargetPlot("Fire", Color.RED, Design.CIRCLE, 250, 250);
-		TargetPlot target2 = new TargetPlot("Water", Color.BLUE, Design.CIRCLE, 275, 275);
+//		TargetPlot target1 = new TargetPlot("Fire", Color.RED, Design.CIRCLE, 250, 250);
+//		TargetPlot target2 = new TargetPlot("Water", Color.BLUE, Design.CIRCLE, 275, 275);
+	}
+	
+	public static void main(String[] args) {
+		Simulator simulator = new Simulator();
+		simulator.screen.initInputs();
+		// Start thread that will handle game loop
+		simulator.start();
 	}
 	
 	public Simulator() {
 		screen = new Screen(this);
-		
+		simManager = new SimulationManager();
 		CentralHub centralHub = new CentralHub();
+		
 		initDrones();
 		initPlots();
-		//CentralHub.InitCentralHUB();
+		
+		
 		startTime = LocalTime.of(0, 0, 0);
 		curTime = startTime;
 		
@@ -91,12 +100,6 @@ public class Simulator extends JFrame implements Runnable{
 		setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		Simulator simulator = new Simulator();
-		// Start thread that will handle game loop
-		simulator.start();
-	}
-	
 	private void start() {
 		// Create and start thread
 		simThread = new Thread(this) {};
@@ -111,7 +114,23 @@ public class Simulator extends JFrame implements Runnable{
 				mapItems.update();
 			}
 		}
+		
+		if (simManager != null) {
+			simManager.update();
+		}
+		
+		updateTime();
 	}
+	
+	private void updateTime() {
+		counter++;
+		if (counter >= UPS_SET && CentralHub.isActive()) {
+			counter = 0;
+			elapsedSeconds++;
+			curTime = startTime.plusSeconds( (int) elapsedSeconds);
+		}
+	}
+	
 	
 	public void render(Graphics g) {
 		// Background
@@ -122,16 +141,21 @@ public class Simulator extends JFrame implements Runnable{
 		g.setColor(Simulator.getGraphColor());
 		g.drawRect(FIELD_X_OFFSET, LABEL_HEIGHT, FIELD_WIDTH, FIELD_HEIGHT);
 		
-		
+		// Draw Map Items
 		if (MapItems.getList() != null) {
 			for (MapItems mapItems : MapItems.getList()) {
 				mapItems.getIndicator().render(g);
 			}
 		}
+		// Draw Clock
 		renderClock(g);
+		// Draw legend
 		Legend.render(g);
+		// Draw Message
+		if (simManager != null) {
+			renderScreenMessage(g);
+		}
 	}
-	
 	
 	@Override
 	public void run() {
@@ -165,7 +189,7 @@ public class Simulator extends JFrame implements Runnable{
 			// Update
 			if (now - lastUpdate >= timePerUpdate) {
 				update();
-				updateTime();
+				
 				lastUpdate = now;
 				updates++;
 			}
@@ -179,15 +203,6 @@ public class Simulator extends JFrame implements Runnable{
 		}
 		
 	}
-
-	private void updateTime() {
-		counter++;
-		if (counter >= UPS_SET && CentralHub.isActive()) {
-			counter = 0;
-			elapsedSeconds++;
-			curTime = startTime.plusSeconds( (int) elapsedSeconds);
-		}
-	}
 	
 	private void renderClock(Graphics g) {
 		g.setColor(Simulator.getTextColor());
@@ -196,6 +211,14 @@ public class Simulator extends JFrame implements Runnable{
 		int h = g.getFontMetrics().getHeight();
 		g.drawString(curTime.toString(), CLOCK_X - (w / 2), LABEL_HEIGHT - 5);
 	}
+	
+	private void renderScreenMessage(Graphics g) {
+		g.setColor(Simulator.getTextColor());
+		g.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+		g.drawString(simManager.getMessage1(), 25, 25);
+		g.drawString(simManager.getMessage2(), 25, 50);
+	}
+
 	
 	public static int getLabelHeight() {
 		return LABEL_HEIGHT;
@@ -245,5 +268,10 @@ public class Simulator extends JFrame implements Runnable{
 		return TEXT_COLOR;
 	}
 
+	public Screen getScreen() {
+		return screen;
+	}
+
+	
 	
 }
