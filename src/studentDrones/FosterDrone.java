@@ -3,15 +3,13 @@ package studentDrones;
 import java.awt.Color;
 
 import mapItems.CommInterface;
-import mapItems.MapIcon;
-import mapItems.DroneInterface;
-import mapItems.MapItems;
+import objects.Drone;
 
-public class FosterDrone  extends MapItems implements CommInterface, DroneInterface{
+public class FosterDrone  extends Drone implements CommInterface{
 
-	public FosterDrone(String name, Color color, MapIcon type, int startX, int startY) {
-		super(name, color, type, startX, startY);
-		// TODO Auto-generated constructor stub
+	public FosterDrone(int startPosX, int startPosY, String name, String studentName, Color color) {
+		super(startPosX, startPosY, name, studentName, color);
+
 	}
 
 	@Override
@@ -26,10 +24,5 @@ public class FosterDrone  extends MapItems implements CommInterface, DroneInterf
 		
 	}
 
-	@Override
-	public void update() {
-		indicator.setIndPosX(posX);
-		indicator.setIndPosY(posY);
-	}
 
 }

@@ -3,33 +3,25 @@ package studentDrones;
 import java.awt.Color;
 
 import mapItems.CommInterface;
-import mapItems.MapIcon;
-import mapItems.DroneInterface;
-import mapItems.MapItems;
+import objects.Drone;
 
-public class JudeDrone extends MapItems implements CommInterface, DroneInterface{
+public class JudeDrone extends Drone implements CommInterface{
 
-	public JudeDrone(String name, Color color, MapIcon type, int startX, int startY) {
-		super(name, color, type, startX, startY);
-		// TODO Auto-generated constructor stub
+	public JudeDrone(int startPosX, int startPosY, String name, String studentName, Color color) {
+		super(startPosX, startPosY, name, studentName, color);
+
 	}
 
 	@Override
 	public void transmit(CommInterface reciever, String data) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void recieve(CommInterface transmitter, String data) {
-		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void update() {
-		indicator.setIndPosX(posX);
-		indicator.setIndPosY(posY);
-	}
+
 
 }

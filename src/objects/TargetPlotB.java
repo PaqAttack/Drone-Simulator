@@ -5,9 +5,8 @@ import java.util.ArrayList;
 
 import mapItems.MapIcon;
 import mapItems.MapItems;
-import mapItems.PlotInterface;
 
-public class TargetPlotB extends MapItems implements PlotInterface{
+public class TargetPlotB extends MapItems{
 
 	private static ArrayList<TargetPlotB> targets = new ArrayList<>();
 	

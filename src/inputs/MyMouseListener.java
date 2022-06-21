@@ -4,55 +4,49 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import main.SimulationManager;
+import main.StateManager;
 import main.Simulator;
 
 public class MyMouseListener implements MouseListener, MouseMotionListener{
 
-	private Simulator simulator;
+	private InputManager inputManager;
 	
-	public MyMouseListener(Simulator simulator) {
-		this.simulator = simulator;
+	public MyMouseListener(InputManager inputManager) {
+		this.inputManager = inputManager;
 	}
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		simulator.getScreen().mouseClick(e.getX(), e.getY());
+		inputManager.mouseClick(e.getX(), e.getY());
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

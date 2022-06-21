@@ -1,12 +1,12 @@
 package main;
 
-public class SimulationManager {
+public class StateManager {
 
 	private static State myState = State.PLOT_A_TARGETS;
 	private String message1;
 	private String message2;
 	
-	public SimulationManager() {
+	public StateManager() {
 
 	}
 	

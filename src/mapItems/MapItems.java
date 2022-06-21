@@ -4,11 +4,6 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import objects.ObstaclePlot;
-import objects.TargetPlotA;
-import objects.TargetPlotB;
-import ui.Legend;
-
 public abstract class MapItems {
 
 	private static final int MAX_DRONES = 5;
@@ -38,10 +33,7 @@ public abstract class MapItems {
 		
 		bounds = new Rectangle(startX, startY, indicator.getWidth(), indicator.getHeight());
 		
-		updateLegend();
-		
 		updateLists();
-
 	}
 	
 	public abstract void update();
@@ -58,31 +50,17 @@ public abstract class MapItems {
 	}
 
 	private void updateLists() {
-		if (this instanceof DroneInterface) {
-			if (drones.size() + 1 > MAX_DRONES) {
-				System.out.println("Drone count exceeds max supported drones. Deleteing Extras.");
-			} else {
-				MapItems.mapItemList.add(this);
-				drones.add(this);
-			}
-		} else {
-			MapItems.mapItemList.add(this);
-			plots.add(this);
-		}
-	}
-	
-	private void updateLegend() {
-		if (this instanceof TargetPlotA) {
-			Legend.setTargetAInd(getIndicator());
-		}
-		
-		if (this instanceof TargetPlotB) {
-			Legend.setTargetBInd(getIndicator());
-		}
-		
-		if (this instanceof ObstaclePlot) {
-			Legend.setObstacleInd(getIndicator());
-		}
+//		if (this instanceof DroneInterface) {
+//			if (drones.size() + 1 > MAX_DRONES) {
+//				System.out.println("Drone count exceeds max supported drones. Deleteing Extras.");
+//			} else {
+//				MapItems.mapItemList.add(this);
+//				drones.add(this);
+//			}
+//		} else {
+//			MapItems.mapItemList.add(this);
+//			plots.add(this);
+//		}
 	}
 	
 	public static ArrayList<MapItems> getDrones() {

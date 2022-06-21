@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import main.GlobalVars;
 import main.Simulator;
 import mapItems.Indicator;
 import mapItems.MapItems;
@@ -22,18 +23,14 @@ public class Legend {
 	private static final int LEGEND_HEIGHT = 60;
 	private static final int LEGEND_GAP = 20;
 	
-	private static Indicator targetAInd;
-	private static Indicator targetBInd;
-	private static Indicator obstacleInd;
-	
-	private static Point indPoint1 = new Point(START_X + (Simulator.getMapItemWidth() / 2), PLOT_LEGEND_TOP);
-	private static Point txtPoint1 = new Point(START_X + (Simulator.getMapObsWidth() * 2) - 5, PLOT_LEGEND_TOP + 10);
+	private static Point indPoint1 = new Point(START_X + 5, PLOT_LEGEND_TOP);
+	private static Point txtPoint1 = new Point(START_X + 25, PLOT_LEGEND_TOP + 10);
 		
-	private static Point indPoint2 = new Point(START_X + (Simulator.getMapItemWidth() / 2), PLOT_LEGEND_TOP + 20);
-	private static Point txtPoint2 = new Point(START_X + (Simulator.getMapObsWidth() * 2) - 5, PLOT_LEGEND_TOP + 30);
+	private static Point indPoint2 = new Point(START_X + 5, PLOT_LEGEND_TOP + 20);
+	private static Point txtPoint2 = new Point(START_X + 25, PLOT_LEGEND_TOP + 30);
 	
-	private static Point indPoint3 = new Point(START_X + (Simulator.getMapItemWidth() / 2) - 5, PLOT_LEGEND_TOP + 40);
-	private static Point txtPoint3 = new Point(START_X + (Simulator.getMapObsWidth() * 2) - 5, PLOT_LEGEND_TOP + 55);
+	private static Point indPoint3 = new Point(START_X + 5, PLOT_LEGEND_TOP + 40);
+	private static Point txtPoint3 = new Point(START_X + 25, PLOT_LEGEND_TOP + 50);
 
 	public Legend() {
 		// *pin drops*
@@ -41,7 +38,7 @@ public class Legend {
 	
 	
 	public static void update() {
-
+		// *pin drops*
 	}
 	
 	public static void render(Graphics g) {
@@ -51,7 +48,7 @@ public class Legend {
 
 
 	private static void drawDrones(Graphics g, int top) {
-		g.setColor(Simulator.getGraphColor());
+		g.setColor(GlobalVars.getGraphColor());
 		
 		if (!MapItems.getDrones().isEmpty()) {
 			
@@ -64,50 +61,40 @@ public class Legend {
 
 
 	private static void drawPlots(Graphics g) {
-		g.setColor(Simulator.getGraphColor());
-		
+		// PLOT HEADER
+		g.setColor(GlobalVars.getGraphColor());
 		g.setFont(new Font("Times New Roman", Font.PLAIN, PLOT_TITLE_HEIGHT));
 		g.drawString("PLOTS:", START_X, PLOT_TITLE_TOP);
 		
-		if (targetAInd != null) {
-			targetAInd.drawIndicator(g, indPoint1.x, indPoint1.y);
+		// PLOT A LEGEND
+		g.setColor(GlobalVars.getPlotAColor());
+		g.drawRect(indPoint1.x, indPoint1.y, 10, 10);
+		g.fillRect(indPoint1.x, indPoint1.y, 10, 10);
 			
-			g.setColor(Simulator.getGraphColor());
-			g.setFont(new Font("Times New Roman", Font.PLAIN, PLOT_ENTRY_HEIGHT));
-			g.drawString(":  Target A", txtPoint1.x, txtPoint1.y);
-		}
+		g.setColor(GlobalVars.getGraphColor());
+		g.setFont(new Font("Times New Roman", Font.PLAIN, PLOT_ENTRY_HEIGHT));
+		g.drawString(":  " + GlobalVars.getPlotAName(), txtPoint1.x, txtPoint1.y);
 		
-		if (targetBInd != null) {
-			targetBInd.drawIndicator(g, indPoint2.x, indPoint2.y);
+		// PLOT A LEGEND
+		g.setColor(GlobalVars.getPlotBColor());
+		g.drawRect(indPoint2.x, indPoint2.y, 10, 10);
+		g.fillRect(indPoint2.x, indPoint2.y, 10, 10);
 			
-			g.setColor(Simulator.getGraphColor());
-			g.setFont(new Font("Times New Roman", Font.PLAIN, PLOT_ENTRY_HEIGHT));
-			g.drawString(":  Target B", txtPoint2.x, txtPoint2.y);
-		}
+		g.setColor(GlobalVars.getGraphColor());
+		g.setFont(new Font("Times New Roman", Font.PLAIN, PLOT_ENTRY_HEIGHT));
+		g.drawString(":  " + GlobalVars.getPlotBName(), txtPoint2.x, txtPoint2.y);
+
+		// OBSTACLE LEGEND
+		g.setColor(GlobalVars.getObsColor());
+		g.drawRect(indPoint3.x, indPoint3.y, 10, 10);
+		g.fillRect(indPoint3.x, indPoint3.y, 10, 10);
 		
-		if (obstacleInd != null) {
-			obstacleInd.drawIndicator(g, indPoint3.x, indPoint3.y);
-			
-			g.setColor(Simulator.getGraphColor());
-			g.setFont(new Font("Times New Roman", Font.PLAIN, PLOT_ENTRY_HEIGHT));
-			g.drawString(":  Obstacle", txtPoint3.x, txtPoint3.y);
-		}
+		g.setColor(GlobalVars.getGraphColor());
+		g.setFont(new Font("Times New Roman", Font.PLAIN, PLOT_ENTRY_HEIGHT));
+		g.drawString(":  Obstacle", txtPoint3.x, txtPoint3.y);
+
 	}
 
-
-	public static void setTargetAInd(Indicator targetAInd) {
-		Legend.targetAInd = targetAInd;
-	}
-
-
-	public static void setTargetBInd(Indicator targetBInd) {
-		Legend.targetBInd = targetBInd;
-	}
-
-
-	public static void setObstacleInd(Indicator obstacleInd) {
-		Legend.obstacleInd = obstacleInd;
-	}
 	
 	
 }

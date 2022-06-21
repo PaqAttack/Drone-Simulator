@@ -6,9 +6,10 @@ import java.time.LocalTime;
 
 import javax.swing.JFrame;
 
-import mapItems.MapIcon;
+import inputs.InputManager;
 import mapItems.MapItems;
 import objects.CentralHub;
+import objects.Drone;
 import studentDrones.ChrisDrone;
 import studentDrones.FosterDrone;
 import studentDrones.JudeDrone;
@@ -18,66 +19,44 @@ import ui.Legend;
 @SuppressWarnings("serial")
 public class Simulator extends JFrame implements Runnable{
 
-	// GLOBAL VARIABLES - SET THESE
-	public static final int MAP_ITEM_WIDTH = 8;
-	public static final int MAP_ITEM_HEIGHT = 8;
-	
-	public static final int MAP_OBS_WIDTH = 20;
-	public static final int MAP_OBS_HEIGHT = 20;
-	
-	public static final int FIELD_HEIGHT_IN_MILES = 100;
-	public static final int FIELD_WIDTH_IN_MILES = 100;
-	
 	// Program Operation Variables.
 	private static final double FPS_SET = 80.0;
 	private static final double UPS_SET = 60.0;
-	
-	// Program Interface Variables
-	private static final int LABEL_HEIGHT = 75;
-	
-	private static final int FIELD_WIDTH = 500;
-	private static final int FIELD_HEIGHT = 500;
-	
-	private static final int FIELD_X_OFFSET = 275;
-	private static final int FIELD_Y_OFFSET = LABEL_HEIGHT + FIELD_HEIGHT;
-	
-	private static final Color BACKGROUND_COLOR = Color.BLACK;
-	private static final Color GRAPH_COLOR = Color.WHITE;
-	private static final Color TEXT_COLOR = Color.WHITE;
 	
 	private Screen screen;
 	private Thread simThread;
 	private LocalTime startTime;
 	private LocalTime curTime;
-	private SimulationManager simManager;
+	private StateManager simManager;
 	
 	private long elapsedSeconds = 0;
 	private int counter = 0;
 	
-	private static final int CLOCK_X = FIELD_X_OFFSET + (FIELD_WIDTH / 2);
-	private static final int CLOCK_Y = LABEL_HEIGHT - 5;
+	private static final int CLOCK_X = GlobalVars.getGraphX() + (GlobalVars.getGraphWidth() / 2);
+	private static final int CLOCK_Y = GlobalVars.getGraphY() - 5;
 	
 	private void initDrones() {
 		// Create all drones here
 		// MAX is 5
-		ChrisDrone chrisDrone = new ChrisDrone("Chris", Color.YELLOW, MapIcon.CIRCLE, 200, 10);
-		FosterDrone fosterDrone = new FosterDrone("Foster", Color.PINK, MapIcon.CIRCLE, 240, 10);
-		RichardDrone richardDrone = new RichardDrone("Richard", Color.BLUE, MapIcon.CIRCLE, 280, 10);
-		JudeDrone judeDrone = new JudeDrone("Jude", Color.WHITE, MapIcon.CIRCLE, 320, 10);
+		ChrisDrone chrisDrone = new ChrisDrone(5, 2, "HID Drone", "Chris", Color.WHITE);
+		FosterDrone fosterDrone = new FosterDrone(25, 2, "HID Drone", "Foster", Color.WHITE);
+		RichardDrone richardDrone = new RichardDrone(45, 2, "HID Drone", "Richard", Color.WHITE);
+		JudeDrone judeDrone = new JudeDrone(65, 2, "HID Drone", "Jude", Color.WHITE);
 	}
 	
 	public static void main(String[] args) {
 		Simulator simulator = new Simulator();
-		simulator.screen.initInputs();
+		InputManager inputManager = new InputManager();
+		simulator.screen.initScreen(inputManager);
 		// Start thread that will handle game loop
 		simulator.start();
 	}
 	
 	public Simulator() {
 		screen = new Screen(this);
-		simManager = new SimulationManager();
+		simManager = new StateManager();
 		CentralHub centralHub = new CentralHub();
-		
+		Graph.initGraph();
 		initDrones();
 		
 		startTime = LocalTime.of(0, 0, 0);
@@ -119,6 +98,8 @@ public class Simulator extends JFrame implements Runnable{
 		}
 		
 		updateTime();
+		
+		
 	}
 	
 	private void updateTime() {
@@ -133,19 +114,10 @@ public class Simulator extends JFrame implements Runnable{
 	
 	public void render(Graphics g) {
 		// Background
-		g.setColor(Simulator.getBackgroundColor());
+		g.setColor(GlobalVars.getBackgroundColor());
 		g.fillRect(0, 0, 800, 600);
 		
-		// draw graph
-		g.setColor(Simulator.getGraphColor());
-		g.drawRect(FIELD_X_OFFSET, LABEL_HEIGHT, FIELD_WIDTH, FIELD_HEIGHT);
-		
-		// Draw Map Items
-		if (MapItems.getList() != null) {
-			for (MapItems mapItems : MapItems.getList()) {
-				mapItems.getIndicator().render(g);
-			}
-		}
+		// UI
 		// Draw Clock
 		renderClock(g);
 		// Draw legend
@@ -153,6 +125,16 @@ public class Simulator extends JFrame implements Runnable{
 		// Draw Message
 		if (simManager != null) {
 			renderScreenMessage(g);
+		}
+		
+		// draw graph
+		Graph.renderGraph(g);
+
+		// Draw Drone Items
+		if (Drone.getDrones() != null) {
+			for (Drone drone : Drone.getDrones()) {
+				drone.render(g);
+			}
 		}
 	}
 	
@@ -204,7 +186,7 @@ public class Simulator extends JFrame implements Runnable{
 	}
 	
 	private void renderClock(Graphics g) {
-		g.setColor(Simulator.getTextColor());
+		g.setColor(GlobalVars.getTextColor());
 		g.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		int w = g.getFontMetrics().stringWidth(curTime.toString());
 		int h = g.getFontMetrics().getHeight();
@@ -213,74 +195,15 @@ public class Simulator extends JFrame implements Runnable{
 	
 	private void renderScreenMessage(Graphics g) {
 		if (simManager.getMessage2() != null) {
-			g.setColor(Simulator.getTextColor());
+			g.setColor(GlobalVars.getTextColor());
 			g.setFont(new Font("Times New Roman", Font.PLAIN, 24));
 			g.drawString(simManager.getMessage1(), 25, 25);
 			g.drawString(simManager.getMessage2(), 25, 50);
 		}
 	}
 
-	
-	public static int getLabelHeight() {
-		return LABEL_HEIGHT;
-	}
-
-	public static int getFieldWidth() {
-		return FIELD_WIDTH;
-	}
-
-	public static int getFieldHeight() {
-		return FIELD_HEIGHT;
-	}
-
-	public static int getFieldXOffset() {
-		return FIELD_X_OFFSET;
-	}
-
-	public static int getFieldYOffset() {
-		return FIELD_Y_OFFSET;
-	}
-	
-	public static int getMapItemWidth() {
-		return MAP_ITEM_WIDTH;
-	}
-	
-	public static int getMapItemHeight() {
-		return MAP_ITEM_HEIGHT;
-	}
-	
-	public static int getFieldHeightInMiles() {
-		return FIELD_HEIGHT_IN_MILES;
-	}
-	
-	public static int getFieldWidthInMiles() {
-		return FIELD_WIDTH_IN_MILES;
-	}
-
-	public static Color getBackgroundColor() {
-		return BACKGROUND_COLOR;
-	}
-
-	public static Color getGraphColor() {
-		return GRAPH_COLOR;
-	}
-
-	public static Color getTextColor() {
-		return TEXT_COLOR;
-	}
-
 	public Screen getScreen() {
 		return screen;
 	}
 
-	public static int getMapObsWidth() {
-		return MAP_OBS_WIDTH;
-	}
-
-	public static int getMapObsHeight() {
-		return MAP_OBS_HEIGHT;
-	}
-
-	
-	
 }

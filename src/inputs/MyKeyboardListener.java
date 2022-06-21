@@ -3,34 +3,26 @@ package inputs;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import main.Simulator;
-
 public class MyKeyboardListener implements KeyListener{
 	
-	private Simulator simulator;
-	private boolean rdy = true;
+	private InputManager inputManager;
 	
-	public MyKeyboardListener(Simulator simulator) {
-		this.simulator = simulator;
+	public MyKeyboardListener(InputManager inputManager) {
+		this.inputManager = inputManager;
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		inputManager.keyPress(e);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (rdy) {
-			rdy = false;
-			simulator.getScreen().keyPress(e);
-		}
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		rdy = true;
 		
 	}
 

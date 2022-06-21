@@ -1,16 +1,16 @@
 package studentDrones;
 
 import java.awt.Color;
+
 import mapItems.CommInterface;
-import mapItems.DroneInterface;
-import mapItems.Indicator;
-import mapItems.MapItems;
-import mapItems.MapIcon;
+import objects.Drone;
 
-public class ChrisDrone extends MapItems implements CommInterface, DroneInterface{
 
-	public ChrisDrone(String name, Color color, MapIcon type, int startX, int startY) {
-		super(name, color, type, startX, startY);
+public class ChrisDrone extends Drone implements CommInterface {
+
+
+	public ChrisDrone(int startPosX, int startPosY, String name, String studentName, Color color) {
+		super(startPosX, startPosY, name, studentName, color);
 
 	}
 
@@ -21,13 +21,6 @@ public class ChrisDrone extends MapItems implements CommInterface, DroneInterfac
 
 	@Override
 	public void recieve(CommInterface transmitter, String data) {
-		
-	}
-
-	@Override
-	public void update() {
-		indicator.setIndPosX(posX);
-		indicator.setIndPosY(posY);
 		
 	}
 

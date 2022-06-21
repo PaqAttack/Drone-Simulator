@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import main.GlobalVars;
 import main.Simulator;
 
 public class Indicator {
@@ -25,21 +26,21 @@ public class Indicator {
 		this.color = color;
 		this.name = name;
 		if (this.type == MapIcon.RECTANGLE) {
-			height = Simulator.getMapObsHeight();
-			width = Simulator.getMapObsWidth();
+			height = GlobalVars.getMapObsDim();
+			width = GlobalVars.getMapObsDim();
 		} else {
-			height = Simulator.getMapItemHeight();
-			width = Simulator.getMapItemWidth();
+			height = GlobalVars.getMapItemDim();
+			width = GlobalVars.getMapItemDim();
 		}
 	}
 	
 	public void render(Graphics g) {
 		if (this.type == MapIcon.RECTANGLE) {
-			renderX = posX - (width / 2) + Simulator.getFieldXOffset();
-			renderY = Simulator.getFieldYOffset() - posY - (height / 2);
+//			renderX = posX - (width / 2) + Simulator.getFieldXOffset();
+//			renderY = Simulator.getFieldYOffset() - posY - (height / 2);
 		} else {
-			renderX = posX - (width / 2) + Simulator.getFieldXOffset();
-			renderY = Simulator.getFieldYOffset() - posY - (height / 2);
+			renderX = posX - (width / 2) + GlobalVars.getGraphX();
+			renderY = GlobalVars.getGraphY() - posY - (height / 2);
 		}
 		
 		drawIndicator(g, renderX, renderY);
@@ -49,7 +50,7 @@ public class Indicator {
 	
 	private void drawText(Graphics g, int renderX, int renderY) {
 		if (name != null) {
-			g.setColor(Simulator.getTextColor());
+			g.setColor(GlobalVars.getTextColor());
 			g.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 			int textHeight = g.getFontMetrics().getHeight();
 			int textWidth = g.getFontMetrics().stringWidth(name);
