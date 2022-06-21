@@ -3,7 +3,7 @@ package objects;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import mapItems.Design;
+import mapItems.MapIcon;
 import mapItems.MapItems;
 import mapItems.PlotInterface;
 
@@ -11,9 +11,11 @@ public class ObstaclePlot extends MapItems implements PlotInterface{
 
 	private static ArrayList<ObstaclePlot> obstacles = new ArrayList<>();
 	
-	public ObstaclePlot(String name, Color color, Design type, int startX, int startY) {
-		super(name, color, type, startX, startY);
+	
+	public ObstaclePlot(String name, Color color, MapIcon type, int startX, int startY) {
+		super("Obstacle", color, type, startX, startY);
 		obstacles.add(this);
+		
 	}
 
 	@Override
@@ -25,4 +27,6 @@ public class ObstaclePlot extends MapItems implements PlotInterface{
 	public static ArrayList<ObstaclePlot> getObstacles() {
 		return obstacles;
 	}
+	
+	
 }

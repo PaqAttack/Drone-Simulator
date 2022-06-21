@@ -6,7 +6,7 @@ import java.time.LocalTime;
 
 import javax.swing.JFrame;
 
-import mapItems.Design;
+import mapItems.MapIcon;
 import mapItems.MapItems;
 import objects.CentralHub;
 import studentDrones.ChrisDrone;
@@ -21,6 +21,9 @@ public class Simulator extends JFrame implements Runnable{
 	// GLOBAL VARIABLES - SET THESE
 	public static final int MAP_ITEM_WIDTH = 8;
 	public static final int MAP_ITEM_HEIGHT = 8;
+	
+	public static final int MAP_OBS_WIDTH = 20;
+	public static final int MAP_OBS_HEIGHT = 20;
 	
 	public static final int FIELD_HEIGHT_IN_MILES = 100;
 	public static final int FIELD_WIDTH_IN_MILES = 100;
@@ -56,15 +59,11 @@ public class Simulator extends JFrame implements Runnable{
 	
 	private void initDrones() {
 		// Create all drones here
-		ChrisDrone chrisDrone = new ChrisDrone("Chris", Color.YELLOW, Design.CIRCLE, 200, 10);
-		FosterDrone fosterDrone = new FosterDrone("Foster", Color.PINK, Design.CIRCLE, 240, 10);
-		RichardDrone richardDrone = new RichardDrone("Richard", Color.BLUE, Design.CIRCLE, 280, 10);
-		JudeDrone judeDrone = new JudeDrone("Jude", Color.WHITE, Design.CIRCLE, 320, 10);
-	}
-	
-	private void initPlots() {
-		// Create plots here
-
+		// MAX is 5
+		ChrisDrone chrisDrone = new ChrisDrone("Chris", Color.YELLOW, MapIcon.CIRCLE, 200, 10);
+		FosterDrone fosterDrone = new FosterDrone("Foster", Color.PINK, MapIcon.CIRCLE, 240, 10);
+		RichardDrone richardDrone = new RichardDrone("Richard", Color.BLUE, MapIcon.CIRCLE, 280, 10);
+		JudeDrone judeDrone = new JudeDrone("Jude", Color.WHITE, MapIcon.CIRCLE, 320, 10);
 	}
 	
 	public static void main(String[] args) {
@@ -80,8 +79,6 @@ public class Simulator extends JFrame implements Runnable{
 		CentralHub centralHub = new CentralHub();
 		
 		initDrones();
-		initPlots();
-		
 		
 		startTime = LocalTime.of(0, 0, 0);
 		curTime = startTime;
@@ -113,6 +110,7 @@ public class Simulator extends JFrame implements Runnable{
 		if (MapItems.getList() != null) {
 			for (MapItems mapItems : MapItems.getList()) {
 				mapItems.update();
+				mapItems.updatePos();
 			}
 		}
 		
@@ -214,10 +212,12 @@ public class Simulator extends JFrame implements Runnable{
 	}
 	
 	private void renderScreenMessage(Graphics g) {
-		g.setColor(Simulator.getTextColor());
-		g.setFont(new Font("Times New Roman", Font.PLAIN, 24));
-		g.drawString(simManager.getMessage1(), 25, 25);
-		g.drawString(simManager.getMessage2(), 25, 50);
+		if (simManager.getMessage2() != null) {
+			g.setColor(Simulator.getTextColor());
+			g.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+			g.drawString(simManager.getMessage1(), 25, 25);
+			g.drawString(simManager.getMessage2(), 25, 50);
+		}
 	}
 
 	
@@ -271,6 +271,14 @@ public class Simulator extends JFrame implements Runnable{
 
 	public Screen getScreen() {
 		return screen;
+	}
+
+	public static int getMapObsWidth() {
+		return MAP_OBS_WIDTH;
+	}
+
+	public static int getMapObsHeight() {
+		return MAP_OBS_HEIGHT;
 	}
 
 	

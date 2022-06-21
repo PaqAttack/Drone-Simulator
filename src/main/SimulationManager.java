@@ -2,7 +2,7 @@ package main;
 
 public class SimulationManager {
 
-	private static State myState = State.PLOT_TARGETS;
+	private static State myState = State.PLOT_A_TARGETS;
 	private String message1;
 	private String message2;
 	
@@ -16,8 +16,13 @@ public class SimulationManager {
 	
 	private void updateMsg() {
 		switch (myState) {
-			case PLOT_TARGETS: {
-				message1 = "Click the field to plot targets.";
+			case PLOT_A_TARGETS: {
+				message1 = "Click the field to plot targets of type A.";
+				message2 = "Press Enter when done.";
+				break;
+			}
+			case PLOT_B_TARGETS: {
+				message1 = "Click the field to plot targets of type B.";
 				message2 = "Press Enter when done.";
 				break;
 			}
@@ -31,9 +36,14 @@ public class SimulationManager {
 				message2 = "";
 				break;
 			}
-			case STARTED: {
+			case PLAYING: {
 				message1 = "Simulation in progress";
-				message2 = "";
+				message2 = "Press Enter to pause.";
+				break;
+			}
+			case PAUSED: {
+				message1 = "Simulation paused";
+				message2 = "Press Enter to resume.";
 				break;
 			}
 		}

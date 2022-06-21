@@ -5,11 +5,11 @@ import mapItems.CommInterface;
 import mapItems.DroneInterface;
 import mapItems.Indicator;
 import mapItems.MapItems;
-import mapItems.Design;
+import mapItems.MapIcon;
 
 public class ChrisDrone extends MapItems implements CommInterface, DroneInterface{
 
-	public ChrisDrone(String name, Color color, Design type, int startX, int startY) {
+	public ChrisDrone(String name, Color color, MapIcon type, int startX, int startY) {
 		super(name, color, type, startX, startY);
 
 	}
@@ -28,6 +28,7 @@ public class ChrisDrone extends MapItems implements CommInterface, DroneInterfac
 	public void update() {
 		indicator.setIndPosX(posX);
 		indicator.setIndPosY(posY);
+		
 	}
 
 }

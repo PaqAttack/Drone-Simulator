@@ -1,12 +1,14 @@
 package main;
 
 public enum State {
-	PLOT_TARGETS,
+	PLOT_A_TARGETS,
+	PLOT_B_TARGETS,
 	PLOT_OBSTACLES,
 	WAITING,
-	STARTED;
+	PLAYING,
+	PAUSED;
 	
-	public static State myState = PLOT_TARGETS;
+	public static State myState = PLOT_A_TARGETS;
 	
 	public static void setType(State state) {
 		myState = state;

@@ -10,11 +10,12 @@ import javax.swing.JPanel;
 
 import inputs.MyKeyboardListener;
 import inputs.MyMouseListener;
-import mapItems.Design;
+import mapItems.MapIcon;
 import mapItems.MapItems;
 import objects.CentralHub;
 import objects.ObstaclePlot;
-import objects.TargetPlot;
+import objects.TargetPlotA;
+import objects.TargetPlotB;
 
 public class Screen extends JPanel{
 	
@@ -58,20 +59,64 @@ public class Screen extends JPanel{
 	
 	public void mouseClick(int x, int y) {
 
-		Rectangle bounds = new Rectangle(simulator.getFieldXOffset(), simulator.getLabelHeight(), simulator.getFieldWidth(), simulator.getFieldHeight());
+		Rectangle bounds = new Rectangle(Simulator.getFieldXOffset(), Simulator.getLabelHeight(), Simulator.getFieldWidth(), Simulator.getFieldHeight());
 		
 		switch (SimulationManager.getState()) {
-			case PLOT_TARGETS: {
+			case PLOT_A_TARGETS: {
 				if (bounds.contains(x, y)) {
-					makeStuff.add(new TargetPlot("Target", Color.GREEN, Design.CIRCLE, getCoordX(x), getCoordY(y)));
-					System.out.println("Target created");
+					
+					boolean collide = false;
+					Rectangle rect = new Rectangle(getCoordX(x) - (Simulator.getMapItemWidth() / 2), getCoordY(y) - (Simulator.getMapItemHeight() / 2), Simulator.getMapItemWidth(), Simulator.getMapItemHeight());
+					for (MapItems i : MapItems.getList()) {
+						if (i.getBounds().contains(rect)) {
+							collide = true;
+						}
+					}
+					if (!collide) {
+						makeStuff.add(new TargetPlotA("Target A", Color.GREEN, MapIcon.CIRCLE, getCoordX(x), getCoordY(y)));
+						System.out.println("Target A created");
+					} else {
+						System.out.println("Unable to plot target here.");
+					}
+					rect = null;
+				}
+				break;
+			}
+			case PLOT_B_TARGETS: {
+				if (bounds.contains(x, y)) {
+					boolean collide = false;
+					Rectangle rect = new Rectangle(getCoordX(x) - (Simulator.getMapItemWidth() / 2), getCoordY(y) - (Simulator.getMapItemHeight() / 2), Simulator.getMapItemWidth(), Simulator.getMapItemHeight());
+					for (MapItems i : MapItems.getList()) {
+						if (i.getBounds().contains(rect)) {
+							collide = true;
+						}
+					}
+					if (!collide) {
+						makeStuff.add(new TargetPlotB("Target B", Color.BLUE, MapIcon.CIRCLE, getCoordX(x), getCoordY(y)));
+						System.out.println("Target B created");
+					} else {
+						System.out.println("Unable to plot target here.");
+					}
+					rect = null;
 				}
 				break;
 			}
 			case PLOT_OBSTACLES: {
 				if (bounds.contains(x, y)) {
-					makeStuff.add(new ObstaclePlot("Obstacle", Color.RED, Design.RECTANGLE, getCoordX(x), getCoordY(y)));
-					System.out.println("Obstacle created");
+					boolean collide = false;
+					Rectangle rect = new Rectangle(getCoordX(x) - (Simulator.getMapObsWidth() / 2), getCoordY(y) - (Simulator.getMapObsHeight() / 2), Simulator.getMapObsWidth(), Simulator.getMapObsHeight());
+					for (MapItems i : MapItems.getList()) {
+						if (i.getBounds().contains(rect)) {
+							collide = true;
+						}
+					}
+					if (!collide) {
+						makeStuff.add(new ObstaclePlot("Obstacle", Color.RED, MapIcon.RECTANGLE, getCoordX(x), getCoordY(y)));
+						System.out.println("Obstacle created");
+					} else {
+						System.out.println("Unable to plot obstacle here.");
+					}
+					rect = null;
 				}
 				break;
 			}
@@ -81,7 +126,11 @@ public class Screen extends JPanel{
 	public void keyPress(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			switch (SimulationManager.getState()) {
-				case PLOT_TARGETS: {
+				case PLOT_A_TARGETS: {
+					SimulationManager.setState(State.PLOT_B_TARGETS);
+					break;
+				}
+				case PLOT_B_TARGETS: {
 					SimulationManager.setState(State.PLOT_OBSTACLES);
 					break;
 				}
@@ -90,8 +139,18 @@ public class Screen extends JPanel{
 					break;
 				}
 				case WAITING: {
-					SimulationManager.setState(State.STARTED);
+					SimulationManager.setState(State.PLAYING);
 					CentralHub.InitCentralHUB();
+					break;
+				}
+				case PLAYING: {
+					SimulationManager.setState(State.PAUSED);
+					CentralHub.setActive(false);
+					break;
+				}
+				case PAUSED: {
+					SimulationManager.setState(State.PLAYING);
+					CentralHub.setActive(true);
 					break;
 				}
 			}
@@ -100,7 +159,7 @@ public class Screen extends JPanel{
 	
 	
 	private int getCoordX(int screenX) {
-		return screenX - simulator.getFieldXOffset();
+		return screenX - Simulator.getFieldXOffset();
 	}
 	
 	private int getCoordY(int screenY) {
