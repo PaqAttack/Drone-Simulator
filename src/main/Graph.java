@@ -3,6 +3,9 @@ package main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.List;
+
+import mapItems.MapItems;
 
 public class Graph {
 
@@ -60,6 +63,16 @@ public class Graph {
 		}
 	}
 
+	public static Point getNextPoint(Point start, Point end) {
+        List<Point> path = Point.FindPath(graph, start, end);
+        
+        if (path != null) {
+        	return path.get(1);
+        }
+        return start;
+	}
+
+	
 	public static void renderGraph(Graphics g) {
 		// draw border
 		renderBorder(g);

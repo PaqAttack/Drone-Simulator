@@ -9,6 +9,9 @@ public class CentralHub implements CommInterface{
 	public static void InitCentralHUB() {
 		// Execute this on startup after plots & Drones created
 		active = true;
+		for (Drone drone : Drone.getDrones()) {
+			drone.activate();
+		}
 	}
 	
 	

@@ -2,15 +2,15 @@ package studentDrones;
 
 import java.awt.Color;
 
+import main.Point;
 import mapItems.CommInterface;
 import objects.Drone;
 
 
 public class ChrisDrone extends Drone implements CommInterface {
 
-
-	public ChrisDrone(int startPosX, int startPosY, String name, String studentName, Color color) {
-		super(startPosX, startPosY, name, studentName, color);
+	public ChrisDrone(Point location, String name, String studentName, Color color, int speedMPH) {
+		super(location, name, studentName, color, speedMPH);
 
 	}
 
@@ -23,5 +23,17 @@ public class ChrisDrone extends Drone implements CommInterface {
 	public void recieve(CommInterface transmitter, String data) {
 		
 	}
+
+	@Override
+	public void activate() {
+		setDestination(450, 450);
+	}
+
+	@Override
+	public void loop() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

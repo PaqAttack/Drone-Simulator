@@ -24,5 +24,11 @@ public class FosterDrone  extends Drone implements CommInterface{
 		
 	}
 
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

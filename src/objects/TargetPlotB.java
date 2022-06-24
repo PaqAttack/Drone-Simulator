@@ -19,8 +19,7 @@ public class TargetPlotB extends MapItems{
 
 	@Override
 	public void update() {
-		indicator.setIndPosX(posX);
-		indicator.setIndPosY(posY);
+
 	}
 
 	public void render(Graphics g) {

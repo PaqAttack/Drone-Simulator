@@ -27,22 +27,15 @@ public class Simulator extends JFrame implements Runnable{
 	
 	private Screen screen;
 	private Thread simThread;
-	private LocalTime startTime;
-	private LocalTime curTime;
-	
-	private long elapsedSeconds = 0;
-	private int counter = 0;
-	
-	private static final int CLOCK_X = GlobalVars.getGraphX() + (GlobalVars.getGraphWidth() / 2);
-	private static final int CLOCK_Y = GlobalVars.getGraphY() - 5;
-	
+
 	private void initDrones() {
 		// Create all drones here
 		// MAX is 5
-		ChrisDrone chrisDrone = new ChrisDrone(5, 97, "HID Drone", "Chris", Color.CYAN);
-		FosterDrone fosterDrone = new FosterDrone(25, 97, "Fire Finder", "Foster", Color.PINK);
-		RichardDrone richardDrone = new RichardDrone(45, 97, "Camper Check-in", "Richard", Color.yellow);
-		JudeDrone judeDrone = new JudeDrone(65, 97, "Human Finder", "Jude", Color.MAGENTA);
+		
+		ChrisDrone chrisDrone = new ChrisDrone(new Point(5, 97, null), "HID Drone", "Chris", Color.CYAN, 30);
+//		FosterDrone fosterDrone = new FosterDrone(25, 97, "Fire Finder", "Foster", Color.PINK);
+//		RichardDrone richardDrone = new RichardDrone(45, 97, "Camper Check-in", "Richard", Color.yellow);
+//		JudeDrone judeDrone = new JudeDrone(65, 97, "Human Finder", "Jude", Color.MAGENTA);
 	}
 	
 	public static void main(String[] args) {
@@ -59,8 +52,7 @@ public class Simulator extends JFrame implements Runnable{
 		Graph.initGraph();
 		initDrones();
 		
-		startTime = LocalTime.of(0, 0, 0);
-		curTime = startTime;
+
 		
 		// Set Frame (Stage) size and data.
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -88,20 +80,8 @@ public class Simulator extends JFrame implements Runnable{
 		
 		StateManager.update();
 		
-		updateTime();
-		
-		
 	}
-	
-	private void updateTime() {
-		counter++;
-		if (counter >= UPS_SET && CentralHub.isActive()) {
-			counter = 0;
-			elapsedSeconds++;
-			curTime = startTime.plusSeconds( (int) elapsedSeconds);
-		}
-	}
-	
+
 	
 	public void render(Graphics g) {
 		// Background
@@ -110,7 +90,7 @@ public class Simulator extends JFrame implements Runnable{
 		
 		// UI
 		// Draw Clock
-		renderClock(g);
+		Timer.render(g);
 		// Draw legend
 		Legend.render(g);
 		// Draw Message
@@ -187,14 +167,6 @@ public class Simulator extends JFrame implements Runnable{
 		
 	}
 	
-	private void renderClock(Graphics g) {
-		g.setColor(GlobalVars.getTextColor());
-		g.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		int w = g.getFontMetrics().stringWidth(curTime.toString());
-		int h = g.getFontMetrics().getHeight();
-		g.drawString(curTime.toString(), CLOCK_X - (w / 2), CLOCK_Y);
-	}
-	
 	private void renderScreenMessage(Graphics g) {
 			g.setColor(GlobalVars.getTextColor());
 			g.setFont(new Font("Times New Roman", Font.PLAIN, 24));
@@ -206,4 +178,9 @@ public class Simulator extends JFrame implements Runnable{
 		return screen;
 	}
 
+	public static double getUpsSet() {
+		return UPS_SET;
+	}
+
+	
 }

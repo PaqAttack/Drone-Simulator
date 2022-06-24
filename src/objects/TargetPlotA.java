@@ -32,8 +32,7 @@ public class TargetPlotA extends MapItems{
 	
 	@Override
 	public void update() {
-		indicator.setIndPosX(posX);
-		indicator.setIndPosY(posY);
+
 	}
 
 	public static ArrayList<TargetPlotA> getTargets() {

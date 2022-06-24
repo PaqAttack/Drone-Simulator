@@ -22,6 +22,12 @@ public class JudeDrone extends Drone implements CommInterface{
 		
 	}
 
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }
