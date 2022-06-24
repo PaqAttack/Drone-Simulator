@@ -93,15 +93,15 @@ public class Graph {
 						break;
 					}
 					case 1: {		// Obstacle
-						g.setColor(Color.RED);
+						g.setColor(GlobalVars.getObsColor());
 						break;
 					}
 					case 2: {		// PLOT Target A
-						g.setColor(Color.GREEN);
+						g.setColor(Color.BLACK);
 						break;
 					}
 					case 3: {		// PLOT Target B
-						g.setColor(Color.GREEN);
+						g.setColor(Color.BLACK);
 						break;
 					}
 

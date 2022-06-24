@@ -32,7 +32,7 @@ public class TargetPlotB extends MapItems{
 			
 			g.setColor(GlobalVars.getGraphColor());
 			g.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-			g.drawString(GlobalVars.getPlotAName(), Graph.graphXtoScreenX(a.getPosX()) - (g.getFontMetrics().stringWidth(GlobalVars.getPlotAName()) / 2), Graph.graphYtoScreenY(a.getPosY()) + GlobalVars.getMapItemDim() + 15);
+			g.drawString(GlobalVars.getPlotBName(), Graph.graphXtoScreenX(a.getPosX()) - (g.getFontMetrics().stringWidth(GlobalVars.getPlotAName()) / 2), Graph.graphYtoScreenY(a.getPosY()) + GlobalVars.getMapItemDim() + 15);
 		}
 	}
 	
@@ -41,6 +41,20 @@ public class TargetPlotB extends MapItems{
 	}
 
 	public static void createPlotB(int x, int y) {
-		targets.add(new TargetPlotB(GlobalVars.getPlotBName(), GlobalVars.getPlotBColor(), x, y));
+		if (Graph.getGraphValue(x, y) == 0) {
+			Graph.changeGraphIDbyCoord(3, x, y);
+			targets.add(new TargetPlotB(GlobalVars.getPlotBName(), GlobalVars.getPlotBColor(), x, y));
+			System.out.println("Plot Created");
+		}
+		
+		for (int a = x - GlobalVars.getMapPlotSpace(); a <= x + GlobalVars.getMapPlotSpace(); a++) {
+			for (int b = y - GlobalVars.getMapPlotSpace(); b <= y + GlobalVars.getMapPlotSpace(); b++) {
+				if (Graph.doesExist(a, b)) {
+					if (Graph.getGraphValue(a, b) == 0) {
+						Graph.changeGraphIDbyCoord(3, a, b);
+					}
+				}
+			}
+		}
 	}
 }

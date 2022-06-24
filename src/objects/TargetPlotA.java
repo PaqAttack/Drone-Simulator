@@ -41,6 +41,22 @@ public class TargetPlotA extends MapItems{
 	}
 	
 	public static void createPlotA(int x, int y) {
-		targets.add(new TargetPlotA(GlobalVars.getPlotAName(), GlobalVars.getPlotAColor(), x, y));
+		
+		if (Graph.getGraphValue(x, y) == 0) {
+			Graph.changeGraphIDbyCoord(2, x, y);
+			targets.add(new TargetPlotA(GlobalVars.getPlotAName(), GlobalVars.getPlotAColor(), x, y));
+			System.out.println("Plot Created");
+		}
+		
+		for (int a = x - GlobalVars.getMapPlotSpace(); a <= x + GlobalVars.getMapPlotSpace(); a++) {
+			for (int b = y - GlobalVars.getMapPlotSpace(); b <= y + GlobalVars.getMapPlotSpace(); b++) {
+				if (Graph.doesExist(a, b)) {
+					if (Graph.getGraphValue(a, b) == 0) {
+						Graph.changeGraphIDbyCoord(2, a, b);
+					}
+				}
+			}
+		}
+		
 	}
 }

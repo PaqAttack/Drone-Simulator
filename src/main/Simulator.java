@@ -29,7 +29,6 @@ public class Simulator extends JFrame implements Runnable{
 	private Thread simThread;
 	private LocalTime startTime;
 	private LocalTime curTime;
-	private StateManager simManager;
 	
 	private long elapsedSeconds = 0;
 	private int counter = 0;
@@ -40,10 +39,10 @@ public class Simulator extends JFrame implements Runnable{
 	private void initDrones() {
 		// Create all drones here
 		// MAX is 5
-		ChrisDrone chrisDrone = new ChrisDrone(5, 97, "HID Drone", "Chris", Color.BLUE);
-		FosterDrone fosterDrone = new FosterDrone(25, 97, "HID Drone", "Foster", Color.GREEN);
-		RichardDrone richardDrone = new RichardDrone(45, 97, "HID Drone", "Richard", Color.yellow);
-		JudeDrone judeDrone = new JudeDrone(65, 97, "HID Drone", "Jude", Color.MAGENTA);
+		ChrisDrone chrisDrone = new ChrisDrone(5, 97, "HID Drone", "Chris", Color.CYAN);
+		FosterDrone fosterDrone = new FosterDrone(25, 97, "Fire Finder", "Foster", Color.PINK);
+		RichardDrone richardDrone = new RichardDrone(45, 97, "Camper Check-in", "Richard", Color.yellow);
+		JudeDrone judeDrone = new JudeDrone(65, 97, "Human Finder", "Jude", Color.MAGENTA);
 	}
 	
 	public static void main(String[] args) {
@@ -56,7 +55,6 @@ public class Simulator extends JFrame implements Runnable{
 	
 	public Simulator() {
 		screen = new Screen(this);
-		simManager = new StateManager();
 		CentralHub centralHub = new CentralHub();
 		Graph.initGraph();
 		initDrones();
@@ -88,9 +86,7 @@ public class Simulator extends JFrame implements Runnable{
 	
 	private void update() {
 		
-		if (simManager != null) {
-			simManager.update();
-		}
+		StateManager.update();
 		
 		updateTime();
 		
@@ -118,9 +114,8 @@ public class Simulator extends JFrame implements Runnable{
 		// Draw legend
 		Legend.render(g);
 		// Draw Message
-		if (simManager != null) {
-			renderScreenMessage(g);
-		}
+		renderScreenMessage(g);
+
 		
 		// draw graph
 		Graph.renderGraph(g);
@@ -135,7 +130,7 @@ public class Simulator extends JFrame implements Runnable{
 			p.render(g);
 		}
 		
-		// Obstacles handles by graph
+		// Obstacles handled by graph
 		
 		// Draw Drone Items
 		if (Drone.getDrones() != null) {
@@ -201,12 +196,10 @@ public class Simulator extends JFrame implements Runnable{
 	}
 	
 	private void renderScreenMessage(Graphics g) {
-		if (simManager.getMessage2() != null) {
 			g.setColor(GlobalVars.getTextColor());
 			g.setFont(new Font("Times New Roman", Font.PLAIN, 24));
-			g.drawString(simManager.getMessage1(), 25, 25);
-			g.drawString(simManager.getMessage2(), 25, 50);
-		}
+			g.drawString(StateManager.getMessage1(), 25, 25);
+			g.drawString(StateManager.getMessage2(), 25, 50);
 	}
 
 	public Screen getScreen() {

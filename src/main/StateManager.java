@@ -3,19 +3,19 @@ package main;
 public class StateManager {
 
 	private static State myState = State.PLOT_A_TARGETS;
-	private String message1;
-	private String message2;
+	private static String message1;
+	private static String message2;
 	
 	public StateManager() {
 
 	}
 	
-	public void update() {
+	public static void update() {
 		updateMsg();
 	}
 	
-	private void updateMsg() {
-		switch (myState) {
+	private static void updateMsg() {
+		switch (StateManager.getState()) {
 			case PLOT_A_TARGETS: {
 				message1 = "Click the field to plot targets of type A.";
 				message2 = "Press Enter when done.";
@@ -49,11 +49,11 @@ public class StateManager {
 		}
 	}
 	
-	public String getMessage1() {
+	public static String getMessage1() {
 		return message1;
 	}
 
-	public String getMessage2() {
+	public static String getMessage2() {
 		return message2;
 	}
 	

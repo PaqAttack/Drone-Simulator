@@ -28,12 +28,14 @@ public class ObstaclePlot extends MapItems{
 	}
 	
 	public static void createObstacle(int x, int y) {
-		obstacles.add(new ObstaclePlot(GlobalVars.getObsColor(), x, y));
-		Graph.changeGraphID(1, x, y);
+		
 		for (int a = x - GlobalVars.getMapObsDim(); a <= x + GlobalVars.getMapObsDim(); a++) {
 			for (int b = y - GlobalVars.getMapObsDim(); b <= y + GlobalVars.getMapObsDim(); b++) {
-				if (Graph.doesExist(x, y)) {
-					Graph.changeGraphIDbyCoord(1, x, y);
+				if (Graph.doesExist(a, b)) {
+					if (Graph.getGraphValue(a, b) == 0) {
+						obstacles.add(new ObstaclePlot(GlobalVars.getObsColor(), a, b));
+						Graph.changeGraphIDbyCoord(1, a, b);
+					}
 				}
 			}
 		}

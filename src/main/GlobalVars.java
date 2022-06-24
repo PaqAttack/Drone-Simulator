@@ -8,12 +8,14 @@ public class GlobalVars {
 	public static final int MAP_OBS_DIM = 3;	// obstacle range from center (2 equals a 5x5 square)
 	public static final int MAP_DRONE_DIM = 10; // Drone diameter
 	
-	public static final String PLOT_A_NAME = "Fire";
-	public static final String PLOT_B_NAME = "Water";
+	public static final int MAP_PLOT_SPACE = 2; // Spaces around plots that are protected
 	
-	private static final Color PLOT_A_COLOR = Color.BLUE;
-	private static final Color PLOT_B_COLOR = Color.GREEN;
-	private static final Color OBS_COLOR = Color.RED;
+	public static final String PLOT_A_NAME = "Fire";
+	public static final String PLOT_B_NAME = "Camper";
+	
+	private static final Color PLOT_A_COLOR = Color.RED;
+	private static final Color PLOT_B_COLOR = Color.BLUE;
+	private static final Color OBS_COLOR = Color.GREEN;
 	
 	private static final int GRAPH_X = 275;
 	private static final int GRAPH_Y = 75;
@@ -65,6 +67,9 @@ public class GlobalVars {
 	}
 	public static int getMapDroneDim() {
 		return MAP_DRONE_DIM;
+	}
+	public static int getMapPlotSpace() {
+		return MAP_PLOT_SPACE;
 	}
 	
 	

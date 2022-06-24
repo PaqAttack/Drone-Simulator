@@ -13,12 +13,12 @@ public class MyKeyboardListener implements KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		inputManager.keyPress(e);
+		
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-
+		inputManager.keyPress(e);
 	}
 
 	@Override
