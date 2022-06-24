@@ -2,12 +2,8 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.time.LocalTime;
-
 import javax.swing.JFrame;
-
 import inputs.InputManager;
-import mapItems.MapItems;
 import objects.CentralHub;
 import objects.Drone;
 import objects.TargetPlotA;

@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.List;
 
-import mapItems.MapItems;
-
 public class Graph {
 
 	private static final int GRAPH_WIDTH = 100;
@@ -129,6 +127,23 @@ public class Graph {
 	public static Rectangle getBounds() {
 		return bounds;
 	}
+
+	public static int getGraphWidth() {
+		return GRAPH_WIDTH;
+	}
+
+	public static int getGraphHeight() {
+		return GRAPH_HEIGHT;
+	}
+
+	public static int getGraphPlotWidth() {
+		return GRAPH_PLOT_WIDTH;
+	}
+
+	public static int getGraphPlotHeight() {
+		return GRAPH_PLOT_HEIGHT;
+	}
+	
 	
 	
 }

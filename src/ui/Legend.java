@@ -3,11 +3,7 @@ package ui;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
-
 import main.GlobalVars;
-import main.Simulator;
-import mapItems.Indicator;
-import mapItems.MapItems;
 import objects.Drone;
 
 public class Legend {

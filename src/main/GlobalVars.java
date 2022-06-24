@@ -6,7 +6,7 @@ public class GlobalVars {
 	// GLOBAL VARIABLES - SET THESE
 	
 	public static final int TIME_SCALE = 5;		// number of seconds in simulation that pass every real second
-	public static final int GRAPH_LENGTH_IN_MILES = 100;
+	public static final int GRAPH_LENGTH_IN_MILES = 10;
 	
 	
 	public static final int MAP_ITEM_DIM = 7;	// Plot oval diameter

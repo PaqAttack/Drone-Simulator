@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import main.GlobalVars;
 import main.Graph;
 import main.Point;
-import mapItems.MapItems;
+import main.Simulator;
 
 public abstract class Drone {
 
@@ -23,6 +23,7 @@ public abstract class Drone {
 	private Point nextStep;
 	private int speedMPH;
 	private int lastCount = 0;
+	double secPerSpot;
 	
 	public Drone(Point location, String name, String studentName, Color color, int speedMPH) {
 		super();
@@ -34,14 +35,30 @@ public abstract class Drone {
 		moving = false;
 		drones.add(this);
 		
-		int timePerStep = 
+		double feetPerMile = 5280;
+		double inchesPerMile = feetPerMile * 12;
+		
+		double inchesTotal = inchesPerMile * GlobalVars.getGraphLengthInMiles();
+		double inchesPerBlock = inchesTotal / Graph.getGraphWidth();
+		
+		double feetPerHour = speedMPH * feetPerMile;
+		double inchesPerHour = feetPerHour * 12;
+		double inchesPerMin = inchesPerHour / 60;
+		double inchesPerSec = inchesPerMin / 60;
+		
+		
+		secPerSpot = inchesPerBlock / inchesPerSec;
+		System.out.println("Seconds Per Spot: " + secPerSpot);
 	}
 
 	public abstract void loop();
 	
 	public void update(int counter) {
 		if (!destination.equals(location) && moving) {
-			
+			if (counter - lastCount >= secPerSpot) {
+				// move
+				lastCount = counter;
+			}
 		}
 	}
 	
@@ -65,11 +82,7 @@ public abstract class Drone {
 		
 	}
 	
-	
-	
-	
-	
-	
+		
 	public void render(Graphics g) {
 		g.setColor(color);
 		g.drawOval(Graph.graphXtoScreenX(location.x) - (GlobalVars.getMapDroneDim() / 2), Graph.graphYtoScreenY(location.y) - (GlobalVars.getMapDroneDim() / 2), GlobalVars.getMapDroneDim(), GlobalVars.getMapDroneDim());
