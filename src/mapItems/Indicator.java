@@ -8,7 +8,6 @@ import main.GlobalVars;
 import main.Simulator;
 
 public class Indicator {
-	private MapIcon type;
 	private Color color;
 	private int posX;
 	private int posY;
@@ -21,28 +20,20 @@ public class Indicator {
 	
 	private int height, width;
 	
-	public Indicator(Color color, MapIcon type, String name) {
-		this.type = type;
+	public Indicator(Color color, String name) {
+
 		this.color = color;
 		this.name = name;
-		if (this.type == MapIcon.RECTANGLE) {
-			height = GlobalVars.getMapObsDim();
-			width = GlobalVars.getMapObsDim();
-		} else {
-			height = GlobalVars.getMapItemDim();
-			width = GlobalVars.getMapItemDim();
-		}
+		height = GlobalVars.getMapItemDim();
+		width = GlobalVars.getMapItemDim();
+
 	}
 	
 	public void render(Graphics g) {
-		if (this.type == MapIcon.RECTANGLE) {
-//			renderX = posX - (width / 2) + Simulator.getFieldXOffset();
-//			renderY = Simulator.getFieldYOffset() - posY - (height / 2);
-		} else {
-			renderX = posX - (width / 2) + GlobalVars.getGraphX();
-			renderY = GlobalVars.getGraphY() - posY - (height / 2);
-		}
-		
+
+		renderX = posX - (width / 2) + GlobalVars.getGraphX();
+		renderY = GlobalVars.getGraphY() - posY - (height / 2);
+
 		drawIndicator(g, renderX, renderY);
 		
 		drawText(g, renderX, renderY);
@@ -55,13 +46,9 @@ public class Indicator {
 			int textHeight = g.getFontMetrics().getHeight();
 			int textWidth = g.getFontMetrics().stringWidth(name);
 			
-			if (this.type == MapIcon.RECTANGLE) {
-				textX = renderX + (width / 2) - (textWidth / 2);
-				textY = renderY + (height / 2) + textHeight + 10;
-			} else {
-				textX = renderX + (width / 2) - (textWidth / 2);
-				textY = renderY + (height / 2) + textHeight + 10;
-			}
+			textX = renderX + (width / 2) - (textWidth / 2);
+			textY = renderY + (height / 2) + textHeight + 10;
+
 		
 			g.drawString(name, textX, textY);
 		}
@@ -70,16 +57,9 @@ public class Indicator {
 	public void drawIndicator(Graphics g, int renderX, int renderY) {
 		g.setColor(color);
 		
-		switch (type) {
-			case RECTANGLE: {
-				g.fillRect(renderX, renderY, width, height);
-				g.drawRect(renderX, renderY, width, height);
-			}
-			case CIRCLE: {
-				g.fillOval(renderX, renderY, width, height);
-				g.drawOval(renderX, renderY, width, height);
-			}
-		}
+		g.fillRect(renderX, renderY, width, height);
+		g.drawRect(renderX, renderY, width, height);
+
 	}
 	
 	public int getIndPosX() {

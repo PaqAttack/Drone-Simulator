@@ -6,6 +6,9 @@ import main.Graph;
 import main.State;
 import main.StateManager;
 import objects.CentralHub;
+import objects.ObstaclePlot;
+import objects.TargetPlotA;
+import objects.TargetPlotB;
 
 public class InputManager {
 	
@@ -18,10 +21,41 @@ public class InputManager {
 	}
 
 	public void mouseClick(int x, int y) {
-		Graph.changeGraphID(1, x, y);
+//		System.out.println("x: " + x + ", Y: " + y);
+		if (Graph.getBounds().contains(x, y)) {
+			switch (StateManager.getState()) {
+				case PLOT_A_TARGETS: {
+					TargetPlotA.createPlotA(Graph.ScreenXtoGraphX(x), Graph.ScreenYtoGraphY(y));
+					break;
+				}
+				case PLOT_B_TARGETS: {
+					TargetPlotB.createPlotB(Graph.ScreenXtoGraphX(x), Graph.ScreenYtoGraphY(y));
+					break;
+				}
+				case PLOT_OBSTACLES: {
+					ObstaclePlot.createObstacle(Graph.ScreenXtoGraphX(x), Graph.ScreenYtoGraphY(y));
+					break;
+				}
+				case WAITING: {
+
+					break;
+				}
+				case PLAYING: {
+
+					break;
+				}
+				case PAUSED: {
+
+					break;
+				}
+			}
+		}
 	}
 	
 	public void keyPress(KeyEvent e) {
+		//debug
+		System.out.println("Key pressed. State: " + StateManager.getState().toString());
+		
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			switch (StateManager.getState()) {
 				case PLOT_A_TARGETS: {

@@ -10,6 +10,8 @@ import inputs.InputManager;
 import mapItems.MapItems;
 import objects.CentralHub;
 import objects.Drone;
+import objects.TargetPlotA;
+import objects.TargetPlotB;
 import studentDrones.ChrisDrone;
 import studentDrones.FosterDrone;
 import studentDrones.JudeDrone;
@@ -38,10 +40,10 @@ public class Simulator extends JFrame implements Runnable{
 	private void initDrones() {
 		// Create all drones here
 		// MAX is 5
-		ChrisDrone chrisDrone = new ChrisDrone(5, 2, "HID Drone", "Chris", Color.WHITE);
-		FosterDrone fosterDrone = new FosterDrone(25, 2, "HID Drone", "Foster", Color.WHITE);
-		RichardDrone richardDrone = new RichardDrone(45, 2, "HID Drone", "Richard", Color.WHITE);
-		JudeDrone judeDrone = new JudeDrone(65, 2, "HID Drone", "Jude", Color.WHITE);
+		ChrisDrone chrisDrone = new ChrisDrone(5, 97, "HID Drone", "Chris", Color.BLUE);
+		FosterDrone fosterDrone = new FosterDrone(25, 97, "HID Drone", "Foster", Color.GREEN);
+		RichardDrone richardDrone = new RichardDrone(45, 97, "HID Drone", "Richard", Color.yellow);
+		JudeDrone judeDrone = new JudeDrone(65, 97, "HID Drone", "Jude", Color.MAGENTA);
 	}
 	
 	public static void main(String[] args) {
@@ -86,13 +88,6 @@ public class Simulator extends JFrame implements Runnable{
 	
 	private void update() {
 		
-		if (MapItems.getList() != null) {
-			for (MapItems mapItems : MapItems.getList()) {
-				mapItems.update();
-				mapItems.updatePos();
-			}
-		}
-		
 		if (simManager != null) {
 			simManager.update();
 		}
@@ -130,6 +125,18 @@ public class Simulator extends JFrame implements Runnable{
 		// draw graph
 		Graph.renderGraph(g);
 
+		// Draw Plot As
+		for (TargetPlotA p : TargetPlotA.getTargets()) {
+			p.render(g);
+		}
+		
+		// Draw Plot As
+		for (TargetPlotB p : TargetPlotB.getTargets()) {
+			p.render(g);
+		}
+		
+		// Obstacles handles by graph
+		
 		// Draw Drone Items
 		if (Drone.getDrones() != null) {
 			for (Drone drone : Drone.getDrones()) {

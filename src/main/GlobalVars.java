@@ -4,8 +4,9 @@ import java.awt.Color;
 
 public class GlobalVars {
 	// GLOBAL VARIABLES - SET THESE
-	public static final int MAP_ITEM_DIM = 7;
-	public static final int MAP_OBS_DIM = 5;
+	public static final int MAP_ITEM_DIM = 7;	// Plot oval diameter
+	public static final int MAP_OBS_DIM = 3;	// obstacle range from center (2 equals a 5x5 square)
+	public static final int MAP_DRONE_DIM = 10; // Drone diameter
 	
 	public static final String PLOT_A_NAME = "Fire";
 	public static final String PLOT_B_NAME = "Water";
@@ -61,6 +62,9 @@ public class GlobalVars {
 	}
 	public static Color getTextColor() {
 		return TEXT_COLOR;
+	}
+	public static int getMapDroneDim() {
+		return MAP_DRONE_DIM;
 	}
 	
 	

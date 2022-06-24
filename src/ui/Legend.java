@@ -8,6 +8,7 @@ import main.GlobalVars;
 import main.Simulator;
 import mapItems.Indicator;
 import mapItems.MapItems;
+import objects.Drone;
 
 public class Legend {
 	
@@ -50,9 +51,9 @@ public class Legend {
 	private static void drawDrones(Graphics g, int top) {
 		g.setColor(GlobalVars.getGraphColor());
 		
-		if (!MapItems.getDrones().isEmpty()) {
+		if (!Drone.getDrones().isEmpty()) {
 			
-			for (int i = 0; i < MapItems.getDrones().size(); i++) {
+			for (int i = 0; i < Drone.getDrones().size(); i++) {
 				g.drawRect(START_X, top + ((LEGEND_HEIGHT + LEGEND_GAP) * i), LEGEND_WIDTH, LEGEND_HEIGHT);
 			}
 

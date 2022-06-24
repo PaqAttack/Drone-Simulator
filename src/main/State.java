@@ -8,9 +8,9 @@ public enum State {
 	PLAYING,
 	PAUSED;
 	
-	public static State myState = PLOT_A_TARGETS;
-	
-	public static void setType(State state) {
-		myState = state;
-	}
+//	public static State myState = PLOT_A_TARGETS;
+//	
+//	public static void setType(State state) {
+//		myState = state;
+//	}
 }

@@ -23,6 +23,14 @@ public class Graph {
 		} 
 	}
 	
+	public static void changeGraphIDbyCoord(int newID, int x, int y) {
+		if (x >= 0 && x < GRAPH_WIDTH) {
+			if (y >= 0 && y < GRAPH_HEIGHT) {
+				graph[x][y] = newID;
+			}
+		}
+	}
+	
 	public static int getGraphValue(int x, int y) {
 		return graph[x][y];
 	}
@@ -60,7 +68,14 @@ public class Graph {
 		renderInterior(g);
 	}
 	
-	
+	public static boolean doesExist(int x, int y) {
+		if (x >= 0 && x < GRAPH_WIDTH) {
+			if (y >= 0 && y < GRAPH_HEIGHT) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	private static void renderBorder(Graphics g) {
 		g.setColor(GlobalVars.getGraphColor());
@@ -96,6 +111,10 @@ public class Graph {
 				
 			}
 		}
+	}
+
+	public static Rectangle getBounds() {
+		return bounds;
 	}
 	
 	

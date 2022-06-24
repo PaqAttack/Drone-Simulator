@@ -36,12 +36,12 @@ public abstract class Drone {
 	
 	public void render(Graphics g) {
 		g.setColor(color);
-		g.drawOval(Graph.graphXtoScreenX(posX) - (GlobalVars.getMapItemDim() / 2), Graph.graphYtoScreenY(posY) - (GlobalVars.getMapItemDim() / 2), GlobalVars.getMapItemDim(), GlobalVars.getMapItemDim());
-		g.fillOval(Graph.graphXtoScreenX(posX) - (GlobalVars.getMapItemDim() / 2), Graph.graphYtoScreenY(posY) - (GlobalVars.getMapItemDim() / 2), GlobalVars.getMapItemDim(), GlobalVars.getMapItemDim());
+		g.drawOval(Graph.graphXtoScreenX(posX) - (GlobalVars.getMapDroneDim() / 2), Graph.graphYtoScreenY(posY) - (GlobalVars.getMapDroneDim() / 2), GlobalVars.getMapDroneDim(), GlobalVars.getMapDroneDim());
+		g.fillOval(Graph.graphXtoScreenX(posX) - (GlobalVars.getMapDroneDim() / 2), Graph.graphYtoScreenY(posY) - (GlobalVars.getMapDroneDim() / 2), GlobalVars.getMapDroneDim(), GlobalVars.getMapDroneDim());
 		
 		g.setColor(GlobalVars.getGraphColor());
 		g.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		g.drawString(getStudentName(), Graph.graphXtoScreenX(posX) - (g.getFontMetrics().stringWidth(getStudentName()) / 2), Graph.graphYtoScreenY(posY) + GlobalVars.getMapItemDim() + 15);
+		g.drawString(getStudentName(), Graph.graphXtoScreenX(posX) - (g.getFontMetrics().stringWidth(getStudentName()) / 2), Graph.graphYtoScreenY(posY) + GlobalVars.getMapDroneDim() + 15);
 	}
 
 	public int getPosX() {
