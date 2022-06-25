@@ -62,7 +62,11 @@ public class Graph {
 	}
 
 	public static Point getNextPoint(Point start, Point end) {
+		System.out.println("getting next point - GRAPH.JAVA");
         List<Point> path = Point.FindPath(graph, start, end);
+        for (Point p : path) {
+        	System.out.println(p.toString());
+        }
         
         if (path != null) {
         	return path.get(1);
