@@ -14,7 +14,7 @@ public class Timer {
 	private static LocalTime startTime = LocalTime.of(0, 0, 0);
 	private static LocalTime curTime = startTime;
 	
-	private static long elapsedSeconds = 0;
+	private static double elapsedSeconds = 0;
 	private static int counter = 0;
 	
 	private Timer() {}
@@ -23,17 +23,20 @@ public class Timer {
 		
 		if(CentralHub.isActive() ) {
 			counter++;
+			
+			if (counter > Simulator.getUpsSet() / GlobalVars.getTimeScale()) {	// 1 simmed sec has passed
+				elapsedSeconds++;
+				counter = 0;
+				curTime = startTime.plusSeconds( (int) elapsedSeconds);
+			}
+			
 			for (Drone drone : Drone.getDrones()) {
 				drone.update((int) elapsedSeconds);
 			}
 		}
-		
-		if (counter >= Simulator.getUpsSet()) {
-			counter = 0;
-			elapsedSeconds += GlobalVars.getTimeScale();
-			curTime = startTime.plusSeconds( (int) elapsedSeconds);
-		}
 	}
+	
+	
 	
 	public static void render(Graphics g) {
 		g.setColor(GlobalVars.getTextColor());
@@ -58,6 +61,6 @@ public class Timer {
 			sec = "0" + sec;
 		}
 		
-		return hr + ":" + min + ":" + sec;
+		return "  " + hr + ":" + min + ":" + sec;
 	}
 }

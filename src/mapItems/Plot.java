@@ -91,6 +91,5 @@ public abstract class Plot {
 	public static ArrayList<Plot> getPlots() {
 		return plots;
 	}
-	
-	
+
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.List;
 
 import main.GlobalVars;
 import main.Graph;
@@ -15,6 +16,7 @@ public abstract class Drone {
 	private static ArrayList<Drone> drones = new ArrayList<>();
 	
 	private Point location;
+	private double realX, realY;
 	private String name;
 	private String studentName;
 	private Color color;
@@ -24,6 +26,8 @@ public abstract class Drone {
 	private int speedMPH;
 	private int lastCount = 0;
 	double secPerSpot;
+	private int pathLoc = 0;
+	private List<Point> path;
 	
 	public Drone(Point location, String name, String studentName, Color color, int speedMPH) {
 		super();
@@ -35,32 +39,39 @@ public abstract class Drone {
 		moving = false;
 		drones.add(this);
 		
-		double feetPerMile = 5280;
-		double inchesPerMile = feetPerMile * 12;
-		
-		double inchesTotal = inchesPerMile * GlobalVars.getGraphLengthInMiles();
-		double inchesPerBlock = inchesTotal / Graph.getGraphWidth();
-		
-		double feetPerHour = speedMPH * feetPerMile;
-		double inchesPerHour = feetPerHour * 12;
-		double inchesPerMin = inchesPerHour / 60;
-		double inchesPerSec = inchesPerMin / 60;
-		
-		
-		secPerSpot = inchesPerBlock / inchesPerSec;
-		System.out.println("Seconds Per Spot: " + secPerSpot);
+		getMoveSpeed();
+	
 	}
+
 
 	public abstract void loop();
 	
-	public void update(int counter) {
-		if (!destination.equals(location) && moving) {
-			if (counter - lastCount >= secPerSpot) {
-				// move
-				lastCount = counter;
-				nextStep = Graph.getNextPoint(location, destination);
-				location.x = nextStep.x;
-				location.y = nextStep.y;
+	public void update(int elapsedSec) {
+		if (path == null && destination != null) {
+			if (!destination.equals(location)) {
+				path = Point.FindPath(Graph.getGraph(), location, destination);
+				pathLoc = 0;
+				System.out.println("Path found");
+				lastCount = elapsedSec;
+			}
+		}
+		
+		
+		
+		if (path != null) {
+			if (!location.equals(destination)) {
+				if ((elapsedSec - lastCount) > secPerSpot) {
+					location.x = path.get(pathLoc).getX();
+					location.y = path.get(pathLoc).getY();
+					if (location != destination) {
+						pathLoc++;
+					} 
+					lastCount = elapsedSec;
+				}
+			} else {
+				moving = false;
+				path = null;
+				System.out.println("arrived");
 			}
 		}
 	}
@@ -96,6 +107,24 @@ public abstract class Drone {
 		g.drawString(getStudentName(), Graph.graphXtoScreenX(location.x) - (g.getFontMetrics().stringWidth(getStudentName()) / 2), Graph.graphYtoScreenY(location.y) + GlobalVars.getMapDroneDim() + 15);
 	}
 
+
+	private void getMoveSpeed() {
+		double feetPerMile = 5280;
+		double inchesPerMile = feetPerMile * 12;
+		
+		double inchesTotal = inchesPerMile * GlobalVars.getGraphLengthInMiles();
+		double inchesPerBlock = inchesTotal / Graph.getGraphWidth();
+		
+		double feetPerHour = speedMPH * feetPerMile;
+		double inchesPerHour = feetPerHour * 12;
+		double inchesPerMin = inchesPerHour / 60;
+		double inchesPerSec = inchesPerMin / 60;
+		
+		secPerSpot = inchesPerBlock / inchesPerSec;
+		System.out.println("Seconds Per Spot: " + secPerSpot);
+		
+	}
+	
 	public int getPosX() {
 		return location.x;
 	}

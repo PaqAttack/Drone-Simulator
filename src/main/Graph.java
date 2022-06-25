@@ -18,8 +18,8 @@ public class Graph {
 	
 	public static void changeGraphID(int newID, int mouseX, int mouseY) {
 		if (bounds.contains(mouseX, mouseY)) {
-			int gPosX = ScreenXtoGraphX(mouseX);
-			int gPosY = ScreenYtoGraphY(mouseY);;
+			int gPosX = screenXtoGraphX(mouseX);
+			int gPosY = screenYtoGraphY(mouseY);;
 			graph[gPosX][gPosY] = newID;
 		} 
 	}
@@ -41,16 +41,15 @@ public class Graph {
 	}
 	
 	public static int graphYtoScreenY(int graphCoord) {
-		// TO DO FIX THIS wrong
-		return GlobalVars.getGraphY() + (graphCoord * GRAPH_PLOT_HEIGHT) + (GRAPH_PLOT_WIDTH / 2);
+		return GlobalVars.getGraphY() + (GRAPH_PLOT_HEIGHT * GRAPH_HEIGHT) - (graphCoord * GRAPH_PLOT_HEIGHT);
 	}
 	
-	public static int ScreenXtoGraphX(int screenCoord) {
+	public static int screenXtoGraphX(int screenCoord) {
 		return (screenCoord - GlobalVars.getGraphX()) / GRAPH_PLOT_WIDTH;
 	}
 	
-	public static int ScreenYtoGraphY(int screenCoord) {
-		return (screenCoord - GlobalVars.getGraphY()) / GRAPH_PLOT_HEIGHT;
+	public static int screenYtoGraphY(int screenCoord) {
+		return GRAPH_HEIGHT - (screenCoord - GlobalVars.getGraphY()) / GRAPH_PLOT_HEIGHT;
 	}
 	
 	public static void initGraph() {
@@ -62,10 +61,9 @@ public class Graph {
 	}
 
 	public static Point getNextPoint(Point start, Point end) {
-		System.out.println("getting next point - GRAPH.JAVA");
         List<Point> path = Point.FindPath(graph, start, end);
         for (Point p : path) {
-        	System.out.println(p.toString());
+        	System.out.println("point X: " + p.getX() + ", Y: " + p.getY());
         }
         
         if (path != null) {
@@ -92,11 +90,14 @@ public class Graph {
 		return false;
 	}
 	
+	public static boolean doesExist(Point point) {
+		return doesExist(point.getX(), point.getY());
+	}
+	
 	private static void renderBorder(Graphics g) {
 		g.setColor(GlobalVars.getGraphColor());
 		g.drawRect(GlobalVars.getGraphX() - 1, GlobalVars.getGraphY() - 1, (GRAPH_WIDTH * GRAPH_PLOT_WIDTH) + 2, (GRAPH_HEIGHT * GRAPH_PLOT_HEIGHT) + 2);
 		g.drawRect(GlobalVars.getGraphX() - 2, GlobalVars.getGraphY() - 2, (GRAPH_WIDTH * GRAPH_PLOT_WIDTH) + 4, (GRAPH_HEIGHT * GRAPH_PLOT_HEIGHT) + 4);
-		
 	}
 	
 	private static void renderInterior(Graphics g) {
@@ -121,8 +122,17 @@ public class Graph {
 					}
 
 				}
-				g.drawRect(GlobalVars.getGraphX() + (x * GRAPH_PLOT_WIDTH), GlobalVars.getGraphY() + (y * GRAPH_PLOT_HEIGHT), GRAPH_PLOT_WIDTH, GRAPH_PLOT_HEIGHT);
-				g.fillRect(GlobalVars.getGraphX() + (x * GRAPH_PLOT_WIDTH), GlobalVars.getGraphY() + (y * GRAPH_PLOT_HEIGHT), GRAPH_PLOT_WIDTH, GRAPH_PLOT_HEIGHT);
+				g.drawRect(
+						GlobalVars.getGraphX() + (x * GRAPH_PLOT_WIDTH), 
+						GlobalVars.getGraphY() + (GRAPH_HEIGHT * GRAPH_PLOT_HEIGHT) - (y * GRAPH_PLOT_HEIGHT) - 5, 
+						GRAPH_PLOT_WIDTH, 
+						GRAPH_PLOT_HEIGHT);
+				
+				g.fillRect(
+						GlobalVars.getGraphX() + (x * GRAPH_PLOT_WIDTH), 
+						GlobalVars.getGraphY() + (GRAPH_HEIGHT * GRAPH_PLOT_HEIGHT) - (y * GRAPH_PLOT_HEIGHT) - 5, 
+						GRAPH_PLOT_WIDTH, 
+						GRAPH_PLOT_HEIGHT);
 				
 			}
 		}
@@ -146,6 +156,10 @@ public class Graph {
 
 	public static int getGraphPlotHeight() {
 		return GRAPH_PLOT_HEIGHT;
+	}
+
+	public static int[][] getGraph() {
+		return graph;
 	}
 	
 	

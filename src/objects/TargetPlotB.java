@@ -31,18 +31,20 @@ public class TargetPlotB extends Plot{
 		if (Graph.getGraphValue(x, y) == 0) {
 			Graph.changeGraphIDbyCoord(3, x, y);
 			targets.add(new TargetPlotB(new Point(x, y, null), GlobalVars.getPlotBColor(), GlobalVars.getPlotBName()));
-			System.out.println("Plot Created");
-		}
-		
-		for (int a = x - GlobalVars.getMapPlotSpace(); a <= x + GlobalVars.getMapPlotSpace(); a++) {
-			for (int b = y - GlobalVars.getMapPlotSpace(); b <= y + GlobalVars.getMapPlotSpace(); b++) {
-				if (Graph.doesExist(a, b)) {
-					if (Graph.getGraphValue(a, b) == 0) {
-						Graph.changeGraphIDbyCoord(3, a, b);
+			for (int a = x - GlobalVars.getMapPlotSpace(); a <= x + GlobalVars.getMapPlotSpace(); a++) {
+				for (int b = y - GlobalVars.getMapPlotSpace(); b <= y + GlobalVars.getMapPlotSpace(); b++) {
+					if (Graph.doesExist(a, b)) {
+						if (Graph.getGraphValue(a, b) == 0) {
+							Graph.changeGraphIDbyCoord(3, a, b);
+						} 
 					}
 				}
 			}
+		} else {
+			System.out.println("Invalid plot location");
 		}
+		
+
 	}
 
 

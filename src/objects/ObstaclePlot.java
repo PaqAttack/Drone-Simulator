@@ -29,16 +29,19 @@ public class ObstaclePlot extends Plot{
 	}
 	
 	public static void createObstacle(int x, int y) {
-		
-		for (int a = x - GlobalVars.getMapObsDim(); a <= x + GlobalVars.getMapObsDim(); a++) {
-			for (int b = y - GlobalVars.getMapObsDim(); b <= y + GlobalVars.getMapObsDim(); b++) {
-				if (Graph.doesExist(a, b)) {
-					if (Graph.getGraphValue(a, b) == 0) {
-						obstacles.add(new ObstaclePlot(new Point(x, y, null), GlobalVars.getObsColor(), "Obstacle"));
-						Graph.changeGraphIDbyCoord(1, a, b);
+		if (Graph.getGraphValue(x, y) == 0 || Graph.getGraphValue(x, y) == 1) {
+			for (int a = x - GlobalVars.getMapObsDim(); a <= x + GlobalVars.getMapObsDim(); a++) {
+				for (int b = y - GlobalVars.getMapObsDim(); b <= y + GlobalVars.getMapObsDim(); b++) {
+					if (Graph.doesExist(a, b)) {
+						if (Graph.getGraphValue(a, b) == 0) {
+							obstacles.add(new ObstaclePlot(new Point(x, y, null), GlobalVars.getObsColor(), "Obstacle"));
+							Graph.changeGraphIDbyCoord(1, a, b);
+						} 
 					}
 				}
 			}
+		}else {
+			System.out.println("Invalid Plot Location.");
 		}
 		
 	}

@@ -29,39 +29,56 @@ public class Point {
     }
     
     public static boolean IsWalkable(int[][] map, Point point) {
-        if (point.y < 0 || point.y > map.length - 1) return false;
-        if (point.x < 0 || point.x > map[0].length - 1) return false;
-        return map[point.y][point.x] == 0;
+        if (Graph.doesExist(point)) {
+        	return map[point.x][point.y] == 0;
+        } else {
+        	return false;
+        }
     }
 
     public static List<Point> FindNeighbors(int[][] map, Point point) {
         List<Point> neighbors = new ArrayList<>();
-        Point up = point.offset(0,  1);
-        Point down = point.offset(0,  -1);
-        Point left = point.offset(-1, 0);
-        Point right = point.offset(1, 0);
-        if (IsWalkable(map, up)) neighbors.add(up);
-        if (IsWalkable(map, down)) neighbors.add(down);
-        if (IsWalkable(map, left)) neighbors.add(left);
-        if (IsWalkable(map, right)) neighbors.add(right);
+        if (Graph.doesExist(point.offset(0,  1))) {
+        	Point up = point.offset(0,  1);
+        	if (IsWalkable(map, up)) neighbors.add(up);
+        } 
+        if (Graph.doesExist(point.offset(0,  -1))) {
+        	Point down = point.offset(0,  -1);
+        	if (IsWalkable(map, down)) neighbors.add(down);
+        }
+        if (Graph.doesExist(point.offset(-1, 0))) {
+        	Point left = point.offset(-1, 0);
+        	if (IsWalkable(map, left)) neighbors.add(left);
+        }
+        if (Graph.doesExist(point.offset(1, 0))) {
+        	Point right = point.offset(1, 0);
+        	if (IsWalkable(map, right)) neighbors.add(right);
+        }
         return neighbors;
     }
     
     public static List<Point> FindPath(int[][] map, Point start, Point end) {
         boolean finished = false;
+        
+        // list of points that have been reviewed
         List<Point> used = new ArrayList<>();
         used.add(start);
+
+        // Main Loop
         while (!finished) {
             List<Point> newOpen = new ArrayList<>();
             for(int i = 0; i < used.size(); ++i){
                 Point point = used.get(i);
+                
+                // for each point thats been used find their neighbours
                 for (Point neighbor : FindNeighbors(map, point)) {
                     if (!used.contains(neighbor) && !newOpen.contains(neighbor)) {
+                    	
                         newOpen.add(neighbor);
                     }
                 }
             }
-
+            
             for(Point point : newOpen) {
                 used.add(point);
                 if (end.equals(point)) {
@@ -80,6 +97,7 @@ public class Point {
             path.add(0, point);
             point = point.previous;
         }
+        System.out.println("Path returned");
         return path;
     }
 

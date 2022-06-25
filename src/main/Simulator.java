@@ -29,7 +29,7 @@ public class Simulator extends JFrame implements Runnable{
 		// Create all drones here
 		// MAX is 5
 		
-		ChrisDrone chrisDrone = new ChrisDrone(new Point(5, 97, null), "HID Drone", "Chris", Color.CYAN, 30);
+		ChrisDrone chrisDrone = new ChrisDrone(new Point(2, 99, null), "HID Drone", "Chris", Color.CYAN, 40);
 //		FosterDrone fosterDrone = new FosterDrone(25, 97, "Fire Finder", "Foster", Color.PINK);
 //		RichardDrone richardDrone = new RichardDrone(45, 97, "Camper Check-in", "Richard", Color.yellow);
 //		JudeDrone judeDrone = new JudeDrone(65, 97, "Human Finder", "Jude", Color.MAGENTA);

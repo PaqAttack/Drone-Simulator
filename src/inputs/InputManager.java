@@ -21,19 +21,18 @@ public class InputManager {
 	}
 
 	public void mouseClick(int x, int y) {
-//		System.out.println("x: " + x + ", Y: " + y);
 		if (Graph.getBounds().contains(x, y)) {
 			switch (StateManager.getState()) {
 				case PLOT_A_TARGETS: {
-					TargetPlotA.createPlotA(Graph.ScreenXtoGraphX(x), Graph.ScreenYtoGraphY(y));
+					TargetPlotA.createPlotA(Graph.screenXtoGraphX(x), Graph.screenYtoGraphY(y));
 					break;
 				}
 				case PLOT_B_TARGETS: {
-					TargetPlotB.createPlotB(Graph.ScreenXtoGraphX(x), Graph.ScreenYtoGraphY(y));
+					TargetPlotB.createPlotB(Graph.screenXtoGraphX(x), Graph.screenYtoGraphY(y));
 					break;
 				}
 				case PLOT_OBSTACLES: {
-					ObstaclePlot.createObstacle(Graph.ScreenXtoGraphX(x), Graph.ScreenYtoGraphY(y));
+					ObstaclePlot.createObstacle(Graph.screenXtoGraphX(x), Graph.screenYtoGraphY(y));
 					break;
 				}
 				case WAITING: {

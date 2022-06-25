@@ -27,12 +27,12 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		inputManager.mouseClick(e.getX(), e.getY());
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+		inputManager.mouseClick(e.getX(), e.getY());
 	}
 
 	@Override
