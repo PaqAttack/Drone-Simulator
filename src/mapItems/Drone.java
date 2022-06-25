@@ -1,4 +1,4 @@
-package objects;
+package mapItems;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -70,11 +70,11 @@ public abstract class Drone {
 		nextStep = Graph.getNextPoint(location, destination);
 	}
 	
-	public void moveOther(MapItems itemToBeMoved, Point destination) {
+	public void moveOther(Plot itemToBeMoved, Point destination) {
 		
 	}
 	
-	public void deleteItem(MapItems item) {
+	public void deleteItem(Plot item) {
 		
 	}
 	

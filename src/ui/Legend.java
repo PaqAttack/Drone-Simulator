@@ -4,7 +4,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import main.GlobalVars;
-import objects.Drone;
+import mapItems.Drone;
 
 public class Legend {
 	

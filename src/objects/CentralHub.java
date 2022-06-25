@@ -1,6 +1,7 @@
 package objects;
 
 import mapItems.CommInterface;
+import mapItems.Drone;
 
 public class CentralHub implements CommInterface{
 	private static boolean active = false;

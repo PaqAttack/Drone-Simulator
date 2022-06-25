@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import main.Point;
 import mapItems.CommInterface;
-import objects.Drone;
+import mapItems.Drone;
 
 
 public class ChrisDrone extends Drone implements CommInterface {

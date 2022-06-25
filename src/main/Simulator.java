@@ -4,8 +4,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import inputs.InputManager;
+import mapItems.Drone;
+import mapItems.Plot;
 import objects.CentralHub;
-import objects.Drone;
 import objects.TargetPlotA;
 import objects.TargetPlotB;
 import studentDrones.ChrisDrone;
@@ -96,13 +97,8 @@ public class Simulator extends JFrame implements Runnable{
 		// draw graph
 		Graph.renderGraph(g);
 
-		// Draw Plot As
-		for (TargetPlotA p : TargetPlotA.getTargets()) {
-			p.render(g);
-		}
-		
-		// Draw Plot As
-		for (TargetPlotB p : TargetPlotB.getTargets()) {
+		// Draw Plots
+		for (Plot p : Plot.getPlots()) {
 			p.render(g);
 		}
 		

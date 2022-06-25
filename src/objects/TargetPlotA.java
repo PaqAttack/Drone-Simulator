@@ -1,49 +1,37 @@
 package objects;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.util.ArrayList;
 
 import main.GlobalVars;
 import main.Graph;
-import mapItems.MapItems;
+import main.Point;
+import mapItems.Plot;
 
-public class TargetPlotA extends MapItems{
+public class TargetPlotA extends Plot{
 
 	private static ArrayList<TargetPlotA> targets = new ArrayList<>();
 	
-	public TargetPlotA(String name, Color color, int x, int y) {
-		super(name, color, x, y);
+	public TargetPlotA(Point location, Color color, String name) {
+		super(location, color, name);
 	}
 
-	public void render(Graphics g) {
-		for (TargetPlotA a : targets) {
-			
-			g.setColor(a.getColor());
-			g.drawOval(Graph.graphXtoScreenX(a.getPosX()) - (GlobalVars.getMapItemDim() / 2), Graph.graphYtoScreenY(a.getPosY()) - (GlobalVars.getMapItemDim() / 2), GlobalVars.getMapItemDim(), GlobalVars.getMapItemDim());
-			g.fillOval(Graph.graphXtoScreenX(a.getPosX()) - (GlobalVars.getMapItemDim() / 2), Graph.graphYtoScreenY(a.getPosY()) - (GlobalVars.getMapItemDim() / 2), GlobalVars.getMapItemDim(), GlobalVars.getMapItemDim());
-			
-			g.setColor(GlobalVars.getGraphColor());
-			g.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-			g.drawString(GlobalVars.getPlotAName(), Graph.graphXtoScreenX(a.getPosX()) - (g.getFontMetrics().stringWidth(GlobalVars.getPlotAName()) / 2), Graph.graphYtoScreenY(a.getPosY()) + GlobalVars.getMapItemDim() + 15);
-		}
-	}
 	
 	@Override
 	public void update() {
 
 	}
 
-	public static ArrayList<TargetPlotA> getTargets() {
-		return targets;
+	@Override
+	public void activate() {
+		
 	}
-	
+
 	public static void createPlotA(int x, int y) {
 		
 		if (Graph.getGraphValue(x, y) == 0) {
 			Graph.changeGraphIDbyCoord(2, x, y);
-			targets.add(new TargetPlotA(GlobalVars.getPlotAName(), GlobalVars.getPlotAColor(), x, y));
+			targets.add(new TargetPlotA(new Point(x, y, null), GlobalVars.getPlotAColor(), GlobalVars.getPlotAName()));
 			System.out.println("Plot Created");
 		}
 		
@@ -58,4 +46,5 @@ public class TargetPlotA extends MapItems{
 		}
 		
 	}
+
 }
