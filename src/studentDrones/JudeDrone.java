@@ -33,8 +33,8 @@ public class JudeDrone extends Drone implements CommInterface{
 
 	@Override
 	public void activate() {
-		// TODO Auto-generated method stub
-		
+		setDestination(new Point(99, 99, null));
+		moving = true;
 	}
 
 

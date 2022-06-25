@@ -25,7 +25,7 @@ public abstract class Drone {
 	private Point nextStep;
 	private int speedMPH;
 	private int lastCount = 0;
-	double secPerSpot;
+	private double secPerSpot;
 	private int pathLoc = 0;
 	private List<Point> path;
 	

@@ -28,7 +28,6 @@ public class ChrisDrone extends Drone implements CommInterface {
 	public void activate() {
 		setDestination(new Point(99, 99, null));
 		moving = true;
-		System.out.println("Active. sec per block is "+ getSecPerSpot());
 	}
 
 	@Override

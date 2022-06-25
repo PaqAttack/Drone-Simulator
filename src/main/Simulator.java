@@ -7,8 +7,6 @@ import inputs.InputManager;
 import mapItems.Drone;
 import mapItems.Plot;
 import objects.CentralHub;
-import objects.TargetPlotA;
-import objects.TargetPlotB;
 import studentDrones.ChrisDrone;
 import studentDrones.FosterDrone;
 import studentDrones.JudeDrone;
@@ -30,9 +28,9 @@ public class Simulator extends JFrame implements Runnable{
 		// MAX is 5
 		
 		ChrisDrone chrisDrone = new ChrisDrone(new Point(2, 99, null), "HID Drone", "Chris", Color.CYAN, 40);
-//		FosterDrone fosterDrone = new FosterDrone(25, 97, "Fire Finder", "Foster", Color.PINK);
-//		RichardDrone richardDrone = new RichardDrone(45, 97, "Camper Check-in", "Richard", Color.yellow);
-//		JudeDrone judeDrone = new JudeDrone(65, 97, "Human Finder", "Jude", Color.MAGENTA);
+		FosterDrone fosterDrone = new FosterDrone(new Point(2, 80, null), "Fire Finder", "Foster", Color.PINK, 60);
+		RichardDrone richardDrone = new RichardDrone(new Point(2, 70, null), "Camper Check-in", "Richard", Color.yellow, 40);
+		JudeDrone judeDrone = new JudeDrone(new Point(5, 50, null), "Human Finder", "Jude", Color.MAGENTA, 60);
 	}
 	
 	public static void main(String[] args) {
