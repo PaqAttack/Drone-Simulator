@@ -74,9 +74,8 @@ public class Simulator extends JFrame implements Runnable{
 	
 	
 	private void update() {
-		
 		StateManager.update();
-		
+		Timer.update();
 	}
 
 	

@@ -26,12 +26,13 @@ public class ChrisDrone extends Drone implements CommInterface {
 
 	@Override
 	public void activate() {
-		setDestination(450, 450);
+		setDestination(new Point(450, 450, null));
+		moving = true;
+		System.out.println("Active. sec per block is "+ getSecPerSpot());
 	}
 
 	@Override
 	public void loop() {
-		// TODO Auto-generated method stub
 		
 	}
 

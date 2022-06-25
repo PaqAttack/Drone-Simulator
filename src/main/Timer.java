@@ -3,7 +3,6 @@ package main;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.time.LocalTime;
-
 import mapItems.Drone;
 import objects.CentralHub;
 
@@ -18,7 +17,10 @@ public class Timer {
 	private static long elapsedSeconds = 0;
 	private static int counter = 0;
 	
+	private Timer() {}
+	
 	public static void update() {
+		
 		if(CentralHub.isActive() ) {
 			counter++;
 			for (Drone drone : Drone.getDrones()) {
@@ -38,6 +40,24 @@ public class Timer {
 		g.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		int w = g.getFontMetrics().stringWidth(curTime.toString());
 		int h = g.getFontMetrics().getHeight();
-		g.drawString(curTime.toString(), CLOCK_X - (w / 2), CLOCK_Y);
+		g.drawString(showTime(curTime), CLOCK_X - (w / 2), CLOCK_Y);
+	}
+	
+	private static String showTime(LocalTime time) {
+		String hr = Integer.toString(time.getHour());
+		String min = Integer.toString(time.getMinute());
+		String sec = Integer.toString(time.getSecond());
+		
+		if (hr.length() != 2) {
+			hr = "0" + hr;
+		}
+		if (min.length() != 2) {
+			min = "0" + min;
+		}
+		if (sec.length() != 2) {
+			sec = "0" + sec;
+		}
+		
+		return hr + ":" + min + ":" + sec;
 	}
 }

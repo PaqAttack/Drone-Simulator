@@ -37,7 +37,7 @@ public class InputManager {
 					break;
 				}
 				case WAITING: {
-
+					
 					break;
 				}
 				case PLAYING: {

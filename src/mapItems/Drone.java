@@ -58,6 +58,9 @@ public abstract class Drone {
 			if (counter - lastCount >= secPerSpot) {
 				// move
 				lastCount = counter;
+				nextStep = Graph.getNextPoint(location, destination);
+				location.x = nextStep.x;
+				location.y = nextStep.y;
 			}
 		}
 	}
@@ -66,8 +69,8 @@ public abstract class Drone {
 	
 	
 	// methods for student use
-	public void setDestination (int destX, int destY) {
-		nextStep = Graph.getNextPoint(location, destination);
+	public void setDestination (Point destination) {
+		this.destination = destination;
 	}
 	
 	public void moveOther(Plot itemToBeMoved, Point destination) {
@@ -115,6 +118,10 @@ public abstract class Drone {
 
 	public static ArrayList<Drone> getDrones() {
 		return drones;
+	}
+
+	public double getSecPerSpot() {
+		return secPerSpot;
 	}
 	
 	

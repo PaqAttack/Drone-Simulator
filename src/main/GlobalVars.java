@@ -4,16 +4,14 @@ import java.awt.Color;
 
 public class GlobalVars {
 	// GLOBAL VARIABLES - SET THESE
-	
 	public static final int TIME_SCALE = 5;		// number of seconds in simulation that pass every real second
 	public static final int GRAPH_LENGTH_IN_MILES = 10;
-	
 	
 	public static final int MAP_ITEM_DIM = 7;	// Plot oval diameter
 	public static final int MAP_OBS_DIM = 3;	// obstacle range from center (2 equals a 5x5 square)
 	public static final int MAP_DRONE_DIM = 10; // Drone diameter
 	
-	public static final int MAP_PLOT_SPACE = 2; // Spaces around plots that are protected
+	public static final int MAP_PLOT_SPACE = 4; // Spaces around plots that are protected
 	
 	public static final String PLOT_A_NAME = "Fire";
 	public static final String PLOT_B_NAME = "Camper";
@@ -29,7 +27,6 @@ public class GlobalVars {
 	private static final Color BACKGROUND_COLOR = Color.BLACK;
 	private static final Color GRAPH_COLOR = Color.WHITE;
 	private static final Color TEXT_COLOR = Color.WHITE;
-	
 	
 	public static int getGraphLengthInMiles() {
 		return GRAPH_LENGTH_IN_MILES;
