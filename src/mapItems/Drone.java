@@ -15,13 +15,13 @@ public abstract class Drone {
 
 	private static ArrayList<Drone> drones = new ArrayList<>();
 	
-	private Point location;
+	protected Point location;
 	private double realX, realY;
 	private String name;
 	private String studentName;
 	private Color color;
 	protected boolean moving;
-	private Point destination;
+	protected Point destination;
 	private Point nextStep;
 	private int speedMPH;
 	private int lastCount = 0;
@@ -113,6 +113,14 @@ public abstract class Drone {
 		g.setColor(GlobalVars.getGraphColor());
 		g.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		g.drawString(getStudentName(), Graph.graphXtoScreenX(location.x) - (g.getFontMetrics().stringWidth(getStudentName()) / 2), Graph.graphYtoScreenY(location.y) + GlobalVars.getMapDroneDim() + 15);
+		
+		if (destination != null && GlobalVars.isShowLine()) {
+			g.setColor(Color.GREEN);
+			g.drawLine(Graph.graphXtoScreenX(location.x), 
+					Graph.graphYtoScreenY(location.y), 
+					Graph.graphXtoScreenX(destination.getX()), 
+					Graph.graphYtoScreenY(destination.getY()));
+		}
 	}
 
 

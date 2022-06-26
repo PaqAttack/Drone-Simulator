@@ -2,6 +2,7 @@ package inputs;
 
 import java.awt.event.KeyEvent;
 
+import main.GlobalVars;
 import main.Graph;
 import main.State;
 import main.StateManager;
@@ -87,6 +88,11 @@ public class InputManager {
 				}
 			}
 		} 
+		
+		if (e.getKeyCode() == KeyEvent.VK_L) {
+			GlobalVars.SHOW_LINE = !GlobalVars.SHOW_LINE;
+		}
+		
 	}
 	
 	

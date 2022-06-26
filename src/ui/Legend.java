@@ -1,9 +1,11 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Point;
 import main.GlobalVars;
+import main.Graph;
+import main.Point;
 import mapItems.Drone;
 
 public class Legend {
@@ -20,14 +22,14 @@ public class Legend {
 	private static final int LEGEND_HEIGHT = 60;
 	private static final int LEGEND_GAP = 20;
 	
-	private static Point indPoint1 = new Point(START_X + 5, PLOT_LEGEND_TOP);
-	private static Point txtPoint1 = new Point(START_X + 25, PLOT_LEGEND_TOP + 10);
+	private static Point indPoint1 = new Point(START_X + 5, PLOT_LEGEND_TOP, null);
+	private static Point txtPoint1 = new Point(START_X + 25, PLOT_LEGEND_TOP + 10, null);
 		
-	private static Point indPoint2 = new Point(START_X + 5, PLOT_LEGEND_TOP + 20);
-	private static Point txtPoint2 = new Point(START_X + 25, PLOT_LEGEND_TOP + 30);
+	private static Point indPoint2 = new Point(START_X + 5, PLOT_LEGEND_TOP + 20, null);
+	private static Point txtPoint2 = new Point(START_X + 25, PLOT_LEGEND_TOP + 30, null);
 	
-	private static Point indPoint3 = new Point(START_X + 5, PLOT_LEGEND_TOP + 40);
-	private static Point txtPoint3 = new Point(START_X + 25, PLOT_LEGEND_TOP + 50);
+	private static Point indPoint3 = new Point(START_X + 5, PLOT_LEGEND_TOP + 40, null);
+	private static Point txtPoint3 = new Point(START_X + 25, PLOT_LEGEND_TOP + 50, null);
 
 	public Legend() {
 		// *pin drops*
@@ -41,9 +43,24 @@ public class Legend {
 	public static void render(Graphics g) {
 		drawDrones(g, START_Y);
 		drawPlots(g);
+		drawMapSIze(g);
 	}
 
-
+	private static void drawMapSIze(Graphics g) {
+		Point tp = new Point(630, 30, null);
+		Point bp = new Point(630, 50, null);
+		
+		g.setColor(GlobalVars.getGraphColor());
+		g.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		
+		g.drawRect(START_X, PLOT_ENTRY_HEIGHT, LEGEND_WIDTH, LEGEND_HEIGHT);
+		
+		g.drawString("Map Height: " + GlobalVars.getGraphLengthInMiles() + " miles", tp.getX(), tp.getY());
+		g.drawString("Map Width:  " + GlobalVars.getGraphLengthInMiles() + " miles", bp.getX(), bp.getY());
+	}
+	
+	
+	
 	private static void drawDrones(Graphics g, int top) {
 		g.setColor(GlobalVars.getGraphColor());
 		
@@ -60,13 +77,22 @@ public class Legend {
 				g.setFont(new Font("Times New Roman", Font.ITALIC, 12));
 				g.drawString(Drone.getDrones().get(i).getStudentName(), START_X + 10, top + 50 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
 				
+
+				g.setColor(Drone.getDrones().get(i).getColor());
+					
+				g.drawString("Position:       X: " + Drone.getDrones().get(i).getPosX() + ", Y: " + Drone.getDrones().get(i).getPosY(), 
+						START_X + 100, 
+						top + 35 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
+					
 				if (Drone.getDrones().get(i).getDestination() != null) {
-					g.setColor(Drone.getDrones().get(i).getColor());
-					g.drawString("Destination - X: " + Drone.getDrones().get(i).getDestination().getX() + ", Y: " + Drone.getDrones().get(i).getDestination().getY(), START_X + 50, top + 20 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
+				g.drawString("Destination: X: " + Drone.getDrones().get(i).getDestination().getX() + ", Y: " + Drone.getDrones().get(i).getDestination().getY(), 
+						START_X + 100, 
+						top + 50 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
+				} else {
+					g.drawString("Destination: N/A", 
+							START_X + 100, 
+							top + 50 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
 				}
-				
-//				g.drawOval(START_X + (LEGEND_WIDTH / 2) + 60, top + 20 + ((LEGEND_HEIGHT + LEGEND_GAP) * i), 25, 25);
-//				g.fillOval(START_X + (LEGEND_WIDTH / 2) + 60, top + 20 + ((LEGEND_HEIGHT + LEGEND_GAP) * i), 25, 25);
 			}
 
 		}

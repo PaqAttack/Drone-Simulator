@@ -28,9 +28,9 @@ public class Simulator extends JFrame implements Runnable{
 		// MAX is 5
 		
 //		ChrisDrone chrisDrone = new ChrisDrone(new Point(4, 4, null), "HID Drone", "Chris", Color.CYAN, 40);
-		FosterDrone fosterDrone = new FosterDrone(new Point(8, 8, null), "Fire Finder", "Foster", Color.PINK, 30);
-//		RichardDrone richardDrone = new RichardDrone(new Point(4, 4, null), "Camper Check-in", "Richard", Color.yellow, 40);
-//		JudeDrone judeDrone = new JudeDrone(new Point(4, 4, null), "Human Finder", "Jude", Color.MAGENTA, 60);
+		FosterDrone fosterDrone = new FosterDrone(new Point(4, 4, null), "Fire Finder", "Foster", Color.PINK, 30);
+		RichardDrone richardDrone = new RichardDrone(new Point(4, 4, null), "Camper Check-in", "Richard", Color.yellow, 20);
+		JudeDrone judeDrone = new JudeDrone(new Point(4, 4, null), "Human Finder", "Jude", Color.MAGENTA, 40);
 	}
 	
 	public static void main(String[] args) {
@@ -74,11 +74,17 @@ public class Simulator extends JFrame implements Runnable{
 		Timer.update();
 		
 		if (CentralHub.getHUBs().get(0).isActive()) {
+			
+			
 			if (Drone.getDrones() != null) {
 				for (Drone drone : Drone.getDrones()) {
 					drone.loop();
 				}
 			}
+			
+			CentralHub.getHUBs().get(0).update();
+			
+
 		}
 		
 	}

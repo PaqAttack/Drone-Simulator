@@ -15,6 +15,8 @@ public class GlobalVars {
 	
 	public static final int MAP_PLOT_SPACE = 4; // Spaces around plots that are protected
 	
+	public static boolean SHOW_LINE = false;
+	
 	public static final String PLOT_A_NAME = "Fire";
 	public static final String PLOT_B_NAME = "Camper";
 	
@@ -30,6 +32,13 @@ public class GlobalVars {
 	private static final Color GRAPH_COLOR = Color.WHITE;
 	private static final Color TEXT_COLOR = Color.WHITE;
 	
+	
+	public static double getMilesRepresentedByEachGraphBlock() {
+		return MILES_REPRESENTED_BY_EACH_GRAPH_BLOCK;
+	}
+	public static boolean isShowLine() {
+		return SHOW_LINE;
+	}
 	public static int getGraphLengthInMiles() {
 		return GRAPH_LENGTH_IN_MILES;
 	}

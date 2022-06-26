@@ -41,9 +41,10 @@ public class FosterDrone  extends Drone implements CommInterface{
 			destPoints.add(new Point(60, 80, null));
 			destPoints.add(new Point(80, 80, null));
 			destPoints.add(new Point(80, 20, null));
+			destPoints.add(new Point(4, 4, null));
 			setDestinationPoints(destPoints);
 			moving = true;
-			System.out.println("Finder Finder Drone Deployed.");
+			System.out.println("Fire Finder Drone Deployed.");
 		}
 	}
 
