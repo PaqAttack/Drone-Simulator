@@ -4,8 +4,10 @@ import java.awt.Color;
 
 public class GlobalVars {
 	// GLOBAL VARIABLES - SET THESE
-	public static final int TIME_SCALE = 30;		// number of seconds in simulation that pass every real second
+	public static final int TIME_SCALE = 10;		// number of seconds in simulation that pass every real second
 	public static final int GRAPH_LENGTH_IN_MILES = 5;
+	
+	public static final double MILES_REPRESENTED_BY_EACH_GRAPH_BLOCK = 0.05;
 	
 	public static final int MAP_ITEM_DIM = 7;	// Plot oval diameter
 	public static final int MAP_OBS_DIM = 3;	// obstacle range from center (2 equals a 5x5 square)
@@ -78,6 +80,9 @@ public class GlobalVars {
 	}
 	public static int getMapPlotSpace() {
 		return MAP_PLOT_SPACE;
+	}
+	public static double getGraphBlockMiles() {
+		return MILES_REPRESENTED_BY_EACH_GRAPH_BLOCK;
 	}
 	
 	

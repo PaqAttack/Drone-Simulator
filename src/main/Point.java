@@ -21,7 +21,14 @@ public class Point {
         return x == point.x && y == point.y;
     }
 
+    
+    
     @Override
+	public String toString() {
+		return "X: " + x + ", Y: " + y; 
+	}
+
+	@Override
     public int hashCode() { return Objects.hash(x, y); }
 
     public Point offset(int ox, int oy) { 
@@ -30,7 +37,7 @@ public class Point {
     
     public static boolean IsWalkable(int[][] map, Point point) {
         if (Graph.doesExist(point)) {
-        	return map[point.x][point.y] == 0;
+        	return map[point.x][point.y] != 1;
         } else {
         	return false;
         }
@@ -59,7 +66,7 @@ public class Point {
     
     public static List<Point> FindPath(int[][] map, Point start, Point end) {
         boolean finished = false;
-        
+
         // list of points that have been reviewed
         List<Point> used = new ArrayList<>();
         used.add(start);
@@ -73,22 +80,31 @@ public class Point {
                 // for each point thats been used find their neighbours
                 for (Point neighbor : FindNeighbors(map, point)) {
                     if (!used.contains(neighbor) && !newOpen.contains(neighbor)) {
-                    	
                         newOpen.add(neighbor);
+                        //debug
+//                        System.out.println("Neighbor added " + neighbor.toString());
                     }
                 }
             }
             
+//            System.out.println("new open size: " + newOpen.size());
+            
             for(Point point : newOpen) {
                 used.add(point);
+                //debug
+//                System.out.println("used added " + point.toString());
+                
                 if (end.equals(point)) {
+//                	System.out.println("end found");
                     finished = true;
                     break;
                 }
             }
 
-            if (!finished && newOpen.isEmpty())
+            if (!finished && newOpen.isEmpty()) {
+            	System.out.println("No Path Possible");
                 return null;
+            }
         }
 
         List<Point> path = new ArrayList<>();
@@ -97,7 +113,7 @@ public class Point {
             path.add(0, point);
             point = point.previous;
         }
-        System.out.println("Path returned");
+//        System.out.println("Path returned");
         return path;
     }
 

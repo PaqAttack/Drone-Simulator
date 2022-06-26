@@ -5,36 +5,32 @@ import java.awt.Color;
 import main.Point;
 import mapItems.CommInterface;
 import mapItems.Drone;
+import mapItems.Message;
 
 public class RichardDrone extends Drone implements CommInterface{
 
 	public RichardDrone(Point location, String name, String studentName, Color color, int speedMPH) {
 		super(location, name, studentName, color, speedMPH);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
-	public void transmit(CommInterface reciever, String data) {
-		// TODO Auto-generated method stub
+	public void transmit(CommInterface reciever, Message msg) {
 		
 	}
 
 	@Override
-	public void recieve(CommInterface transmitter, String data) {
-		// TODO Auto-generated method stub
+	public void recieve(CommInterface transmitter, Message msg) {
 		
 	}
 
 	@Override
 	public void loop() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void activate() {
-		setDestination(new Point(99, 99, null));
-		moving = true;
 		
 	}
 

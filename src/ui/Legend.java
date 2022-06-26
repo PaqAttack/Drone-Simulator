@@ -60,9 +60,13 @@ public class Legend {
 				g.setFont(new Font("Times New Roman", Font.ITALIC, 12));
 				g.drawString(Drone.getDrones().get(i).getStudentName(), START_X + 10, top + 50 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
 				
-				g.setColor(Drone.getDrones().get(i).getColor());
-				g.drawOval(START_X + (LEGEND_WIDTH / 2) + 60, top + 20 + ((LEGEND_HEIGHT + LEGEND_GAP) * i), 25, 25);
-				g.fillOval(START_X + (LEGEND_WIDTH / 2) + 60, top + 20 + ((LEGEND_HEIGHT + LEGEND_GAP) * i), 25, 25);
+				if (Drone.getDrones().get(i).getDestination() != null) {
+					g.setColor(Drone.getDrones().get(i).getColor());
+					g.drawString("Destination - X: " + Drone.getDrones().get(i).getDestination().getX() + ", Y: " + Drone.getDrones().get(i).getDestination().getY(), START_X + 50, top + 20 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
+				}
+				
+//				g.drawOval(START_X + (LEGEND_WIDTH / 2) + 60, top + 20 + ((LEGEND_HEIGHT + LEGEND_GAP) * i), 25, 25);
+//				g.fillOval(START_X + (LEGEND_WIDTH / 2) + 60, top + 20 + ((LEGEND_HEIGHT + LEGEND_GAP) * i), 25, 25);
 			}
 
 		}

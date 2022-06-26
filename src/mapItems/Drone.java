@@ -28,6 +28,7 @@ public abstract class Drone {
 	private double secPerSpot;
 	private int pathLoc = 0;
 	private List<Point> path;
+	private List<Point> destinationPoints;
 	
 	public Drone(Point location, String name, String studentName, Color color, int speedMPH) {
 		super();
@@ -38,25 +39,30 @@ public abstract class Drone {
 		this.speedMPH = speedMPH;
 		moving = false;
 		drones.add(this);
-		
+		destinationPoints = new ArrayList<>();
 		getMoveSpeed();
 	
 	}
 
-
 	public abstract void loop();
 	
 	public void update(int elapsedSec) {
+		if (destination == null && destinationPoints.size() > 0) {
+			destination = destinationPoints.get(0);
+			destinationPoints.remove(0);
+		}
+		
 		if (path == null && destination != null) {
 			if (!destination.equals(location)) {
 				path = Point.FindPath(Graph.getGraph(), location, destination);
 				pathLoc = 0;
-				System.out.println("Path found");
 				lastCount = elapsedSec;
+			} else {
+				destination = null;
+				moving = false;
+				path = null;
 			}
 		}
-		
-		
 		
 		if (path != null) {
 			if (!location.equals(destination)) {
@@ -69,11 +75,14 @@ public abstract class Drone {
 					lastCount = elapsedSec;
 				}
 			} else {
+				destination = null;
 				moving = false;
 				path = null;
 				System.out.println("arrived");
 			}
 		}
+		
+		
 	}
 	
 	public abstract void activate();
@@ -96,7 +105,6 @@ public abstract class Drone {
 		
 	}
 	
-		
 	public void render(Graphics g) {
 		g.setColor(color);
 		g.drawOval(Graph.graphXtoScreenX(location.x) - (GlobalVars.getMapDroneDim() / 2), Graph.graphYtoScreenY(location.y) - (GlobalVars.getMapDroneDim() / 2), GlobalVars.getMapDroneDim(), GlobalVars.getMapDroneDim());
@@ -152,7 +160,26 @@ public abstract class Drone {
 	public double getSecPerSpot() {
 		return secPerSpot;
 	}
+
+	public List<Point> getDestinationPoints() {
+		return destinationPoints;
+	}
+
+	public void setDestinationPoints(List<Point> destinationPoints) {
+		this.destinationPoints = destinationPoints;
+	}
 	
-	
+	public static Drone getDroneByStudentName(String name) {
+		for (Drone d : drones) {
+			if (d.getStudentName().equalsIgnoreCase(name)) {
+				return d;
+			}
+		}
+		return null;
+	}
+
+	public Point getDestination() {
+		return destination;
+	}
 	
 }

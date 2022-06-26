@@ -1,6 +1,6 @@
 package mapItems;
 
 public interface CommInterface {
-	public void transmit(CommInterface reciever, String data);
-	public void recieve(CommInterface transmitter, String data);
+	public void transmit(CommInterface reciever, Message msg);
+	public void recieve(CommInterface transmitter, Message msg);
 }

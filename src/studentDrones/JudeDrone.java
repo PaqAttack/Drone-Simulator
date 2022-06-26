@@ -5,6 +5,7 @@ import java.awt.Color;
 import main.Point;
 import mapItems.CommInterface;
 import mapItems.Drone;
+import mapItems.Message;
 
 public class JudeDrone extends Drone implements CommInterface{
 
@@ -14,13 +15,13 @@ public class JudeDrone extends Drone implements CommInterface{
 	}
 
 	@Override
-	public void transmit(CommInterface reciever, String data) {
+	public void transmit(CommInterface reciever, Message msg) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void recieve(CommInterface transmitter, String data) {
+	public void recieve(CommInterface transmitter, Message msg) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -33,8 +34,7 @@ public class JudeDrone extends Drone implements CommInterface{
 
 	@Override
 	public void activate() {
-		setDestination(new Point(99, 99, null));
-		moving = true;
+
 	}
 
 

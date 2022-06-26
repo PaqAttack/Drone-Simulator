@@ -22,20 +22,21 @@ public class Simulator extends JFrame implements Runnable{
 	
 	private Screen screen;
 	private Thread simThread;
-
+	
 	private void initDrones() {
 		// Create all drones here
 		// MAX is 5
 		
-		ChrisDrone chrisDrone = new ChrisDrone(new Point(2, 99, null), "HID Drone", "Chris", Color.CYAN, 40);
-		FosterDrone fosterDrone = new FosterDrone(new Point(2, 80, null), "Fire Finder", "Foster", Color.PINK, 60);
-		RichardDrone richardDrone = new RichardDrone(new Point(2, 70, null), "Camper Check-in", "Richard", Color.yellow, 40);
-		JudeDrone judeDrone = new JudeDrone(new Point(5, 50, null), "Human Finder", "Jude", Color.MAGENTA, 60);
+//		ChrisDrone chrisDrone = new ChrisDrone(new Point(4, 4, null), "HID Drone", "Chris", Color.CYAN, 40);
+		FosterDrone fosterDrone = new FosterDrone(new Point(8, 8, null), "Fire Finder", "Foster", Color.PINK, 30);
+//		RichardDrone richardDrone = new RichardDrone(new Point(4, 4, null), "Camper Check-in", "Richard", Color.yellow, 40);
+//		JudeDrone judeDrone = new JudeDrone(new Point(4, 4, null), "Human Finder", "Jude", Color.MAGENTA, 60);
 	}
 	
 	public static void main(String[] args) {
 		Simulator simulator = new Simulator();
-		InputManager inputManager = new InputManager();
+		CentralHub centralHub = new CentralHub();
+		InputManager inputManager = new InputManager(centralHub);
 		simulator.screen.initScreen(inputManager);
 		// Start thread that will handle game loop
 		simulator.start();
@@ -43,12 +44,9 @@ public class Simulator extends JFrame implements Runnable{
 	
 	public Simulator() {
 		screen = new Screen(this);
-		CentralHub centralHub = new CentralHub();
 		Graph.initGraph();
 		initDrones();
-		
-
-		
+	
 		// Set Frame (Stage) size and data.
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -74,6 +72,15 @@ public class Simulator extends JFrame implements Runnable{
 	private void update() {
 		StateManager.update();
 		Timer.update();
+		
+		if (CentralHub.getHUBs().get(0).isActive()) {
+			if (Drone.getDrones() != null) {
+				for (Drone drone : Drone.getDrones()) {
+					drone.loop();
+				}
+			}
+		}
+		
 	}
 
 	

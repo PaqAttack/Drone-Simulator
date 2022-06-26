@@ -21,7 +21,7 @@ public class Timer {
 	
 	public static void update() {
 		
-		if(CentralHub.isActive() ) {
+		if(CentralHub.getHUBs().get(0).isActive() ) {
 			counter++;
 			
 			if (counter > Simulator.getUpsSet() / GlobalVars.getTimeScale()) {	// 1 simmed sec has passed

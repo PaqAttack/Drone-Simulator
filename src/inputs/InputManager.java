@@ -14,10 +14,12 @@ public class InputManager {
 	
 	private MyMouseListener myMouseListener;
 	private MyKeyboardListener myKeyboardListener;
+	private CentralHub centralHub;
 	
-	public InputManager() {
+	public InputManager(CentralHub centralHub) {
 		myMouseListener = new MyMouseListener(this);
 		myKeyboardListener = new MyKeyboardListener(this);
+		this.centralHub = centralHub;
 	}
 
 	public void mouseClick(int x, int y) {
@@ -70,17 +72,17 @@ public class InputManager {
 				}
 				case WAITING: {
 					StateManager.setState(State.PLAYING);
-					CentralHub.InitCentralHUB();
+					centralHub.InitCentralHUB();
 					break;
 				}
 				case PLAYING: {
 					StateManager.setState(State.PAUSED);
-					CentralHub.setActive(false);
+					centralHub.setActive(false);
 					break;
 				}
 				case PAUSED: {
 					StateManager.setState(State.PLAYING);
-					CentralHub.setActive(true);
+					centralHub.setActive(true);
 					break;
 				}
 			}
