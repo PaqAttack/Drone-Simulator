@@ -39,7 +39,9 @@ public class ChrisDrone extends Drone implements CommInterface {
 
 	@Override
 	public void arrived() {
-		System.out.println("Camper at point " + location.getX() + ", " + location.getY() + " evacuated.");
+		if (location.getX() != 4) {
+			System.out.println("Camper at point " + location.getX() + ", " + location.getY() + " evacuated.");
+		}
 	}
 
 }
