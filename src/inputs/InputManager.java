@@ -59,7 +59,6 @@ public class InputManager {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			switch (StateManager.getState()) {
 				case PLOT_A_TARGETS: {
-					System.out.println("State A detected");
 					StateManager.setState(State.PLOT_B_TARGETS);
 					break;
 				}

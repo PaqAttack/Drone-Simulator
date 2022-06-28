@@ -53,7 +53,7 @@ public class Legend {
 		g.setColor(GlobalVars.getGraphColor());
 		g.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		
-		g.drawRect(START_X, PLOT_ENTRY_HEIGHT, LEGEND_WIDTH, LEGEND_HEIGHT);
+//		g.drawRect(START_X, PLOT_ENTRY_HEIGHT, LEGEND_WIDTH, LEGEND_HEIGHT);
 		
 		g.drawString("Map Height: " + GlobalVars.getGraphLengthInMiles() + " miles", tp.getX(), tp.getY());
 		g.drawString("Map Width:  " + GlobalVars.getGraphLengthInMiles() + " miles", bp.getX(), bp.getY());
@@ -66,7 +66,7 @@ public class Legend {
 		
 		if (!Drone.getDrones().isEmpty()) {
 			
-			for (int i = 0; i < Drone.getDrones().size(); i++) {
+			for (int i = 0; i < Math.min(Drone.getDrones().size(), 4); i++) {
 				g.setColor(Drone.getDrones().get(i).getColor());
 				g.drawRect(START_X, top + ((LEGEND_HEIGHT + LEGEND_GAP) * i), LEGEND_WIDTH, LEGEND_HEIGHT);
 				
@@ -77,21 +77,24 @@ public class Legend {
 				g.setFont(new Font("Times New Roman", Font.ITALIC, 12));
 				g.drawString(Drone.getDrones().get(i).getStudentName(), START_X + 10, top + 50 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
 				
-
 				g.setColor(Drone.getDrones().get(i).getColor());
 					
-				g.drawString("Position:       X: " + Drone.getDrones().get(i).getPosX() + ", Y: " + Drone.getDrones().get(i).getPosY(), 
-						START_X + 100, 
-						top + 35 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
-					
-				if (Drone.getDrones().get(i).getDestination() != null) {
-				g.drawString("Destination: X: " + Drone.getDrones().get(i).getDestination().getX() + ", Y: " + Drone.getDrones().get(i).getDestination().getY(), 
-						START_X + 100, 
-						top + 50 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
-				} else {
-					g.drawString("Destination: N/A", 
+				if (i < 3) {
+				
+					g.drawString("Position:       X: " + Drone.getDrones().get(i).getPosX() + ", Y: " + Drone.getDrones().get(i).getPosY(), 
+							START_X + 100, 
+							top + 35 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
+						
+					if (Drone.getDrones().get(i).getDestination() != null) {
+					g.drawString("Destination: X: " + Drone.getDrones().get(i).getDestination().getX() + ", Y: " + Drone.getDrones().get(i).getDestination().getY(), 
 							START_X + 100, 
 							top + 50 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
+					} else {
+						g.drawString("Destination: N/A", 
+								START_X + 100, 
+								top + 50 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
+					}
+				
 				}
 			}
 

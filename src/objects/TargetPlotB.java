@@ -47,7 +47,18 @@ public class TargetPlotB extends Plot{
 
 	}
 
+	public void remove() {
+		System.out.println("Camper at point " + getLocation().getX() + ", " + getLocation().getY() + " evacuated.");
+		targets.remove(this);
+	}
 
-
-
+	public static Plot getPlotByLocation(Point p) {
+		for (Plot plot : targets) {
+			if (plot.getLocation().equals(p)) {
+				System.out.println("found plot");
+				return plot;
+			}
+		}
+		return null;
+	}
 }

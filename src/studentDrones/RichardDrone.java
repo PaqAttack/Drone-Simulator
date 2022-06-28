@@ -36,6 +36,14 @@ public class RichardDrone extends Drone implements CommInterface{
 			moving = true;
 			System.out.println("Camper Check-in Drone Deployed to " + destPoints.size() + " people.");
 		}
+		
+		if (msg.getMsg().equalsIgnoreCase("ADD")) {
+			Point p = (Point) msg.getO();
+			getDestinationPoints().add(p);
+			
+			moving = true;
+			System.out.println("Camper Check-in Drone added 1 person to destination list.");
+		}
 	}
 
 	@Override
@@ -45,11 +53,21 @@ public class RichardDrone extends Drone implements CommInterface{
 			destPoints.add(new Point(4, 4, null));
 			setDestinationPoints(destPoints);
 		}
+		
+		if (getDestination() == null) {
+			getDestinationPoints().add(new Point(4, 4, null));
+			moving = true;
+		}
 	}
 
 	@Override
 	public void activate() {
 		
+	}
+
+	@Override
+	public void arrived() {
+
 	}
 
 

@@ -16,13 +16,11 @@ public abstract class Drone {
 	private static ArrayList<Drone> drones = new ArrayList<>();
 	
 	protected Point location;
-	private double realX, realY;
 	private String name;
 	private String studentName;
 	private Color color;
 	protected boolean moving;
 	protected Point destination;
-	private Point nextStep;
 	private int speedMPH;
 	private int lastCount = 0;
 	private double secPerSpot;
@@ -46,10 +44,13 @@ public abstract class Drone {
 
 	public abstract void loop();
 	
+	public abstract void arrived();
+	
 	public void update(int elapsedSec) {
 		if (destination == null && destinationPoints.size() > 0) {
 			destination = destinationPoints.get(0);
 			destinationPoints.remove(0);
+			
 		}
 		
 		if (path == null && destination != null) {
@@ -61,6 +62,7 @@ public abstract class Drone {
 				destination = null;
 				moving = false;
 				path = null;
+				arrived();
 			}
 		}
 		
@@ -78,7 +80,8 @@ public abstract class Drone {
 				destination = null;
 				moving = false;
 				path = null;
-				System.out.println("arrived");
+				arrived();
+//				System.out.println("arrived");
 			}
 		}
 		
@@ -137,7 +140,7 @@ public abstract class Drone {
 		double inchesPerSec = inchesPerMin / 60;
 		
 		secPerSpot = inchesPerBlock / inchesPerSec;
-		System.out.println("Seconds Per Spot: " + secPerSpot);
+//		System.out.println("Seconds Per Spot: " + secPerSpot);
 		
 	}
 	

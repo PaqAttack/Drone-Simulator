@@ -2,6 +2,8 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.ConcurrentModificationException;
+
 import javax.swing.JFrame;
 import inputs.InputManager;
 import mapItems.Drone;
@@ -29,7 +31,7 @@ public class Simulator extends JFrame implements Runnable{
 		
 //		ChrisDrone chrisDrone = new ChrisDrone(new Point(4, 4, null), "HID Drone", "Chris", Color.CYAN, 40);
 		FosterDrone fosterDrone = new FosterDrone(new Point(4, 4, null), "Fire Finder", "Foster", Color.PINK, 30);
-		RichardDrone richardDrone = new RichardDrone(new Point(4, 4, null), "Camper Check-in", "Richard", Color.yellow, 20);
+		RichardDrone richardDrone = new RichardDrone(new Point(4, 4, null), "Camper Check-in", "Richard", Color.yellow, 40);
 		JudeDrone judeDrone = new JudeDrone(new Point(4, 4, null), "Human Finder", "Jude", Color.MAGENTA, 40);
 	}
 	
@@ -75,11 +77,14 @@ public class Simulator extends JFrame implements Runnable{
 		
 		if (CentralHub.getHUBs().get(0).isActive()) {
 			
-			
-			if (Drone.getDrones() != null) {
-				for (Drone drone : Drone.getDrones()) {
-					drone.loop();
+			try {
+				if (Drone.getDrones() != null) {
+					for (Drone drone : Drone.getDrones()) {
+						drone.loop();
+					}
 				}
+			} catch (ConcurrentModificationException e) {
+				
 			}
 			
 			CentralHub.getHUBs().get(0).update();
@@ -160,7 +165,7 @@ public class Simulator extends JFrame implements Runnable{
 			}
 			
 			if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
-				System.out.println("FPS: " + frames + " | UPS: " + updates);
+//				System.out.println("FPS: " + frames + " | UPS: " + updates);
 				frames = 0;
 				updates = 0;
 				lastTimeCheck = System.currentTimeMillis();

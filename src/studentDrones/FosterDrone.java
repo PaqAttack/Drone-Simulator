@@ -68,6 +68,12 @@ public class FosterDrone  extends Drone implements CommInterface{
 		
 	}
 
+	@Override
+	public void arrived() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 

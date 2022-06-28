@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import main.GlobalVars;
 import main.Graph;
 import main.Point;
+import objects.TargetPlotB;
 
 public abstract class Plot {
 	private Point location;
@@ -17,7 +18,6 @@ public abstract class Plot {
 	private Point nextStep;
 	private int speedMPH;
 	private int lastCount = 0;
-	private double secPerSpot;
 	private String name;
 	
 	private static ArrayList<Plot> plots = new ArrayList<>();
@@ -44,6 +44,21 @@ public abstract class Plot {
 		g.drawString(name, Graph.graphXtoScreenX(location.x) - (g.getFontMetrics().stringWidth(name) / 2), Graph.graphYtoScreenY(location.y) + GlobalVars.getMapItemDim() + 15);
 	}
 
+	
+	public void remove() {
+		System.out.println("Camper at point " + getLocation().getX() + ", " + getLocation().getY() + " evacuated.");
+		plots.remove(this);
+	}
+
+	public static Plot getPlotByLocation(Point p) {
+		for (Plot plot : plots) {
+			if (plot.getLocation().equals(p)) {
+				return plot;
+			}
+		}
+		return null;
+	}
+	
 	public Point getLocation() {
 		return location;
 	}

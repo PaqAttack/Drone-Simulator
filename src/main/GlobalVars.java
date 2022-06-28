@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class GlobalVars {
 	// GLOBAL VARIABLES - SET THESE
-	public static final int TIME_SCALE = 10;		// number of seconds in simulation that pass every real second
+	public static final int TIME_SCALE = 15;		// number of seconds in simulation that pass every real second
 	public static final int GRAPH_LENGTH_IN_MILES = 5;
 	
 	public static final double MILES_REPRESENTED_BY_EACH_GRAPH_BLOCK = 0.05;

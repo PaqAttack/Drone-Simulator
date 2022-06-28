@@ -22,7 +22,7 @@ public class JudeDrone extends Drone implements CommInterface{
 	public JudeDrone(Point location, String name, String studentName, Color color, int speedMPH) {
 		super(location, name, studentName, color, speedMPH);
 		ignoreList = new ArrayList<>();
-		scanner = new DroneScannerB(this, 10);
+		scanner = new DroneScannerB(this, 1);
 	}
 
 	@Override
@@ -67,6 +67,12 @@ public class JudeDrone extends Drone implements CommInterface{
 	@Override
 	public void activate() {
 
+	}
+
+	@Override
+	public void arrived() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
