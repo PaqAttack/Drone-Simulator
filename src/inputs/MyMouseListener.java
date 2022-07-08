@@ -11,6 +11,7 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 
 	private InputManager inputManager;
 	
+	// With minor refactoring this could be removed. TODO
 	public MyMouseListener(InputManager inputManager) {
 		this.inputManager = inputManager;
 	}

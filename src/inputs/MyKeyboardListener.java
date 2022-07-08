@@ -7,6 +7,7 @@ public class MyKeyboardListener implements KeyListener{
 	
 	private InputManager inputManager;
 	
+	// With minor refactoring this could be removed. TODO
 	public MyKeyboardListener(InputManager inputManager) {
 		this.inputManager = inputManager;
 	}

@@ -2,10 +2,15 @@ package main;
 
 import java.awt.Color;
 
+/**
+ * Repository of all Global Variables
+ * @author Christopher Paquin
+ *
+ */
 public class GlobalVars {
 	// GLOBAL VARIABLES - SET THESE
-	public static final int TIME_SCALE = 15;		// number of seconds in simulation that pass every real second
-	public static final int GRAPH_LENGTH_IN_MILES = 5;
+	public static final int TIME_SCALE = 15;			// number of seconds in simulation that pass every real second
+	public static final int GRAPH_LENGTH_IN_MILES = 5;	// height and width represented by graph
 	
 	public static final double MILES_REPRESENTED_BY_EACH_GRAPH_BLOCK = 0.05;
 	
@@ -15,7 +20,7 @@ public class GlobalVars {
 	
 	public static final int MAP_PLOT_SPACE = 4; // Spaces around plots that are protected
 	
-	public static boolean SHOW_LINE = false;
+	public static boolean showLine = false;
 	
 	public static final String PLOT_A_NAME = "Fire";
 	public static final String PLOT_B_NAME = "Camper";
@@ -37,7 +42,7 @@ public class GlobalVars {
 		return MILES_REPRESENTED_BY_EACH_GRAPH_BLOCK;
 	}
 	public static boolean isShowLine() {
-		return SHOW_LINE;
+		return showLine;
 	}
 	public static int getGraphLengthInMiles() {
 		return GRAPH_LENGTH_IN_MILES;
