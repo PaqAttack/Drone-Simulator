@@ -5,16 +5,28 @@ import javax.swing.JPanel;
 import inputs.InputManager;
 
 public class Screen extends JPanel{
-	
+
+	private static final long serialVersionUID = 1L;
+
+	// Screen Size
 	private Dimension size;
 	
+	// reference to Simulator Instance
 	private Simulator simulator;
 		
+	/**
+	 * Constructs screen
+	 * @param simulator provides object with reference to simulator (Main class)
+	 */
 	public Screen(Simulator simulator) {
 		this.simulator = simulator;
 		setPanelSize();
 	}
 	
+	/**
+	 * Initializes screen by adding input listeners and setting focus.
+	 * @param inputManager Reference to the input manager which implements listener interfaces.
+	 */
 	public void initScreen(InputManager inputManager) {
 		addMouseListener(inputManager);
 		addMouseMotionListener(inputManager);
@@ -23,6 +35,9 @@ public class Screen extends JPanel{
 		requestFocus();
 	}
 	
+	/**
+	 * Sets panel size.
+	 */
 	private void setPanelSize() {
 		size = new Dimension(800, 600);
 		setMinimumSize(size);
@@ -30,6 +45,10 @@ public class Screen extends JPanel{
 		setMaximumSize(size);
 	}
 
+	/**
+	 * Starts the chain of drawing everything.
+	 * Called automatically by JPanel.
+	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
