@@ -58,7 +58,7 @@ public class FosterDrone  extends Drone implements CommInterface{
 			//found fire
 			for (Plot p : scanner.getScannedItemList()) {
 				if (!ignoreList.contains(p)) {
-					transmit(CentralHub.getHUBs().get(0), new Message("Fire", DataType._POINT, p.getNode()));
+					transmit(CentralHub.getHUBs().get(0), new Message("Fire", DataType._POINT, p.getLocation()));
 					ignoreList.add(p);
 					System.out.println("Fire finder drone sends detected fire location to central HUB.");
 				}

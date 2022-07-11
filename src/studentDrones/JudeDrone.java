@@ -58,7 +58,7 @@ public class JudeDrone extends Drone implements CommInterface{
 			//found Human
 			for (Plot p : scanner.getScannedItemList()) {
 				if (!ignoreList.contains(p)) {
-					transmit(CentralHub.getHUBs().get(0), new Message("Human", DataType._POINT, p.getNode()));
+					transmit(CentralHub.getHUBs().get(0), new Message("Human", DataType._POINT, p.getLocation()));
 					ignoreList.add(p);
 					System.out.println("Human finder drone sends detected human location to central HUB.");
 				}

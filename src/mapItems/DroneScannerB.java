@@ -32,8 +32,8 @@ public class DroneScannerB {
 	}
 
 	private double getDistance(Plot p) {
-		double distX = Math.abs(p.getNode().getX() - Graph.screenXtoGraphX(drone.getPosX()));
-		double distY = Math.abs(p.getNode().getY() - Graph.screenYtoGraphY(drone.getPosY()));
+		double distX = Math.abs(p.getLocation().getX() - Graph.screenXtoGraphX(drone.getPosX()));
+		double distY = Math.abs(p.getLocation().getY() - Graph.screenYtoGraphY(drone.getPosY()));
 		return Math.sqrt(((distX * distX) + (distY * distY)));
 	}
 

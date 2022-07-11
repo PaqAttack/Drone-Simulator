@@ -39,24 +39,11 @@ public class TargetPlotB extends Plot {
 					}
 				}
 			}
+			targets.clear();
 		} else {
 			System.out.println("Invalid plot location");
 		}
 
 	}
 
-	public void remove() {
-		System.out.println("Camper at point " + getNode().getX() + ", " + getNode().getY() + " evacuated.");
-		targets.remove(this);
-	}
-
-	public static Plot getPlotByLocation(Node p) {
-		for (Plot plot : targets) {
-			if (plot.getNode().equals(p)) {
-				System.out.println("found plot");
-				return plot;
-			}
-		}
-		return null;
-	}
 }

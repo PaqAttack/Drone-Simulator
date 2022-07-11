@@ -39,6 +39,7 @@ public class TargetPlotA extends Plot {
 					}
 				}
 			}
+			targets.clear();
 		} else {
 			System.out.println("Invalid location for plot.");
 		}

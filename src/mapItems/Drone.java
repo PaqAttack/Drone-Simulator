@@ -52,6 +52,15 @@ public abstract class Drone {
 	// Nodes to Travel to.
 	private Stack<Node> destinationPoints = new Stack<>();
 
+	/**
+	 * Constructor for all student created drones.
+	 * @param location Point starting position for drone.
+	 * @param name Drone name to be displayed in legend.
+	 * @param studentName name of student who created the drone.
+	 * @param color color of drone to be displayed.
+	 * @param returnHome sets behavior to always return home when done traveling if this is true.
+	 * @param speedMPH Speed of the drone in Miles Per Hour.
+	 */
 	protected Drone(Point location, String name, String studentName, Color color, boolean returnHome, int speedMPH) {
 		this.location = location;
 		this.name = name;
@@ -63,16 +72,25 @@ public abstract class Drone {
 		moving = false;
 		drones.add(this);
 
-		if (returnHome) {
-			destinationPoints.push(CentralHub.getHome());
-		}
-		getMoveSpeed();
+		calculateMoveSpeed();
 	}
 
+	/**
+	 * Visible loop feature available to students. 
+	 * This is called every update.
+	 */
 	public abstract void loop();
 
+	/**
+	 * Called each time the drone arrives at a waypoint
+	 */
 	public abstract void arrived();
 
+	/**
+	 * Called every update, this method handles movement for drones.
+	 * This is meant to be invisible to students.
+	 * @param elapsedSec Number of seconds that have progressed in the simulation.
+	 */
 	public void update(int elapsedSec) {
 
 		// If there is no destination set but destination points exist then move a
@@ -155,7 +173,7 @@ public abstract class Drone {
 		}
 	}
 
-	private void getMoveSpeed() {
+	private void calculateMoveSpeed() {
 		double feetPerMile = 5280;
 		double inchesPerMile = feetPerMile * 12;
 
@@ -211,4 +229,5 @@ public abstract class Drone {
 		return destination;
 	}
 
+	
 }

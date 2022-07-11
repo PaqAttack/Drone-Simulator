@@ -37,7 +37,7 @@ public class Node {
 			return false;
 		}
 		
-		return location.getX() == point.location.getX() && location.getY() == point.location.getY();
+		return (int) location.getX() == (int) point.location.getX() && (int) location.getY() == (int) point.location.getY();
 	}
 
 	/**
