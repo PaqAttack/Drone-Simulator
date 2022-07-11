@@ -9,7 +9,6 @@ import inputs.InputManager;
 import mapItems.Drone;
 import mapItems.Plot;
 import objects.CentralHub;
-import studentDrones.ChrisDrone;
 import studentDrones.FosterDrone;
 import studentDrones.JudeDrone;
 import studentDrones.RichardDrone;
@@ -18,18 +17,32 @@ import ui.Legend;
 @SuppressWarnings("serial")
 public class Simulator extends JFrame implements Runnable{
 
-	// Program Operation Variables.
-	private static final double FPS_SET = 80.0;
-	private static final double UPS_SET = 60.0;
+	// PROGRAM OPERATION VARIABLES
+	
+	private static final double FPS_SET = 80.0;		// Frames per second goal.
+	private static final double UPS_SET = 60.0;		// Updates per second goal.
+	
+	public static final int TIME_SCALE = 15;			// number of seconds in simulation that pass every real second
+	public static final int GRID_LENGTH_IN_MILES = 5;	// height and width represented by graph. This Grid will be a Square.
+	public static final double MILES_REPRESENTED_BY_EACH_GRAPH_BLOCK = (double) GRID_LENGTH_IN_MILES / Graph.getGraphLengthInPlots();
+	
+	public static final String PLOT_A_NAME = "Fire";
+	public static final String PLOT_B_NAME = "Camper";
+	
+	private static final Color PLOT_A_COLOR = Color.RED;
+	private static final Color PLOT_B_COLOR = Color.BLUE;
+	private static final Color OBS_COLOR = Color.GREEN;
+	
+	private static final Color BACKGROUND_COLOR = Color.BLACK;
+	private static final Color GRAPH_COLOR = Color.WHITE;
+	private static final Color TEXT_COLOR = Color.WHITE;
 	
 	private Screen screen;
 	private Thread simThread;
 	
 	private void initDrones() {
 		// Create all drones here
-		// MAX is 5
-		
-//		ChrisDrone chrisDrone = new ChrisDrone(new Point(4, 4, null), "HID Drone", "Chris", Color.CYAN, 40);
+		// Only the first 4 will be on the legend
 		FosterDrone fosterDrone = new FosterDrone(new Point(4, 4, null), "Fire Finder", "Foster", Color.PINK, 30);
 		RichardDrone richardDrone = new RichardDrone(new Point(4, 4, null), "Camper Check-in", "Richard", Color.yellow, 40);
 		JudeDrone judeDrone = new JudeDrone(new Point(4, 4, null), "Human Finder", "Jude", Color.MAGENTA, 40);
@@ -42,6 +55,8 @@ public class Simulator extends JFrame implements Runnable{
 		simulator.screen.initScreen(inputManager);
 		// Start thread that will handle game loop
 		simulator.start();
+		
+		System.out.println(MILES_REPRESENTED_BY_EACH_GRAPH_BLOCK);
 	}
 	
 	public Simulator() {
@@ -97,7 +112,7 @@ public class Simulator extends JFrame implements Runnable{
 	
 	public void render(Graphics g) {
 		// Background
-		g.setColor(GlobalVars.getBackgroundColor());
+		g.setColor(getBackgroundColor());
 		g.fillRect(0, 0, 800, 600);
 		
 		// UI
@@ -175,7 +190,7 @@ public class Simulator extends JFrame implements Runnable{
 	}
 	
 	private void renderScreenMessage(Graphics g) {
-			g.setColor(GlobalVars.getTextColor());
+			g.setColor(getTextColor());
 			g.setFont(new Font("Times New Roman", Font.PLAIN, 24));
 			g.drawString(StateManager.getMessage1(), 25, 25);
 			g.drawString(StateManager.getMessage2(), 25, 50);
@@ -187,6 +202,50 @@ public class Simulator extends JFrame implements Runnable{
 
 	public static double getUpsSet() {
 		return UPS_SET;
+	}
+
+	public static Color getBackgroundColor() {
+		return BACKGROUND_COLOR;
+	}
+
+	public static Color getGraphColor() {
+		return GRAPH_COLOR;
+	}
+
+	public static Color getTextColor() {
+		return TEXT_COLOR;
+	}
+
+	public static Color getObsColor() {
+		return OBS_COLOR;
+	}
+
+	public static int getTimeScale() {
+		return TIME_SCALE;
+	}
+
+	public static int getGridLengthInMiles() {
+		return GRID_LENGTH_IN_MILES;
+	}
+
+	public static double getMilesRepresentedByEachGraphBlock() {
+		return MILES_REPRESENTED_BY_EACH_GRAPH_BLOCK;
+	}
+
+	public static String getPlotAName() {
+		return PLOT_A_NAME;
+	}
+
+	public static String getPlotBName() {
+		return PLOT_B_NAME;
+	}
+
+	public static Color getPlotAColor() {
+		return PLOT_A_COLOR;
+	}
+
+	public static Color getPlotBColor() {
+		return PLOT_B_COLOR;
 	}
 
 	

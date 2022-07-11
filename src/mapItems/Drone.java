@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.GlobalVars;
 import main.Graph;
 import main.Point;
 import main.Simulator;
@@ -39,7 +38,6 @@ public abstract class Drone {
 		drones.add(this);
 		destinationPoints = new ArrayList<>();
 		getMoveSpeed();
-	
 	}
 
 	public abstract void loop();
@@ -81,7 +79,6 @@ public abstract class Drone {
 				moving = false;
 				path = null;
 				arrived();
-//				System.out.println("arrived");
 			}
 		}
 		
@@ -110,14 +107,14 @@ public abstract class Drone {
 	
 	public void render(Graphics g) {
 		g.setColor(color);
-		g.drawOval(Graph.graphXtoScreenX(location.x) - (GlobalVars.getMapDroneDim() / 2), Graph.graphYtoScreenY(location.y) - (GlobalVars.getMapDroneDim() / 2), GlobalVars.getMapDroneDim(), GlobalVars.getMapDroneDim());
-		g.fillOval(Graph.graphXtoScreenX(location.x) - (GlobalVars.getMapDroneDim() / 2), Graph.graphYtoScreenY(location.y) - (GlobalVars.getMapDroneDim() / 2), GlobalVars.getMapDroneDim(), GlobalVars.getMapDroneDim());
+		g.drawOval(Graph.graphXtoScreenX(location.x) - (Graph.getMapDroneDiameter() / 2), Graph.graphYtoScreenY(location.y) - (Graph.getMapDroneDiameter() / 2), Graph.getMapDroneDiameter(), Graph.getMapDroneDiameter());
+		g.fillOval(Graph.graphXtoScreenX(location.x) - (Graph.getMapDroneDiameter() / 2), Graph.graphYtoScreenY(location.y) - (Graph.getMapDroneDiameter() / 2), Graph.getMapDroneDiameter(), Graph.getMapDroneDiameter());
 		
-		g.setColor(GlobalVars.getGraphColor());
+		g.setColor(Simulator.getGraphColor());
 		g.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		g.drawString(getStudentName(), Graph.graphXtoScreenX(location.x) - (g.getFontMetrics().stringWidth(getStudentName()) / 2), Graph.graphYtoScreenY(location.y) + GlobalVars.getMapDroneDim() + 15);
+		g.drawString(getStudentName(), Graph.graphXtoScreenX(location.x) - (g.getFontMetrics().stringWidth(getStudentName()) / 2), Graph.graphYtoScreenY(location.y) + Graph.getMapDroneDiameter() + 15);
 		
-		if (destination != null && GlobalVars.isShowLine()) {
+		if (destination != null && Graph.showLine) {
 			g.setColor(Color.GREEN);
 			g.drawLine(Graph.graphXtoScreenX(location.x), 
 					Graph.graphYtoScreenY(location.y), 
@@ -131,8 +128,8 @@ public abstract class Drone {
 		double feetPerMile = 5280;
 		double inchesPerMile = feetPerMile * 12;
 		
-		double inchesTotal = inchesPerMile * GlobalVars.getGraphLengthInMiles();
-		double inchesPerBlock = inchesTotal / Graph.getGraphWidth();
+		double inchesTotal = inchesPerMile * Simulator.getGridLengthInMiles();
+		double inchesPerBlock = inchesTotal / Graph.getGraphLengthInPlots();
 		
 		double feetPerHour = speedMPH * feetPerMile;
 		double inchesPerHour = feetPerHour * 12;
@@ -140,8 +137,6 @@ public abstract class Drone {
 		double inchesPerSec = inchesPerMin / 60;
 		
 		secPerSpot = inchesPerBlock / inchesPerSec;
-//		System.out.println("Seconds Per Spot: " + secPerSpot);
-		
 	}
 	
 	public int getPosX() {

@@ -5,10 +5,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import main.GlobalVars;
 import main.Graph;
 import main.Point;
-import objects.TargetPlotB;
+import main.Simulator;
 
 public abstract class Plot {
 	private Point location;
@@ -19,9 +18,9 @@ public abstract class Plot {
 	private int speedMPH;
 	private int lastCount = 0;
 	private String name;
-	
+
 	private static ArrayList<Plot> plots = new ArrayList<>();
-	
+
 	public Plot(Point location, Color color, String name) {
 		super();
 		this.location = location;
@@ -31,20 +30,24 @@ public abstract class Plot {
 	}
 
 	public abstract void activate();
-	
+
 	public abstract void update();
-	
+
 	public void render(Graphics g) {
 		g.setColor(color);
-		g.drawOval(Graph.graphXtoScreenX(location.x) - (GlobalVars.getMapItemDim() / 2), Graph.graphYtoScreenY(location.y) - (GlobalVars.getMapItemDim() / 2), GlobalVars.getMapItemDim(), GlobalVars.getMapItemDim());
-		g.fillOval(Graph.graphXtoScreenX(location.x) - (GlobalVars.getMapItemDim() / 2), Graph.graphYtoScreenY(location.y) - (GlobalVars.getMapItemDim() / 2), GlobalVars.getMapItemDim(), GlobalVars.getMapItemDim());
-		
-		g.setColor(GlobalVars.getGraphColor());
+		g.drawOval(Graph.graphXtoScreenX(location.x) - (Graph.getMapItemDiameter() / 2),
+				Graph.graphYtoScreenY(location.y) - (Graph.getMapItemDiameter() / 2), Graph.getMapItemDiameter(),
+				Graph.getMapItemDiameter());
+		g.fillOval(Graph.graphXtoScreenX(location.x) - (Graph.getMapItemDiameter() / 2),
+				Graph.graphYtoScreenY(location.y) - (Graph.getMapItemDiameter() / 2), Graph.getMapItemDiameter(),
+				Graph.getMapItemDiameter());
+
+		g.setColor(Simulator.getGraphColor());
 		g.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		g.drawString(name, Graph.graphXtoScreenX(location.x) - (g.getFontMetrics().stringWidth(name) / 2), Graph.graphYtoScreenY(location.y) + GlobalVars.getMapItemDim() + 15);
+		g.drawString(name, Graph.graphXtoScreenX(location.x) - (g.getFontMetrics().stringWidth(name) / 2),
+				Graph.graphYtoScreenY(location.y) + Graph.getMapItemDiameter() + 15);
 	}
 
-	
 	public void remove() {
 		System.out.println("Camper at point " + getLocation().getX() + ", " + getLocation().getY() + " evacuated.");
 		plots.remove(this);
@@ -58,7 +61,7 @@ public abstract class Plot {
 		}
 		return null;
 	}
-	
+
 	public Point getLocation() {
 		return location;
 	}

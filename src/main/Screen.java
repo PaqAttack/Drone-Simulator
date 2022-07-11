@@ -16,9 +16,9 @@ public class Screen extends JPanel{
 	}
 	
 	public void initScreen(InputManager inputManager) {
-		addMouseListener(inputManager.getMyMouseListener());
-		addMouseMotionListener(inputManager.getMyMouseListener());
-		addKeyListener(inputManager.getMyKeyboardListener());
+		addMouseListener(inputManager);
+		addMouseMotionListener(inputManager);
+		addKeyListener(inputManager);
 		
 		requestFocus();
 	}

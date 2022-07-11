@@ -2,7 +2,7 @@ package mapItems;
 
 import java.util.ArrayList;
 
-import main.GlobalVars;
+import main.Simulator;
 import objects.TargetPlotB;
 
 public class DroneScannerB {
@@ -10,17 +10,17 @@ public class DroneScannerB {
 	private ArrayList<Plot> scannedItemList;
 	private double range;
 	private Drone drone;
-	
+
 	public DroneScannerB(Drone drone, double rangeInMiles) {
 		this.range = rangeInMiles;
 		this.drone = drone;
 		scannedItemList = new ArrayList<>();
 	}
-	
+
 	public int scan() {
 		for (Plot p : Plot.getPlots()) {
 			if (p instanceof TargetPlotB) {
-				if (getDistance(p) < range / GlobalVars.getGraphBlockMiles()) {
+				if (getDistance(p) < range / Simulator.getMilesRepresentedByEachGraphBlock()) {
 					if (!scannedItemList.contains(p)) {
 						scannedItemList.add(p);
 					}
@@ -39,6 +39,5 @@ public class DroneScannerB {
 	public ArrayList<Plot> getScannedItemList() {
 		return scannedItemList;
 	}
-	
-	
+
 }

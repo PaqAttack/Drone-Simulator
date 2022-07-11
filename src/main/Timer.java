@@ -8,8 +8,8 @@ import objects.CentralHub;
 
 public class Timer {
 	
-	private static final int CLOCK_X = GlobalVars.getGraphX() + (GlobalVars.getGraphWidth() / 2);
-	private static final int CLOCK_Y = GlobalVars.getGraphY() - 15;
+	private static final int CLOCK_X = Graph.getGraphXStartPosition() + (Graph.getGraphDisplayLength() / 2);
+	private static final int CLOCK_Y = Graph.getGraphYStartPosition() - 15;
 	
 	private static LocalTime startTime = LocalTime.of(0, 0, 0);
 	private static LocalTime curTime = startTime;
@@ -24,7 +24,7 @@ public class Timer {
 		if(CentralHub.getHUBs().get(0).isActive() ) {
 			counter++;
 			
-			if (counter > Simulator.getUpsSet() / GlobalVars.getTimeScale()) {	// 1 simmed sec has passed
+			if (counter > Simulator.getUpsSet() / Simulator.getTimeScale()) {	// 1 simmed sec has passed
 				elapsedSeconds++;
 				counter = 0;
 				curTime = startTime.plusSeconds( (int) elapsedSeconds);
@@ -39,7 +39,7 @@ public class Timer {
 	
 	
 	public static void render(Graphics g) {
-		g.setColor(GlobalVars.getTextColor());
+		g.setColor(Simulator.getTextColor());
 		g.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		int w = g.getFontMetrics().stringWidth(curTime.toString());
 		int h = g.getFontMetrics().getHeight();

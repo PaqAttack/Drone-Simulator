@@ -75,25 +75,19 @@ public class Point {
             for(int i = 0; i < used.size(); ++i){
                 Point point = used.get(i);
                 
-                // for each point thats been used find their neighbours
+                // for each point thats been used find their neighbors
                 for (Point neighbor : FindNeighbors(map, point)) {
                     if (!used.contains(neighbor) && !newOpen.contains(neighbor)) {
                         newOpen.add(neighbor);
-                        //debug
-//                        System.out.println("Neighbor added " + neighbor.toString());
                     }
                 }
             }
             
-//            System.out.println("new open size: " + newOpen.size());
             
             for(Point point : newOpen) {
                 used.add(point);
-                //debug
-//                System.out.println("used added " + point.toString());
                 
                 if (end.equals(point)) {
-//                	System.out.println("end found");
                     finished = true;
                     break;
                 }
@@ -111,7 +105,6 @@ public class Point {
             path.add(0, point);
             point = point.previous;
         }
-//        System.out.println("Path returned");
         return path;
     }
 

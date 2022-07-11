@@ -5,16 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.Point;
-import main.Simulator;
 import mapItems.CommInterface;
 import mapItems.Drone;
 import mapItems.Message;
 
-public class RichardDrone extends Drone implements CommInterface{
+public class RichardDrone extends Drone implements CommInterface {
 
 	ArrayList<Point> visited;
 	ArrayList<Point> unVisited;
-	
+
 	public RichardDrone(Point location, String name, String studentName, Color color, int speedMPH) {
 		super(location, name, studentName, color, speedMPH);
 
@@ -36,11 +35,11 @@ public class RichardDrone extends Drone implements CommInterface{
 			moving = true;
 			System.out.println("Camper Check-in Drone Deployed to " + destPoints.size() + " people.");
 		}
-		
+
 		if (msg.getMsg().equalsIgnoreCase("ADD")) {
 			Point p = (Point) msg.getO();
 			getDestinationPoints().add(p);
-			
+
 			moving = true;
 			System.out.println("Camper Check-in Drone added 1 person to destination list.");
 		}
@@ -53,7 +52,7 @@ public class RichardDrone extends Drone implements CommInterface{
 			destPoints.add(new Point(4, 4, null));
 			setDestinationPoints(destPoints);
 		}
-		
+
 		if (getDestination() == null) {
 			getDestinationPoints().add(new Point(4, 4, null));
 			moving = true;
@@ -62,15 +61,12 @@ public class RichardDrone extends Drone implements CommInterface{
 
 	@Override
 	public void activate() {
-		
+
 	}
 
 	@Override
 	public void arrived() {
 
 	}
-
-
-
 
 }
