@@ -30,10 +30,10 @@ public class InputManager implements MouseListener, MouseMotionListener, KeyList
 	}
 
 	/*
-	 * On mouse click this method plots items on the map
+	 * On mouse press this method plots items on the map
 	 */
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mousePressed(MouseEvent e) {
 		if (Graph.getBounds().contains(e.getX(), e.getY())) {
 
 			// Based on the simulation state different plots will be created.
@@ -138,9 +138,8 @@ public class InputManager implements MouseListener, MouseMotionListener, KeyList
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
