@@ -3,6 +3,7 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ConcurrentModificationException;
 
 import javax.swing.JFrame;
@@ -220,9 +221,9 @@ public class Simulator extends JFrame implements Runnable {
 	 * Only the first 4 to be created will be shown on the legend.
 	 */
 	private void initDrones() {
-		FosterDrone fosterDrone = new FosterDrone(new Node(4, 4, null), "Fire Finder", "Foster", Color.PINK, 30);
-		RichardDrone richardDrone = new RichardDrone(new Node(4, 4, null), "Camper Check-in", "Richard", Color.yellow, 40);
-		JudeDrone judeDrone = new JudeDrone(new Node(4, 4, null), "Human Finder", "Jude", Color.MAGENTA, 40);
+		FosterDrone fosterDrone = new FosterDrone(new Point(Graph.graphXtoScreenX(4), Graph.graphYtoScreenY(4)), "Fire Finder", "Foster", Color.PINK, true, 30);
+		RichardDrone richardDrone = new RichardDrone(new Point(Graph.graphXtoScreenX(4), Graph.graphYtoScreenY(4)), "Camper Check-in", "Richard", Color.yellow, true, 40);
+		JudeDrone judeDrone = new JudeDrone(new Point(Graph.graphXtoScreenX(4), Graph.graphYtoScreenY(4)), "Human Finder", "Jude", Color.MAGENTA, true, 40);
 	}
 	
 	/**

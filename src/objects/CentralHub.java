@@ -1,8 +1,10 @@
 package objects;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.ArrayList;
 
+import main.Graph;
 import main.Node;
 import mapItems.CommInterface;
 import mapItems.DataType;
@@ -12,11 +14,6 @@ import studentDrones.ChrisDrone;
 
 public class CentralHub implements CommInterface {
 
-//	ChrisDrone chrisDrone = new ChrisDrone(new Point(2, 99, null), "HID Drone", "Chris", Color.CYAN, 40);
-//	FosterDrone fosterDrone = new FosterDrone(new Point(2, 80, null), "Fire Finder", "Foster", Color.PINK, 30);
-//	RichardDrone richardDrone = new RichardDrone(new Point(2, 70, null), "Camper Check-in", "Richard", Color.yellow, 40);
-//	JudeDrone judeDrone = new JudeDrone(new Point(5, 50, null), "Human Finder", "Jude", Color.MAGENTA, 60);
-
 	private boolean active = false;
 
 	// Simulation specific variables
@@ -25,6 +22,9 @@ public class CentralHub implements CommInterface {
 	private ArrayList<Drone> chrisDrones = new ArrayList<>();
 	private ArrayList<Node> peopleSaved = new ArrayList<>();
 
+	// Home Node
+	private static Node home = new Node(4, 4, null);
+	
 	private boolean richDroneDeployed = false;
 	private boolean fireDetected = false;
 
@@ -66,11 +66,9 @@ public class CentralHub implements CommInterface {
 			for (Node p : people) {
 				if (!peopleSaved.contains(p)) {
 					System.out.println("Deploying HID drone to rescue camper at " + p.getX() + ", " + p.getY() + ".");
-					chrisDrones.add(new ChrisDrone(new Node(4, 4, null), "HID Drone", "Chris", Color.CYAN, 30));
+					chrisDrones.add(new ChrisDrone(new Point(Graph.graphXtoScreenX(4), Graph.graphYtoScreenY(4)), "HID Drone", "Chris", Color.CYAN, true, 30));
 					peopleSaved.add(p);
-					goTo.add(p);
-					goTo.add(home);
-					chrisDrones.get(chrisDrones.size() - 1).setDestinationPoints(goTo);
+					chrisDrones.get(chrisDrones.size() - 1).addDestinationPoint(p);
 					chrisDrones.get(chrisDrones.size() - 1).activate();
 				}
 			}
@@ -120,4 +118,13 @@ public class CentralHub implements CommInterface {
 		return HUBs;
 	}
 
+	public static Node getHome() {
+		return home;
+	}
+
+	public static void setHome(Node home) {
+		CentralHub.home = home;
+	}
+
+	
 }

@@ -1,6 +1,7 @@
 package studentDrones;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +20,8 @@ public class JudeDrone extends Drone implements CommInterface{
 	Node camper;
 	ArrayList<Plot> ignoreList;
 	
-	public JudeDrone(Node location, String name, String studentName, Color color, int speedMPH) {
-		super(location, name, studentName, color, speedMPH);
+	public JudeDrone(Point location, String name, String studentName, Color color, boolean returnHome, int speedMPH) {
+		super(location, name, studentName, color, returnHome, speedMPH);
 		ignoreList = new ArrayList<>();
 		scanner = new DroneScannerB(this, 1);
 	}
@@ -41,8 +42,11 @@ public class JudeDrone extends Drone implements CommInterface{
 			destPoints.add(new Node(40, 20, null));
 			destPoints.add(new Node(40, 80, null));
 			destPoints.add(new Node(20, 80, null));
-			destPoints.add(new Node(4, 4, null));
-			setDestinationPoints(destPoints);
+			
+			for (Node n : destPoints) {
+				addDestinationPoint(n);
+			}
+			
 			moving = true;
 			System.out.println("Human Finder Drone Deployed.");
 		}

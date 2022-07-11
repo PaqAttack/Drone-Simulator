@@ -30,7 +30,13 @@ public class Node {
 	 * @Override
 	 */
 	public boolean equals(Object o) {
-		Node point = (Node) o;
+		Node point;
+		if (o != null) {
+			point = (Node) o;
+		} else {
+			return false;
+		}
+		
 		return location.getX() == point.location.getX() && location.getY() == point.location.getY();
 	}
 
@@ -121,9 +127,13 @@ public class Node {
 	 * @param end   node to end pathfinding at.
 	 * @return List of nodes that lead from start to end point.
 	 */
-	public static List<Node> FindPath(Node start, Node end) {
+	public static ArrayList<Node> FindPath(Node start, Node end) {
 		boolean finished = false;
 
+		if (start.equals(end)) {
+			return null;
+		}
+		
 		// list of points that have been reviewed
 		List<Node> used = new ArrayList<>();
 		used.add(start);
@@ -166,7 +176,7 @@ public class Node {
 			}
 		}
 
-		List<Node> path = new ArrayList<>();
+		ArrayList<Node> path = new ArrayList<>();
 		// The last added node on the path will be the end point
 		Node point = used.get(used.size() - 1);
 
@@ -176,6 +186,7 @@ public class Node {
 			path.add(0, point);
 			point = point.parent;
 		}
+		path.add(end);
 		return path;
 	}
 
@@ -195,30 +206,6 @@ public class Node {
 	 */
 	public int getY() {
 		return (int) location.getY();
-	}
-
-	/**
-	 * Move drone or plots to provided new X coordinate. This is a poor
-	 * implementation as each drone has their location represented by a node. 
-	 * TODO: Make drones have a location indicated by a point and move that. Drone nodes
-	 * currently are just confusing location data.
-	 * 
-	 * @param New X coordinate for the drone.
-	 */
-	public void setX(int x) {
-		location.x = x;
-	}
-
-	/**
-	 * Move drone or plots to provided new Y coordinate. This is a poor
-	 * implementation as each drone has their location represented by a node. 
-	 * TODO: Make drones have a location indicated by a point and move that. Drone nodes
-	 * currently are just confusing location data.
-	 * 
-	 * @param New Y coordinate for the drone.
-	 */
-	public void setY(int y) {
-		location.y = y;
 	}
 
 }

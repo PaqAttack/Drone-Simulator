@@ -2,6 +2,8 @@ package ui;
 
 import java.awt.Font;
 import java.awt.Graphics;
+
+import main.Graph;
 import main.Node;
 import main.Simulator;
 import mapItems.Drone;
@@ -77,10 +79,10 @@ public class Legend {
 				g.setColor(Drone.getDrones().get(i).getColor());
 
 				if (i < 3) {
-
+					
 					g.drawString(
-							"Position:       X: " + Drone.getDrones().get(i).getPosX() + ", Y: "
-									+ Drone.getDrones().get(i).getPosY(),
+							"Position:       X: " + Graph.screenXtoGraphX(Drone.getDrones().get(i).getPosX()) + ", Y: "
+									+ Graph.screenYtoGraphY(Drone.getDrones().get(i).getPosY()),
 							START_X + 100, top + 35 + ((LEGEND_HEIGHT + LEGEND_GAP) * i));
 
 					if (Drone.getDrones().get(i).getDestination() != null) {

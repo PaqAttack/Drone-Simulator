@@ -2,6 +2,7 @@ package mapItems;
 
 import java.util.ArrayList;
 
+import main.Graph;
 import main.Simulator;
 import objects.TargetPlotA;
 
@@ -31,8 +32,8 @@ public class DroneScannerA {
 	}
 
 	private double getDistance(Plot p) {
-		double distX = Math.abs(p.getNode().getX() - drone.getPosX());
-		double distY = Math.abs(p.getNode().getY() - drone.getPosY());
+		double distX = Math.abs(p.getNode().getX() - Graph.screenXtoGraphX(drone.getPosX()));
+		double distY = Math.abs(p.getNode().getY() - Graph.screenYtoGraphY(drone.getPosY()));
 		return Math.sqrt(((distX * distX) + (distY * distY)));
 	}
 

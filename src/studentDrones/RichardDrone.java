@@ -1,6 +1,7 @@
 package studentDrones;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class RichardDrone extends Drone implements CommInterface {
 	ArrayList<Node> visited;
 	ArrayList<Node> unVisited;
 
-	public RichardDrone(Node location, String name, String studentName, Color color, int speedMPH) {
-		super(location, name, studentName, color, speedMPH);
+	public RichardDrone(Point location, String name, String studentName, Color color, boolean returnHome, int speedMPH) {
+		super(location, name, studentName, color, returnHome, speedMPH);
 
 	}
 
@@ -27,18 +28,17 @@ public class RichardDrone extends Drone implements CommInterface {
 	@Override
 	public void recieve(CommInterface transmitter, Message msg) {
 		if (msg.getMsg().equalsIgnoreCase("START")) {
-			List<Node> destPoints = new ArrayList<>();
-			for (Node p : (List<Node>) msg.getO()) {
-				destPoints.add(p);
+			List<Node> nodes = (List<Node>) msg.getO();
+			for (Node p : nodes) {
+				addDestinationPoint(p);
 			}
-			setDestinationPoints(destPoints);
 			moving = true;
-			System.out.println("Camper Check-in Drone Deployed to " + destPoints.size() + " people.");
+			System.out.println("Camper Check-in Drone Deployed to " + nodes.size() + " people.");
 		}
 
 		if (msg.getMsg().equalsIgnoreCase("ADD")) {
 			Node p = (Node) msg.getO();
-			getDestinationPoints().add(p);
+			addDestinationPoint(p);
 
 			moving = true;
 			System.out.println("Camper Check-in Drone added 1 person to destination list.");
@@ -47,16 +47,7 @@ public class RichardDrone extends Drone implements CommInterface {
 
 	@Override
 	public void loop() {
-		if (moving && getDestination() == null && node != new Node(4, 4, null)) {
-			List<Node> destPoints = new ArrayList<>();
-			destPoints.add(new Node(4, 4, null));
-			setDestinationPoints(destPoints);
-		}
 
-		if (getDestination() == null) {
-			getDestinationPoints().add(new Node(4, 4, null));
-			moving = true;
-		}
 	}
 
 	@Override
