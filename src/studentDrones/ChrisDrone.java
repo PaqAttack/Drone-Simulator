@@ -2,7 +2,7 @@ package studentDrones;
 
 import java.awt.Color;
 
-import main.Point;
+import main.Node;
 import mapItems.CommInterface;
 import mapItems.Drone;
 import mapItems.Message;
@@ -12,7 +12,7 @@ import objects.TargetPlotB;
 
 public class ChrisDrone extends Drone implements CommInterface {
 	
-	public ChrisDrone(Point location, String name, String studentName, Color color, int speedMPH) {
+	public ChrisDrone(Node location, String name, String studentName, Color color, int speedMPH) {
 		super(location, name, studentName, color, speedMPH);
 
 	}
@@ -39,8 +39,8 @@ public class ChrisDrone extends Drone implements CommInterface {
 
 	@Override
 	public void arrived() {
-		if (location.getX() != 4) {
-			System.out.println("Camper at point " + location.getX() + ", " + location.getY() + " evacuated.");
+		if (node.getX() != 4) {
+			System.out.println("Camper at point " + node.getX() + ", " + node.getY() + " evacuated.");
 		}
 	}
 

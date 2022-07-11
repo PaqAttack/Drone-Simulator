@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import main.Graph;
-import main.Point;
+import main.Node;
 import main.Simulator;
 import mapItems.Plot;
 
@@ -12,7 +12,7 @@ public class TargetPlotB extends Plot {
 
 	private static ArrayList<TargetPlotB> targets = new ArrayList<>();
 
-	public TargetPlotB(Point location, Color color, String name) {
+	public TargetPlotB(Node location, Color color, String name) {
 		super(location, color, name);
 	}
 
@@ -29,7 +29,7 @@ public class TargetPlotB extends Plot {
 	public static void createPlotB(int x, int y) {
 		if (Graph.getGraphValue(x, y) == 0) {
 			Graph.changeGraphIDbyCoord(3, x, y);
-			targets.add(new TargetPlotB(new Point(x, y, null), Simulator.getPlotBColor(), Simulator.getPlotBName()));
+			targets.add(new TargetPlotB(new Node(x, y, null), Simulator.getPlotBColor(), Simulator.getPlotBName()));
 			for (int a = x - Graph.getMapPlotSpace(); a <= x + Graph.getMapPlotSpace(); a++) {
 				for (int b = y - Graph.getMapPlotSpace(); b <= y + Graph.getMapPlotSpace(); b++) {
 					if (Graph.doesExist(a, b)) {
@@ -46,13 +46,13 @@ public class TargetPlotB extends Plot {
 	}
 
 	public void remove() {
-		System.out.println("Camper at point " + getLocation().getX() + ", " + getLocation().getY() + " evacuated.");
+		System.out.println("Camper at point " + getNode().getX() + ", " + getNode().getY() + " evacuated.");
 		targets.remove(this);
 	}
 
-	public static Plot getPlotByLocation(Point p) {
+	public static Plot getPlotByLocation(Node p) {
 		for (Plot plot : targets) {
-			if (plot.getLocation().equals(p)) {
+			if (plot.getNode().equals(p)) {
 				System.out.println("found plot");
 				return plot;
 			}

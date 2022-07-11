@@ -3,7 +3,7 @@ package objects;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import main.Point;
+import main.Node;
 import mapItems.CommInterface;
 import mapItems.DataType;
 import mapItems.Drone;
@@ -20,10 +20,10 @@ public class CentralHub implements CommInterface {
 	private boolean active = false;
 
 	// Simulation specific variables
-	private ArrayList<Point> fires = new ArrayList<>();
-	private ArrayList<Point> people = new ArrayList<>();
+	private ArrayList<Node> fires = new ArrayList<>();
+	private ArrayList<Node> people = new ArrayList<>();
 	private ArrayList<Drone> chrisDrones = new ArrayList<>();
-	private ArrayList<Point> peopleSaved = new ArrayList<>();
+	private ArrayList<Node> peopleSaved = new ArrayList<>();
 
 	private boolean richDroneDeployed = false;
 	private boolean fireDetected = false;
@@ -60,13 +60,13 @@ public class CentralHub implements CommInterface {
 		}
 
 		if (fireDetected && people.size() != peopleSaved.size()) {
-			ArrayList<Point> goTo = new ArrayList<>();
-			Point home = new Point(4, 4, null);
+			ArrayList<Node> goTo = new ArrayList<>();
+			Node home = new Node(4, 4, null);
 
-			for (Point p : people) {
+			for (Node p : people) {
 				if (!peopleSaved.contains(p)) {
 					System.out.println("Deploying HID drone to rescue camper at " + p.getX() + ", " + p.getY() + ".");
-					chrisDrones.add(new ChrisDrone(new Point(4, 4, null), "HID Drone", "Chris", Color.CYAN, 30));
+					chrisDrones.add(new ChrisDrone(new Node(4, 4, null), "HID Drone", "Chris", Color.CYAN, 30));
 					peopleSaved.add(p);
 					goTo.add(p);
 					goTo.add(home);
@@ -85,22 +85,22 @@ public class CentralHub implements CommInterface {
 	public void recieve(CommInterface transmitter, Message msg) {
 		// Add newly detected fires to list
 		if (msg.getMsg().equalsIgnoreCase("FIRE")) {
-			if (!fires.contains((Point) msg.getO())) {
-				fires.add((Point) msg.getO());
+			if (!fires.contains((Node) msg.getO())) {
+				fires.add((Node) msg.getO());
 				fireDetected = true;
 			}
 
 		}
 
 		if (msg.getMsg().equalsIgnoreCase("HUMAN")) {
-			if (!people.contains((Point) msg.getO())) {
-				people.add((Point) msg.getO());
+			if (!people.contains((Node) msg.getO())) {
+				people.add((Node) msg.getO());
 
 				if (richDroneDeployed) {
 					System.out.println("Central retrasnmits new human location to Camper Check in drone. "
 							+ people.size() + " people have been spotted total now.");
 					transmit((CommInterface) Drone.getDroneByStudentName("RICHARD"),
-							new Message("ADD", DataType._POINT, (Point) msg.getO()));
+							new Message("ADD", DataType._POINT, (Node) msg.getO()));
 				}
 			}
 

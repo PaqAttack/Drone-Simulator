@@ -4,17 +4,17 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.Point;
+import main.Node;
 import mapItems.CommInterface;
 import mapItems.Drone;
 import mapItems.Message;
 
 public class RichardDrone extends Drone implements CommInterface {
 
-	ArrayList<Point> visited;
-	ArrayList<Point> unVisited;
+	ArrayList<Node> visited;
+	ArrayList<Node> unVisited;
 
-	public RichardDrone(Point location, String name, String studentName, Color color, int speedMPH) {
+	public RichardDrone(Node location, String name, String studentName, Color color, int speedMPH) {
 		super(location, name, studentName, color, speedMPH);
 
 	}
@@ -27,8 +27,8 @@ public class RichardDrone extends Drone implements CommInterface {
 	@Override
 	public void recieve(CommInterface transmitter, Message msg) {
 		if (msg.getMsg().equalsIgnoreCase("START")) {
-			List<Point> destPoints = new ArrayList<>();
-			for (Point p : (List<Point>) msg.getO()) {
+			List<Node> destPoints = new ArrayList<>();
+			for (Node p : (List<Node>) msg.getO()) {
 				destPoints.add(p);
 			}
 			setDestinationPoints(destPoints);
@@ -37,7 +37,7 @@ public class RichardDrone extends Drone implements CommInterface {
 		}
 
 		if (msg.getMsg().equalsIgnoreCase("ADD")) {
-			Point p = (Point) msg.getO();
+			Node p = (Node) msg.getO();
 			getDestinationPoints().add(p);
 
 			moving = true;
@@ -47,14 +47,14 @@ public class RichardDrone extends Drone implements CommInterface {
 
 	@Override
 	public void loop() {
-		if (moving && getDestination() == null && location != new Point(4, 4, null)) {
-			List<Point> destPoints = new ArrayList<>();
-			destPoints.add(new Point(4, 4, null));
+		if (moving && getDestination() == null && node != new Node(4, 4, null)) {
+			List<Node> destPoints = new ArrayList<>();
+			destPoints.add(new Node(4, 4, null));
 			setDestinationPoints(destPoints);
 		}
 
 		if (getDestination() == null) {
-			getDestinationPoints().add(new Point(4, 4, null));
+			getDestinationPoints().add(new Node(4, 4, null));
 			moving = true;
 		}
 	}

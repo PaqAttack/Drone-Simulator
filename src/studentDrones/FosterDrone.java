@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.Point;
+import main.Node;
 import mapItems.CommInterface;
 import mapItems.DataType;
 import mapItems.Drone;
@@ -16,10 +16,10 @@ import objects.CentralHub;
 public class FosterDrone  extends Drone implements CommInterface{
 
 	DroneScannerA scanner;
-	Point fire;
+	Node fire;
 	ArrayList<Plot> ignoreList;
 	
-	public FosterDrone(Point location, String name, String studentName, Color color, int speedMPH) {
+	public FosterDrone(Node location, String name, String studentName, Color color, int speedMPH) {
 		super(location, name, studentName, color, speedMPH);
 		ignoreList = new ArrayList<>();
 		scanner = new DroneScannerA(this, 1);
@@ -33,15 +33,15 @@ public class FosterDrone  extends Drone implements CommInterface{
 	@Override
 	public void recieve(CommInterface transmitter, Message msg) {
 		if (msg.getMsg().equalsIgnoreCase("START")) {
-			List<Point> destPoints = new ArrayList<>();
-			destPoints.add(new Point(20, 80, null));
-			destPoints.add(new Point(40, 80, null));
-			destPoints.add(new Point(40, 20, null));
-			destPoints.add(new Point(60, 20, null));
-			destPoints.add(new Point(60, 80, null));
-			destPoints.add(new Point(80, 80, null));
-			destPoints.add(new Point(80, 20, null));
-			destPoints.add(new Point(4, 4, null));
+			List<Node> destPoints = new ArrayList<>();
+			destPoints.add(new Node(20, 80, null));
+			destPoints.add(new Node(40, 80, null));
+			destPoints.add(new Node(40, 20, null));
+			destPoints.add(new Node(60, 20, null));
+			destPoints.add(new Node(60, 80, null));
+			destPoints.add(new Node(80, 80, null));
+			destPoints.add(new Node(80, 20, null));
+			destPoints.add(new Node(4, 4, null));
 			setDestinationPoints(destPoints);
 			moving = true;
 			System.out.println("Fire Finder Drone Deployed.");
@@ -54,7 +54,7 @@ public class FosterDrone  extends Drone implements CommInterface{
 			//found fire
 			for (Plot p : scanner.getScannedItemList()) {
 				if (!ignoreList.contains(p)) {
-					transmit(CentralHub.getHUBs().get(0), new Message("Fire", DataType._POINT, p.getLocation()));
+					transmit(CentralHub.getHUBs().get(0), new Message("Fire", DataType._POINT, p.getNode()));
 					ignoreList.add(p);
 					System.out.println("Fire finder drone sends detected fire location to central HUB.");
 				}

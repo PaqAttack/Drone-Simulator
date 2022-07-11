@@ -3,33 +3,34 @@ package mapItems;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
 import main.Graph;
-import main.Point;
+import main.Node;
 import main.Simulator;
 
 public abstract class Drone {
 
 	private static ArrayList<Drone> drones = new ArrayList<>();
 	
-	protected Point location;
+	protected Node node;
 	private String name;
 	private String studentName;
 	private Color color;
 	protected boolean moving;
-	protected Point destination;
+	protected Node destination;
 	private int speedMPH;
 	private int lastCount = 0;
 	private double secPerSpot;
 	private int pathLoc = 0;
-	private List<Point> path;
-	private List<Point> destinationPoints;
+	private List<Node> path;
+	private List<Node> destinationPoints;
 	
-	public Drone(Point location, String name, String studentName, Color color, int speedMPH) {
+	public Drone(Node node, String name, String studentName, Color color, int speedMPH) {
 		super();
-		this.location = location;
+		this.node = node;
 		this.name = name;
 		this.studentName = studentName;
 		this.color = color;
@@ -52,8 +53,8 @@ public abstract class Drone {
 		}
 		
 		if (path == null && destination != null) {
-			if (!destination.equals(location)) {
-				path = Point.FindPath(Graph.getGraph(), location, destination);
+			if (!destination.equals(node)) {
+				path = Node.FindPath(node, destination);
 				pathLoc = 0;
 				lastCount = elapsedSec;
 			} else {
@@ -65,11 +66,11 @@ public abstract class Drone {
 		}
 		
 		if (path != null) {
-			if (!location.equals(destination)) {
+			if (!node.equals(destination)) {
 				if ((elapsedSec - lastCount) > secPerSpot) {
-					location.x = path.get(pathLoc).getX();
-					location.y = path.get(pathLoc).getY();
-					if (location != destination) {
+					node.setX(path.get(pathLoc).getX());
+					node.setY(path.get(pathLoc).getY());
+					if (node != destination) {
 						pathLoc++;
 					} 
 					lastCount = elapsedSec;
@@ -89,11 +90,11 @@ public abstract class Drone {
 	
 	
 	// methods for student use
-	public void setDestination (Point destination) {
+	public void setDestination (Node destination) {
 		this.destination = destination;
 	}
 	
-	public void moveOther(Plot itemToBeMoved, Point destination) {
+	public void moveOther(Plot itemToBeMoved, Node destination) {
 		
 	}
 	
@@ -101,23 +102,23 @@ public abstract class Drone {
 		
 	}
 	
-	public void deleteItemOnPoint(Point location) {
+	public void deleteItemOnPoint(Node location) {
 		
 	}
 	
 	public void render(Graphics g) {
 		g.setColor(color);
-		g.drawOval(Graph.graphXtoScreenX(location.x) - (Graph.getMapDroneDiameter() / 2), Graph.graphYtoScreenY(location.y) - (Graph.getMapDroneDiameter() / 2), Graph.getMapDroneDiameter(), Graph.getMapDroneDiameter());
-		g.fillOval(Graph.graphXtoScreenX(location.x) - (Graph.getMapDroneDiameter() / 2), Graph.graphYtoScreenY(location.y) - (Graph.getMapDroneDiameter() / 2), Graph.getMapDroneDiameter(), Graph.getMapDroneDiameter());
+		g.drawOval(Graph.graphXtoScreenX(node.getX()) - (Graph.getMapDroneDiameter() / 2), Graph.graphYtoScreenY(node.getY()) - (Graph.getMapDroneDiameter() / 2), Graph.getMapDroneDiameter(), Graph.getMapDroneDiameter());
+		g.fillOval(Graph.graphXtoScreenX(node.getX()) - (Graph.getMapDroneDiameter() / 2), Graph.graphYtoScreenY(node.getY()) - (Graph.getMapDroneDiameter() / 2), Graph.getMapDroneDiameter(), Graph.getMapDroneDiameter());
 		
 		g.setColor(Simulator.getGraphColor());
 		g.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		g.drawString(getStudentName(), Graph.graphXtoScreenX(location.x) - (g.getFontMetrics().stringWidth(getStudentName()) / 2), Graph.graphYtoScreenY(location.y) + Graph.getMapDroneDiameter() + 15);
+		g.drawString(getStudentName(), Graph.graphXtoScreenX(node.getX()) - (g.getFontMetrics().stringWidth(getStudentName()) / 2), Graph.graphYtoScreenY(node.getY()) + Graph.getMapDroneDiameter() + 15);
 		
 		if (destination != null && Graph.showLine) {
 			g.setColor(Color.GREEN);
-			g.drawLine(Graph.graphXtoScreenX(location.x), 
-					Graph.graphYtoScreenY(location.y), 
+			g.drawLine(Graph.graphXtoScreenX(node.getX()), 
+					Graph.graphYtoScreenY(node.getY()), 
 					Graph.graphXtoScreenX(destination.getX()), 
 					Graph.graphYtoScreenY(destination.getY()));
 		}
@@ -140,11 +141,11 @@ public abstract class Drone {
 	}
 	
 	public int getPosX() {
-		return location.x;
+		return node.getX();
 	}
 
 	public int getPosY() {
-		return location.y;
+		return node.getY();
 	}
 
 	public String getName() {
@@ -167,11 +168,11 @@ public abstract class Drone {
 		return secPerSpot;
 	}
 
-	public List<Point> getDestinationPoints() {
+	public List<Node> getDestinationPoints() {
 		return destinationPoints;
 	}
 
-	public void setDestinationPoints(List<Point> destinationPoints) {
+	public void setDestinationPoints(List<Node> destinationPoints) {
 		this.destinationPoints = destinationPoints;
 	}
 	
@@ -184,7 +185,7 @@ public abstract class Drone {
 		return null;
 	}
 
-	public Point getDestination() {
+	public Node getDestination() {
 		return destination;
 	}
 	

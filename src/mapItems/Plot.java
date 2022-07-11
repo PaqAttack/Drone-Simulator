@@ -6,24 +6,24 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import main.Graph;
-import main.Point;
+import main.Node;
 import main.Simulator;
 
 public abstract class Plot {
-	private Point location;
+	private Node node;
 	protected boolean moving;
 	private Color color;
-	private Point destination;
-	private Point nextStep;
+	private Node destination;
+	private Node nextStep;
 	private int speedMPH;
 	private int lastCount = 0;
 	private String name;
 
 	private static ArrayList<Plot> plots = new ArrayList<>();
 
-	public Plot(Point location, Color color, String name) {
+	public Plot(Node node, Color color, String name) {
 		super();
-		this.location = location;
+		this.node = node;
 		this.color = color;
 		this.name = name;
 		plots.add(this);
@@ -35,39 +35,39 @@ public abstract class Plot {
 
 	public void render(Graphics g) {
 		g.setColor(color);
-		g.drawOval(Graph.graphXtoScreenX(location.x) - (Graph.getMapItemDiameter() / 2),
-				Graph.graphYtoScreenY(location.y) - (Graph.getMapItemDiameter() / 2), Graph.getMapItemDiameter(),
+		g.drawOval(Graph.graphXtoScreenX(node.getX()) - (Graph.getMapItemDiameter() / 2),
+				Graph.graphYtoScreenY(node.getY()) - (Graph.getMapItemDiameter() / 2), Graph.getMapItemDiameter(),
 				Graph.getMapItemDiameter());
-		g.fillOval(Graph.graphXtoScreenX(location.x) - (Graph.getMapItemDiameter() / 2),
-				Graph.graphYtoScreenY(location.y) - (Graph.getMapItemDiameter() / 2), Graph.getMapItemDiameter(),
+		g.fillOval(Graph.graphXtoScreenX(node.getX()) - (Graph.getMapItemDiameter() / 2),
+				Graph.graphYtoScreenY(node.getY()) - (Graph.getMapItemDiameter() / 2), Graph.getMapItemDiameter(),
 				Graph.getMapItemDiameter());
 
 		g.setColor(Simulator.getGraphColor());
 		g.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		g.drawString(name, Graph.graphXtoScreenX(location.x) - (g.getFontMetrics().stringWidth(name) / 2),
-				Graph.graphYtoScreenY(location.y) + Graph.getMapItemDiameter() + 15);
+		g.drawString(name, Graph.graphXtoScreenX(node.getX()) - (g.getFontMetrics().stringWidth(name) / 2),
+				Graph.graphYtoScreenY(node.getY()) + Graph.getMapItemDiameter() + 15);
 	}
 
 	public void remove() {
-		System.out.println("Camper at point " + getLocation().getX() + ", " + getLocation().getY() + " evacuated.");
+		System.out.println("Camper at point " + getNode().getX() + ", " + getNode().getY() + " evacuated.");
 		plots.remove(this);
 	}
 
-	public static Plot getPlotByLocation(Point p) {
+	public static Plot getPlotByLocation(Node p) {
 		for (Plot plot : plots) {
-			if (plot.getLocation().equals(p)) {
+			if (plot.getNode().equals(p)) {
 				return plot;
 			}
 		}
 		return null;
 	}
 
-	public Point getLocation() {
-		return location;
+	public Node getNode() {
+		return node;
 	}
 
-	public void setLocation(Point location) {
-		this.location = location;
+	public void setNode(Node node) {
+		this.node = node;
 	}
 
 	public boolean isMoving() {
@@ -78,11 +78,11 @@ public abstract class Plot {
 		this.moving = moving;
 	}
 
-	public Point getDestination() {
+	public Node getDestination() {
 		return destination;
 	}
 
-	public void setDestination(Point destination) {
+	public void setDestination(Node destination) {
 		this.destination = destination;
 	}
 
@@ -102,7 +102,7 @@ public abstract class Plot {
 		this.lastCount = lastCount;
 	}
 
-	public Point getNextStep() {
+	public Node getNextStep() {
 		return nextStep;
 	}
 

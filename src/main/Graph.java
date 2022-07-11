@@ -136,9 +136,9 @@ public class Graph {
 		}
 	}
 
-	public static Point getNextPoint(Point start, Point end) {
-		List<Point> path = Point.FindPath(graph, start, end);
-		for (Point p : path) {
+	public static Node getNextPoint(Node start, Node end) {
+		List<Node> path = Node.FindPath(start, end);
+		for (Node p : path) {
 			System.out.println("point X: " + p.getX() + ", Y: " + p.getY());
 		}
 
@@ -183,7 +183,7 @@ public class Graph {
 	 * @param point This point will be checked to see if it exists.
 	 * @return True/false determination of the existence of the point in question.
 	 */
-	public static boolean doesExist(Point point) {
+	public static boolean doesExist(Node point) {
 		return doesExist(point.getX(), point.getY());
 	}
 

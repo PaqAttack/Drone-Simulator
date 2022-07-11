@@ -40,12 +40,14 @@ public class Simulator extends JFrame implements Runnable{
 	private Screen screen;
 	private Thread simThread;
 	
+	private boolean simulationRunning = true;
+	
 	private void initDrones() {
 		// Create all drones here
 		// Only the first 4 will be on the legend
-		FosterDrone fosterDrone = new FosterDrone(new Point(4, 4, null), "Fire Finder", "Foster", Color.PINK, 30);
-		RichardDrone richardDrone = new RichardDrone(new Point(4, 4, null), "Camper Check-in", "Richard", Color.yellow, 40);
-		JudeDrone judeDrone = new JudeDrone(new Point(4, 4, null), "Human Finder", "Jude", Color.MAGENTA, 40);
+		FosterDrone fosterDrone = new FosterDrone(new Node(4, 4, null), "Fire Finder", "Foster", Color.PINK, 30);
+		RichardDrone richardDrone = new RichardDrone(new Node(4, 4, null), "Camper Check-in", "Richard", Color.yellow, 40);
+		JudeDrone judeDrone = new JudeDrone(new Node(4, 4, null), "Human Finder", "Jude", Color.MAGENTA, 40);
 	}
 	
 	public static void main(String[] args) {
@@ -160,7 +162,7 @@ public class Simulator extends JFrame implements Runnable{
 		
 		long now;
 		
-		while (true) {
+		while (simulationRunning) {
 			
 			now = System.nanoTime();
 			

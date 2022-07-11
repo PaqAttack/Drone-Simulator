@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import main.Graph;
-import main.Point;
+import main.Node;
 import main.Simulator;
 import mapItems.Plot;
 
@@ -13,7 +13,7 @@ public class ObstaclePlot extends Plot {
 
 	private static ArrayList<ObstaclePlot> obstacles = new ArrayList<>();
 
-	public ObstaclePlot(Point location, Color color, String name) {
+	public ObstaclePlot(Node location, Color color, String name) {
 		super(location, color, name);
 
 	}
@@ -33,7 +33,7 @@ public class ObstaclePlot extends Plot {
 				for (int b = y - Graph.getMapObsDisplayRange(); b <= y + Graph.getMapObsDisplayRange(); b++) {
 					if (Graph.doesExist(a, b)) {
 						if (Graph.getGraphValue(a, b) == 0) {
-							obstacles.add(new ObstaclePlot(new Point(x, y, null), Simulator.getObsColor(), "Obstacle"));
+							obstacles.add(new ObstaclePlot(new Node(x, y, null), Simulator.getObsColor(), "Obstacle"));
 							Graph.changeGraphIDbyCoord(1, a, b);
 						}
 					}

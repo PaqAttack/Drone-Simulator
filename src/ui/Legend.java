@@ -2,7 +2,7 @@ package ui;
 
 import java.awt.Font;
 import java.awt.Graphics;
-import main.Point;
+import main.Node;
 import main.Simulator;
 import mapItems.Drone;
 
@@ -20,14 +20,14 @@ public class Legend {
 	private static final int LEGEND_HEIGHT = 60;
 	private static final int LEGEND_GAP = 20;
 
-	private static Point indPoint1 = new Point(START_X + 5, PLOT_LEGEND_TOP, null);
-	private static Point txtPoint1 = new Point(START_X + 25, PLOT_LEGEND_TOP + 10, null);
+	private static Node indPoint1 = new Node(START_X + 5, PLOT_LEGEND_TOP, null);
+	private static Node txtPoint1 = new Node(START_X + 25, PLOT_LEGEND_TOP + 10, null);
 
-	private static Point indPoint2 = new Point(START_X + 5, PLOT_LEGEND_TOP + 20, null);
-	private static Point txtPoint2 = new Point(START_X + 25, PLOT_LEGEND_TOP + 30, null);
+	private static Node indPoint2 = new Node(START_X + 5, PLOT_LEGEND_TOP + 20, null);
+	private static Node txtPoint2 = new Node(START_X + 25, PLOT_LEGEND_TOP + 30, null);
 
-	private static Point indPoint3 = new Point(START_X + 5, PLOT_LEGEND_TOP + 40, null);
-	private static Point txtPoint3 = new Point(START_X + 25, PLOT_LEGEND_TOP + 50, null);
+	private static Node indPoint3 = new Node(START_X + 5, PLOT_LEGEND_TOP + 40, null);
+	private static Node txtPoint3 = new Node(START_X + 25, PLOT_LEGEND_TOP + 50, null);
 
 	public Legend() {
 		// *pin drops*
@@ -44,8 +44,8 @@ public class Legend {
 	}
 
 	private static void drawMapSIze(Graphics g) {
-		Point tp = new Point(630, 30, null);
-		Point bp = new Point(630, 50, null);
+		Node tp = new Node(630, 30, null);
+		Node bp = new Node(630, 50, null);
 
 		g.setColor(Simulator.getGraphColor());
 		g.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -106,30 +106,30 @@ public class Legend {
 
 		// PLOT A LEGEND
 		g.setColor(Simulator.getPlotAColor());
-		g.drawRect(indPoint1.x, indPoint1.y, 10, 10);
-		g.fillRect(indPoint1.x, indPoint1.y, 10, 10);
+		g.drawRect(indPoint1.getX(), indPoint1.getY(), 10, 10);
+		g.fillRect(indPoint1.getX(), indPoint1.getY(), 10, 10);
 
 		g.setColor(Simulator.getGraphColor());
 		g.setFont(new Font("Times New Roman", Font.PLAIN, PLOT_ENTRY_HEIGHT));
-		g.drawString(":  " + Simulator.getPlotAName(), txtPoint1.x, txtPoint1.y);
+		g.drawString(":  " + Simulator.getPlotAName(), txtPoint1.getX(), txtPoint1.getY());
 
 		// PLOT A LEGEND
 		g.setColor(Simulator.getPlotBColor());
-		g.drawRect(indPoint2.x, indPoint2.y, 10, 10);
-		g.fillRect(indPoint2.x, indPoint2.y, 10, 10);
+		g.drawRect(indPoint2.getX(), indPoint2.getY(), 10, 10);
+		g.fillRect(indPoint2.getX(), indPoint2.getY(), 10, 10);
 
 		g.setColor(Simulator.getGraphColor());
 		g.setFont(new Font("Times New Roman", Font.PLAIN, PLOT_ENTRY_HEIGHT));
-		g.drawString(":  " + Simulator.getPlotBName(), txtPoint2.x, txtPoint2.y);
+		g.drawString(":  " + Simulator.getPlotBName(), txtPoint2.getX(), txtPoint2.getY());
 
 		// OBSTACLE LEGEND
 		g.setColor(Simulator.getObsColor());
-		g.drawRect(indPoint3.x, indPoint3.y, 10, 10);
-		g.fillRect(indPoint3.x, indPoint3.y, 10, 10);
+		g.drawRect(indPoint3.getX(), indPoint3.getY(), 10, 10);
+		g.fillRect(indPoint3.getX(), indPoint3.getY(), 10, 10);
 
 		g.setColor(Simulator.getGraphColor());
 		g.setFont(new Font("Times New Roman", Font.PLAIN, PLOT_ENTRY_HEIGHT));
-		g.drawString(":  Obstacle", txtPoint3.x, txtPoint3.y);
+		g.drawString(":  Obstacle", txtPoint3.getX(), txtPoint3.getY());
 
 	}
 
