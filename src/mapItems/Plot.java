@@ -14,20 +14,41 @@ public abstract class Plot {
 	private Color color;
 	private String name;
 
+	// List holding reference to all Plots that are in the game.
 	private static ArrayList<Plot> plots = new ArrayList<>();
 
-	public Plot(Node node, Color color, String name) {
+	/**
+	 * Created a plot on the grid.
+	 * 
+	 * @param node  Node represents the location on the grid.
+	 * @param color Color that will represent the plot on the grid.
+	 * @param name  name of the plot item.
+	 */
+	protected Plot(Node node, Color color, String name) {
 		super();
 		this.location = node;
 		this.color = color;
 		this.name = name;
+
+		// Stores reference to the new plot in the static plots list.
 		plots.add(this);
 	}
 
+	/**
+	 * This method is available if needed.
+	 */
 	public abstract void activate();
 
+	/**
+	 * This is called every update and allows support for looping behavior.
+	 */
 	public abstract void update();
 
+	/**
+	 * Renders Plot on the grid.
+	 * 
+	 * @param g Graphics Object used to render graphics.
+	 */
 	public void render(Graphics g) {
 		g.setColor(color);
 		g.drawOval(Graph.graphXtoScreenX(location.getX()) - (Graph.getMapItemDiameter() / 2),
@@ -43,10 +64,20 @@ public abstract class Plot {
 				Graph.graphYtoScreenY(location.getY()) + Graph.getMapItemDiameter() + 15);
 	}
 
+	/**
+	 * Removes the sole reference to this plot and effectively deletes it from
+	 * existence.
+	 */
 	public void remove() {
 		plots.remove(this);
 	}
 
+	/**
+	 * Gets a reference to a plot based on its location on the grid.
+	 * 
+	 * @param p Node to compare position with.
+	 * @return Located plot or null if no plot is at the provided Node's location.
+	 */
 	public static Plot getPlotByLocation(Node p) {
 		for (Plot plot : plots) {
 			if (plot.getLocation().equals(p)) {
@@ -65,14 +96,29 @@ public abstract class Plot {
 		return false;
 	}
 
+	/**
+	 * Gets the location (as a node) for the current plot.
+	 * 
+	 * @return Location as a Node.
+	 */
 	public Node getLocation() {
 		return location;
 	}
 
+	/**
+	 * Sets the location on the plot.
+	 * 
+	 * @param node Provided node gives location data to this plot.
+	 */
 	public void setNode(Node node) {
 		this.location = node;
 	}
 
+	/**
+	 * Static method to get the arrayList of all Plots.
+	 * 
+	 * @return arrayList containing all Plot references.
+	 */
 	public static ArrayList<Plot> getPlots() {
 		return plots;
 	}
